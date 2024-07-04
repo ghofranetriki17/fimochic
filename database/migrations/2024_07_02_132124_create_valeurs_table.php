@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('valeurs', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
-            $table->unsignedBigInteger('attribut_id'); // Utilisation d'un unsigned big integer pour la clé étrangère
+            $table->string('nom')->nullable();
+            $table->unsignedBigInteger('attribut_id')->nullable(); // Utilisation d'un unsigned big integer pour la clé étrangère
             $table->foreign('attribut_id')->references('id')->on('attributs')->onDelete('cascade');
             $table->timestamps();
         });

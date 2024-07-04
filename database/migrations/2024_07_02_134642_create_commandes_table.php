@@ -17,9 +17,9 @@ return new class extends Migration
            
 
             $table->id();
-            $table->float('prix');
-            $table->string('mode_paiement');
-            $table->string('adresse');
+            $table->float('prix')->nullable();
+            $table->string('mode_paiement')->nullable();
+            $table->string('adresse')->nullable();
             $table->date('date_cmd');
             $table->date('date_estimee_liv');
             $table->boolean('etat');

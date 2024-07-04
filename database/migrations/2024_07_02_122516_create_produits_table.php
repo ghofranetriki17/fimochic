@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('produits', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->float('prix');
-            $table->integer('qte_dispo');
-            $table->string('type');
-            $table->date('date_ajout');
+            $table->string('name')->nullable();
+            $table->float('prix')->nullable();
+            $table->integer('qte_dispo')->nullable();
+            $table->string('type')->nullable();
+            $table->date('date_ajout')->nullable();
             $table->timestamps();
 
 

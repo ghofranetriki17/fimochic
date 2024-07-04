@@ -17,9 +17,14 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('preNom')->nullable();
-            $table->string('age');
-            $table->double('numeroTel');
-            $table->string('sexe');
+            $table->string('nom')->nullable();
+            $table->string('mail')->nullable();
+
+            $table->string('age')->nullable();
+            $table->double('numeroTel')->nullable();
+            $table->string('sexe')->nullable();
+            $table->string('adresse')->nullable();
+
             // Ajoutez d'autres colonnes au besoin
 
             $table->timestamps();
