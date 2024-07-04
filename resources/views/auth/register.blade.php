@@ -1,52 +1,195 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - www.codingnepalweb.com -->
+<html>
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glassmorphism Login Form | CodingNepal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
+            <h2>register</h2>
+            <!-- Name -->
+        <div class="input-field">
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <label>Enter your name</label>
+
         </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+                    <!-- Email Address -->
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <div class="input-field">
+                <input type="email" id="email" name="email" :value="old('email')" required autocomplete="username">
+                <x-input-error :messages="$errors->get('email')" class="mt-2" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+                <label>Enter your email</label>
+            </div>
+            <div class="input-field">
+                <input type="password" id="password" name="password" :value="__('Password')" required  required autocomplete="new-password">
+                <x-input-error :messages="$errors->get('password')" class="mt-2" />
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+                <label>Enter your password</label>
+            </div>
+            <!-- Confirm Password -->
+            <div class="input-field">
+                <labelfor="password_confirmation" :value="__('Confirm Password')"">
+                    <input type="password" id="password_confirmation" name="password_confirmation" required autocomplete="new-password">
+                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+                    <label>confirm password</label>
+                    
+            </div>
+            <button type="submit">sign in</button>
+            <div class="register">
+                <p>vous avez deja un compte? <a href="login">login</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@200;300;400;500;600;700&display=swap");
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Open Sans", sans-serif;
+    }
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        width: 100%;
+        padding: 0 10px;
+    }
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
+    body::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: url("{{ asset('img/ghof.jpg') }}"), #000;
+        background-position: center;
+        background-size: cover;
+    }
 
-            <x-primary-button class="ml-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    .wrapper {
+        width: 400px;
+        border-radius: 8px;
+        padding: 30px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(9px);
+        -webkit-backdrop-filter: blur(9px);
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #fff;
+    }
+
+    .input-field {
+        position: relative;
+        border-bottom: 2px solid #ccc;
+        margin: 15px 0;
+    }
+
+    .input-field label {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        color: #fff;
+        font-size: 16px;
+        pointer-events: none;
+        transition: 0.15s ease;
+    }
+
+    .input-field input {
+        width: 100%;
+        height: 40px;
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        color: #fff;
+    }
+
+    .input-field input:focus~label,
+    .input-field input:valid~label {
+        font-size: 0.8rem;
+        top: 10px;
+        transform: translateY(-120%);
+    }
+
+    .forget {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 25px 0 35px 0;
+        color: #fff;
+    }
+
+    #remember {
+        accent-color: #fff;
+    }
+
+    .forget label {
+        display: flex;
+        align-items: center;
+    }
+
+    .forget label p {
+        margin-left: 8px;
+    }
+
+    .wrapper a {
+        color: #efefef;
+        text-decoration: none;
+    }
+
+    .wrapper a:hover {
+        text-decoration: underline;
+    }
+
+    button {
+        background: #fff;
+        color: #000;
+        font-weight: 600;
+        border: none;
+        padding: 12px 20px;
+        cursor: pointer;
+        border-radius: 3px;
+        font-size: 16px;
+        border: 2px solid transparent;
+        transition: 0.3s ease;
+    }
+
+    button:hover {
+        color: #fff;
+        border-color: #fff;
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .register {
+        text-align: center;
+        margin-top: 30px;
+        color: #fff;
+    }
+</style>
+
+</html>
