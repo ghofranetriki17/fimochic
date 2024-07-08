@@ -99,9 +99,20 @@ Supplier Management: Track supplier details and order history.-->
                 <i class="bi bi-people"></i><span>Gestion de la Relation Client (CRM)</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="crm-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+            <li class="{{ Request::is('index') ? 'active' : '' }}">
+    <a href="{{ route('clients.index') }}">
+        <i class="bi bi-circle"></i><span>Profils Clients / liste des clients actives</span>
+    </a>
+</li>
+<li>
+    <a href="{{ route('clients.create') }}">
+        <i class="bi bi-circle"></i><span>Ajout Client</span>
+    </a>
+</li>
+
                 <li>
                     <a href="crm-customer-profiles.html">
-                        <i class="bi bi-circle"></i><span>Profils Clients</span>
+                        <i class="bi bi-circle"></i><span>Profils Clients/liste des clients non active</span>
                     </a>
                 </li>
                 <li>

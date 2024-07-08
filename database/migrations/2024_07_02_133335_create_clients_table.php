@@ -15,23 +15,16 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained();
             $table->string('preNom')->nullable();
-            $table->string('nom')->nullable();
-            $table->string('mail')->nullable();
-
+            $table->string('nom')->nullable(); // Correspond au 'name' de l'utilisateur
             $table->string('age')->nullable();
-            $table->double('numeroTel')->nullable();
-            $table->string('sexe')->nullable();
+            $table->string('numeroTel')->nullable();
+            $table->string('gender')->nullable();
             $table->string('adresse')->nullable();
-
-            // Ajoutez d'autres colonnes au besoin
-
             $table->timestamps();
-        
-
-
         });
+        
     }
 
     /**
