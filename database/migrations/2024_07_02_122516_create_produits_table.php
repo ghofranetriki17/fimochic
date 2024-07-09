@@ -20,6 +20,10 @@ return new class extends Migration
             $table->integer('qte_dispo')->nullable();
             $table->string('type')->nullable();
             $table->date('date_ajout')->nullable();
+            $table->string('description')->nullable();
+            $table->string('image')->nullable();
+
+
             $table->timestamps();
 
 

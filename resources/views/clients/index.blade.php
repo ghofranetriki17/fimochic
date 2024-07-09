@@ -3,7 +3,7 @@
 @include('dashboard.layout.asside')
 @include('dashboard.layout.script')
 
-<main>
+<main class="ml-4">
     <div class="pagetitle">
         <h1>Data Tables</h1>
         <nav>

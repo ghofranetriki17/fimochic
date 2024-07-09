@@ -2,84 +2,117 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Attribut;
+use App\Models\Attribut; // Assurez-vous d'importer le modèle Attribut si nécessaire
 use Illuminate\Http\Request;
 
 class AttributController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Affiche une liste des ressources.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function index()
     {
-        //
+        // Récupérer tous les attributs
+        $attributs = Attribut::all();
+    
+        // Retourner une vue avec les attributs
+        return view('produits.index', compact('attributs'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Affiche le formulaire de création d'une nouvelle ressource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function create()
     {
-        //
+        $attributs = Attribut::all(); // Récupérer tous les attributs disponibles
+        return view('produits.create', compact('attributs'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Stocke une nouvelle ressource nouvellement créée dans le stockage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        // Valider les données du formulaire
+        $request->validate([
+            'nom' => 'required|string|max:255',
+        ]);
+
+        // Créer un nouvel attribut
+        $attribut = Attribut::create([
+            'nom' => $request->nom,
+        ]);
+
+        // Rediriger avec un message de succès
+        return redirect()->route('produits.index')->with('success', 'Attribut créé avec succès.');
     }
 
+
     /**
-     * Display the specified resource.
+     * Affiche la ressource spécifiée.
      *
-     * @param  \App\Models\Attribut  $attribut
-     * @return \Illuminate\Http\Response
+   *@param  int  $id
+     * @return \Illuminate\Contracts\View\View
      */
     public function show(Attribut $attribut)
     {
-        //
+        return view('produits.show', compact('attribut'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Affiche le formulaire pour modifier la ressource spécifiée.
      *
-     * @param  \App\Models\Attribut  $attribut
-     * @return \Illuminate\Http\Response
-     */
+     * @param  int  $id
+    * @return \Illuminate\Contracts\View\View
+    */
     public function edit(Attribut $attribut)
     {
-        //
+        return view('produits.edit', compact('attribut'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Met à jour la ressource spécifiée dans le stockage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Attribut  $attribut
-     * @return \Illuminate\Http\Response
+   * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Attribut $attribut)
     {
-        //
+        // Valider les données du formulaire
+        $request->validate([
+            'nom' => 'required|string|max:255',
+        ]);
+
+        // Mettre à jour l'attribut
+        $attribut->update([
+            'nom' => $request->nom,
+        ]);
+
+        // Rediriger avec un message de succès
+        return redirect()->route('produits.index')->with('success', 'Attribut mis à jour avec succès.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Supprime la ressource spécifiée du stockage.
      *
-     * @param  \App\Models\Attribut  $attribut
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Attribut $attribut)
     {
-        //
+        // Supprimer l'attribut
+        $attribut->delete();
+
+        // Rediriger avec un message de succès
+        return redirect()->route('produits.index')->with('success', 'Attribut supprimé avec succès.');
     }
 }
+

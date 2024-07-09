@@ -33,13 +33,13 @@ Supplier Management: Track supplier details and order history.-->
         <i class="bi bi-archive"></i><span>Gestion de l'Inventaire</span><i class="bi bi-chevron-down ms-auto"></i>
     </a>
     <ul id="inventory-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+    <li class="{{ Request::is('index') ? 'active' : '' }}">
+    <a href="{{ route('produits.index') }}">
+        <i class="bi bi-circle"></i><span>liste produits</span>
+    </a>
+</li>
         <li>
-            <a href="stock-alerts">
-                <i class="bi bi-circle"></i><span>Alertes de Stock</span>
-            </a>
-        </li>
-        <li>
-            <a href="bulk-update">
+            <a href="{{ route('produits.create') }}">
                 <i class="bi bi-circle"></i><span>update stock</span>
             </a>
         </li>

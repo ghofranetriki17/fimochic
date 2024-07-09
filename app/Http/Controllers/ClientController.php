@@ -60,7 +60,7 @@ class ClientController extends Controller
     
         return redirect()->route('clients.index')
             ->with('success', 'Client ajouté avec succès.');
-    }
+    }/*********************** */
 
     /**
      * Affiche les détails d'un client spécifique.

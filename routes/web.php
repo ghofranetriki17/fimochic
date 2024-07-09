@@ -1,7 +1,11 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ProduitController;
+use App\Http\Controllers\ProduitValeurController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ValeurController;
+use App\Http\Controllers\AttributController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,4 +36,17 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 Route::resources([
     'clients' => ClientController::class,
+]);Route::resources([
+    'produits' => ProduitController::class,
 ]);
+Route::get('/index', [ProduitController::class, 'index'])->name('produits.index');
+
+Route::resources([
+    'valeurs' => ValeurController::class,
+]);
+Route::resources([
+    'produitvaleur' => ProduitValeurController::class,
+])
+;
+Route::resource('attributs', AttributController::class);
+               
