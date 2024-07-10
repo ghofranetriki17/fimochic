@@ -39,7 +39,7 @@ Supplier Management: Track supplier details and order history.-->
     </a>
 </li>
         <li>
-            <a href="{{ route('produits.create') }}">
+            <a href="{{ route('produits.index') }}">
                 <i class="bi bi-circle"></i><span>update stock</span>
             </a>
         </li>
@@ -54,7 +54,7 @@ Supplier Management: Track supplier details and order history.-->
             </a>
         </li>
         <li>
-            <a href="supplier-management">
+            <a href="{{ route('ressources.index') }}">
                 <i class="bi bi-circle"></i><span>Gestion des ressources</span>
             </a>
         </li>

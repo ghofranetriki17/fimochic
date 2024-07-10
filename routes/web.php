@@ -6,6 +6,8 @@ use App\Http\Controllers\ProduitValeurController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ValeurController;
 use App\Http\Controllers\AttributController;
+use App\Http\Controllers\RessourceController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,3 +52,4 @@ Route::resources([
 ;
 Route::resource('attributs', AttributController::class);
 Route::get('/valeurs/{valeur}/edit', [ValeurController::class, 'edit'])->name('valeurs.edit');
+Route::resource('ressources', RessourceController::class);

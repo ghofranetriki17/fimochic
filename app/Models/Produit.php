@@ -10,12 +10,12 @@ class Produit extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nom', 'prix', 'qte_dispo', 'type', 'date_ajout',
+        'name', 'prix', 'qte_dispo', 'type', 'date_ajout', 'description', 'image',
     ];
 
     public function valeurs()
     {
-        return $this->belongsToMany(Valeur::class, 'produit_valeurs');
+        return $this->belongsToMany(Valeur::class, 'produit_valeurs')->withPivot('image', 'prix');
     }
 
     public function ligneCmds()
