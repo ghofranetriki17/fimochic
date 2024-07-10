@@ -44,6 +44,16 @@ Supplier Management: Track supplier details and order history.-->
             </a>
         </li>
         <li>
+            <a href="{{ route('attributs.index') }}">
+                <i class="bi bi-circle"></i><span> gerer Attributs</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('valeurs.index') }}">
+                <i class="bi bi-circle"></i><span> gerer valeurs</span>
+            </a>
+        </li>
+        <li>
             <a href="supplier-management">
                 <i class="bi bi-circle"></i><span>Gestion des ressources</span>
             </a>

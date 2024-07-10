@@ -14,15 +14,14 @@ class ValeurController extends Controller
      * @param  \App\Models\Attribut  $attribut
      * @return \Illuminate\Contracts\View\View
      */
-    public function index(Attribut $attribut)
+    public function index()
     {
-        // Récupérer toutes les valeurs associées à cet attribut
-        $valeurs = $attribut->valeurs()->orderBy('created_at', 'DESC')->get();
-
-        // Retourner une vue avec les valeurs
-        return view('produits.index', compact('attribut', 'valeurs'));
+        // Récupérer tous les attributs avec leurs valeurs associées
+        $attributs = Attribut::with('valeurs')->get();
+    
+        // Retourner la vue avec les attributs et leurs valeurs
+        return view('valeurs.index', compact('attributs'));
     }
-
     /**
      * Affiche le formulaire de création d'une nouvelle valeur pour un attribut donné.
      *
@@ -31,7 +30,7 @@ class ValeurController extends Controller
      */
     public function create(Attribut $attribut)
     {
-        return view('produits.create', compact('attribut'));
+        return view('valeurs.create', compact('attribut'));
     }
 
     /**
@@ -41,22 +40,24 @@ class ValeurController extends Controller
      * @param  \App\Models\Attribut  $attribut
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, Attribut $attribut)
-    {
-        // Valider les données du formulaire
-        $request->validate([
-            'nom' => 'required|string|max:255',
-        ]);
+    public function store(Request $request)
+{
+    // Validation des données
+    $request->validate([
+        'attribut_id' => 'required|exists:attributs,id', // Vérifie que l'attribut_id existe dans la table attributs
+        'nom' => 'required|string|max:255',
+    ]);
 
-        // Créer une nouvelle valeur pour cet attribut
-        $attribut->valeurs()->create([
-            'nom' => $request->nom,
-        ]);
+    // Création d'une nouvelle valeur
+    $valeur = new Valeur();
+    $valeur->attribut_id = $request->attribut_id;
+    $valeur->nom = $request->nom;
+    $valeur->save();
 
-        // Rediriger vers les produits avec un message de succès
-        return redirect()->route('produits.index', $attribut)->with('success', 'Valeur créée avec succès.');
-    }
-
+    // Redirection avec un message de succès
+    return redirect()->route('valeurs.index')
+                     ->with('success', 'La valeur a été ajoutée avec succès.');
+}
     /**
      * Affiche la ressource spécifiée.
      *
@@ -65,7 +66,7 @@ class ValeurController extends Controller
      */
     public function show(Valeur $valeur)
     {
-        return view('produits.show', compact('valeur'));
+        return view('valeurs.show', compact('valeur'));
     }
 
     /**
@@ -76,7 +77,7 @@ class ValeurController extends Controller
      */
     public function edit(Valeur $valeur)
     {
-        return view('produits.edit', compact('valeur'));
+        return view('valeurs.edit', compact('valeur'));
     }
 
     /**
@@ -98,8 +99,8 @@ class ValeurController extends Controller
             'nom' => $request->nom,
         ]);
 
-        // Rediriger vers les produits avec un message de succès
-        return redirect()->route('produits.index', $valeur->attribut)->with('success', 'Valeur mise à jour avec succès.');
+        // Rediriger vers les valeurs avec un message de succès
+        return redirect()->route('valeurs.index', $valeur->attribut)->with('success', 'Valeur mise à jour avec succès.');
     }
 
     /**
@@ -116,7 +117,7 @@ class ValeurController extends Controller
         // Supprimer la valeur
         $valeur->delete();
 
-        // Rediriger vers les produits avec un message de succès
-        return redirect()->route('produits.index', $attribut)->with('success', 'Valeur supprimée avec succès.');
+        // Rediriger vers les valeurs avec un message de succès
+        return redirect()->route('valeurs.index', $attribut)->with('success', 'Valeur supprimée avec succès.');
     }
 }

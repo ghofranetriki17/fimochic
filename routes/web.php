@@ -49,4 +49,4 @@ Route::resources([
 ])
 ;
 Route::resource('attributs', AttributController::class);
-               
+Route::get('/valeurs/{valeur}/edit', [ValeurController::class, 'edit'])->name('valeurs.edit');

@@ -1,8 +1,7 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\Attribut; // Assurez-vous d'importer le modèle Attribut si nécessaire
+use App\Models\Attribut;
 use Illuminate\Http\Request;
 
 class AttributController extends Controller
@@ -16,9 +15,9 @@ class AttributController extends Controller
     {
         // Récupérer tous les attributs
         $attributs = Attribut::all();
-    
+
         // Retourner une vue avec les attributs
-        return view('produits.index', compact('attributs'));
+        return view('attributs.index', compact('attributs'));
     }
 
     /**
@@ -29,7 +28,7 @@ class AttributController extends Controller
     public function create()
     {
         $attributs = Attribut::all(); // Récupérer tous les attributs disponibles
-        return view('produits.create', compact('attributs'));
+        return view('attributs.create', compact('attributs'));
     }
 
     /**
@@ -46,42 +45,41 @@ class AttributController extends Controller
         ]);
 
         // Créer un nouvel attribut
-        $attribut = Attribut::create([
+        Attribut::create([
             'nom' => $request->nom,
         ]);
 
         // Rediriger avec un message de succès
-        return redirect()->route('produits.index')->with('success', 'Attribut créé avec succès.');
+        return redirect()->route('attributs.index')->with('success', 'Attribut créé avec succès.');
     }
-
 
     /**
      * Affiche la ressource spécifiée.
      *
-   *@param  int  $id
+     * @param  Attribut  $attribut
      * @return \Illuminate\Contracts\View\View
      */
     public function show(Attribut $attribut)
     {
-        return view('produits.show', compact('attribut'));
+        return view('attributs.show', compact('attribut'));
     }
 
     /**
      * Affiche le formulaire pour modifier la ressource spécifiée.
      *
-     * @param  int  $id
-    * @return \Illuminate\Contracts\View\View
-    */
+     * @param  Attribut  $attribut
+     * @return \Illuminate\Contracts\View\View
+     */
     public function edit(Attribut $attribut)
     {
-        return view('produits.edit', compact('attribut'));
+        return view('attributs.edit', compact('attribut'));
     }
 
     /**
      * Met à jour la ressource spécifiée dans le stockage.
      *
-   * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Attribut  $attribut
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Attribut $attribut)
@@ -97,13 +95,13 @@ class AttributController extends Controller
         ]);
 
         // Rediriger avec un message de succès
-        return redirect()->route('produits.index')->with('success', 'Attribut mis à jour avec succès.');
+        return redirect()->route('attributs.index')->with('success', 'Attribut mis à jour avec succès.');
     }
 
     /**
      * Supprime la ressource spécifiée du stockage.
      *
-     * @param  int  $id
+     * @param  Attribut  $attribut
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Attribut $attribut)
@@ -112,7 +110,6 @@ class AttributController extends Controller
         $attribut->delete();
 
         // Rediriger avec un message de succès
-        return redirect()->route('produits.index')->with('success', 'Attribut supprimé avec succès.');
+        return redirect()->route('attributs.index')->with('success', 'Attribut supprimé avec succès.');
     }
 }
-
