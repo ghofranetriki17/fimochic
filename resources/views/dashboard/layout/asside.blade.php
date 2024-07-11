@@ -3,30 +3,24 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link " href="index.html">
+            <a  href="{{ route('dashboard') }}">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
-        </li><!-- End Dashboard Nav -->
-<!--1. Sales Analytics Dashboard
-Real-time Sales Tracking: Visual charts and graphs displaying sales over time.
-Top Products: List of best-selling products.
-Customer Insights: Information on customer demographics and purchase behavior.
--->
+        </li>
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#sales-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-bar-chart"></i><span>Sales Analytics</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-bar-chart"></i><span>Analyse des Ventes</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="sales-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li><a href="sales-overview.html"><i class="bi bi-circle"></i><span>Overview</span></a></li>
-                <li><a href="sales-products.html"><i class="bi bi-circle"></i><span>Top Products</span></a></li>
-                <li><a href="sales-customers.html"><i class="bi bi-circle"></i><span>Customer Insights</span></a></li>
+                <li><a href="sales-overview.html"><i class="bi bi-circle"></i><span>Vue d'Ensemble</span></a></li>
+                <li><a href="sales-products.html"><i class="bi bi-circle"></i><span>Produits Populaires</span></a></li>
+                <li><a href="sales-customers.html"><i class="bi bi-circle"></i><span>Analyses Clients</span></a></li>
             </ul>
-        </li><!-- End Sales Analytic -->
-        <!--2. Inventory Management
-Stock Alerts: Notifications for low stock items.
-Bulk Update: Options to update stock quantities and product details in bulk.
-Supplier Management: Track supplier details and order history.-->
+        </li>
+
+
+
 
         <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#inventory-nav" data-bs-toggle="collapse" href="#">
@@ -40,27 +34,56 @@ Supplier Management: Track supplier details and order history.-->
 </li>
         <li>
             <a href="{{ route('produits.index') }}">
-                <i class="bi bi-circle"></i><span>update stock</span>
+                <i class="bi bi-circle"></i><span> Mettre à Jour le Stock</s</span>
             </a>
         </li>
         <li>
             <a href="{{ route('attributs.index') }}">
-                <i class="bi bi-circle"></i><span> gerer Attributs</span>
-            </a>
-        </li>
+                <i class="bi bi-circle"></i><span> Gérer les categories(Attributs)</li>
         <li>
             <a href="{{ route('valeurs.index') }}">
-                <i class="bi bi-circle"></i><span> gerer valeurs</span>
+                <i class="bi bi-circle"></i><span> Gérer les sous categories(Valeurs)</span>
             </a>
         </li>
         <li>
             <a href="{{ route('ressources.index') }}">
-                <i class="bi bi-circle"></i><span>Gestion des ressources</span>
+                <i class="bi bi-circle"></i><span>Gérer des ressources</span>
             </a>
         </li>
     </ul>
-</li><!-- End Inventory Management Nav -->
+</li>
 
+
+
+
+
+<li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#order-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-cart-check"></i><span>Gestion des Commandes</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="order-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="order-tracking.html">
+                        <i class="bi bi-circle"></i><span>Suivi des Commandes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="order-invoicing.html">
+                        <i class="bi bi-circle"></i><span>Facturation Automatisée</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="order-customer-communication.html">
+                        <i class="bi bi-circle"></i><span>livraison</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+
+
+     
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i
@@ -80,28 +103,8 @@ Supplier Management: Track supplier details and order history.-->
             </ul>
         </li><!-- End Tables Nav -->
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#order-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-cart-check"></i><span>Gestion des Commandes</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="order-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="order-tracking.html">
-                        <i class="bi bi-circle"></i><span>Suivi des Commandes</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="order-invoicing.html">
-                        <i class="bi bi-circle"></i><span>Facturation Automatisée</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="order-customer-communication.html">
-                        <i class="bi bi-circle"></i><span>Communication Client</span>
-                    </a>
-                </li>
-            </ul>
-        </li><!-- End Order Management Nav -->
+       
+
 
 
         <li class="nav-item">
@@ -111,20 +114,21 @@ Supplier Management: Track supplier details and order history.-->
             <ul id="crm-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
             <li class="{{ Request::is('index') ? 'active' : '' }}">
     <a href="{{ route('clients.index') }}">
-        <i class="bi bi-circle"></i><span>Profils Clients / liste des clients actives</span>
-    </a>
-</li>
-<li>
-    <a href="{{ route('clients.create') }}">
-        <i class="bi bi-circle"></i><span>Ajout Client</span>
+        <i class="bi bi-circle"></i><span>Profils Clients Actifs</span>
     </a>
 </li>
 
                 <li>
                     <a href="crm-customer-profiles.html">
-                        <i class="bi bi-circle"></i><span>Profils Clients/liste des clients non active</span>
+                        <i class="bi bi-circle"></i><span>Profils Clients Inactifs</span>
                     </a>
                 </li>
+                <li>
+    <a href="{{ route('clients.create') }}">
+        <i class="bi bi-circle"></i><span>Ajout Client</span>
+    </a>
+</li>
+
                 <li>
                     <a href="crm-loyalty-program.html">
                         <i class="bi bi-circle"></i><span>Gestion du Programme de Fidélité</span>
@@ -135,13 +139,78 @@ Supplier Management: Track supplier details and order history.-->
                         <i class="bi bi-circle"></i><span>Système de Feedback</span>
                     </a>
                 </li>
+               
+            </ul>
+        </li>
+        
+
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#promo-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-tags"></i><span>Gestion des Codes Promo</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="promo-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="crm-discount-codes.html">
-                        <i class="bi bi-circle"></i><span>Codes de Réduction</span>
+                    <a href="promo-create.html">
+                        <i class="bi bi-circle"></i><span>Créer un Code Promo</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="promo-manage.html">
+                        <i class="bi bi-circle"></i><span>Gérer les Codes Promo</span>
                     </a>
                 </li>
             </ul>
-        </li><!-- End CRM Nav -->
+        </li>
+
+
+
+
+
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#inspo-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-images"></i><span>Images d'Inspiration</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="inspo-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="inspo-upload.html">
+                        <i class="bi bi-circle"></i><span>Télécharger des Images</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="inspo-manage.html">
+                        <i class="bi bi-circle"></i><span>Gérer les Images</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+
+
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#tutorials-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-play-circle"></i><span>Vidéos Tutoriels</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="tutorials-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="tutorials-upload.html">
+                        <i class="bi bi-circle"></i><span>Télécharger des Vidéos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="tutorials-manage.html">
+                        <i class="bi bi-circle"></i><span>Gérer les Vidéos</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+
+
 
 
         <li class="nav-heading">Pages</li>
