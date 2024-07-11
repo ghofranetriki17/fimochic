@@ -2,6 +2,8 @@
 @include('dashboard.layout.nav')
 @include('dashboard.layout.asside')
 @include('dashboard.layout.script')
+@include('dashboard.layout.cssperso')
+
 
 
 <div class="container">
@@ -35,7 +37,7 @@
                         <td>{{ $ressource->couleur }}</td>
                         <td>
                             @if($ressource->image)
-                                <img src="{{ asset('storage/' . $ressource->image) }}" alt="Image" width="50">
+                                <img src="{{ asset('img/' . $ressource->image) }}" alt="Image" width="50">
                             @else
                                 Pas d'image
                             @endif

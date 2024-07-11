@@ -9,7 +9,7 @@ class ProduitValeur extends Model
     protected $table = 'produit_valeurs'; // Nom de la table pivot
 
     protected $fillable = [
-        'produit_id', 'valeur_id', 'prix'
+        'produit_id', 'valeur_id'
     ];
 
     // Relation avec le produit

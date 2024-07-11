@@ -4,6 +4,8 @@
 @include('dashboard.layout.nav')
 @include('dashboard.layout.asside')
 @include('dashboard.layout.script')
+@include('dashboard.layout.cssperso')
+
 
 <div class="pagetitle">
     <h1>Créer un Produit</h1>
@@ -24,7 +26,7 @@
                     <h5 class="card-title">Formulaire de Création de Produit</h5>
 
                     <!-- Form for creating a new product -->
-                    <form action="{{ route('produits.store') }}" method="POST">
+                    <form action="{{ route('produits.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="name">Nom du Produit</label>
@@ -62,6 +64,12 @@
                             </select>
                         </div>
                         @endforeach
+
+                        <!-- Champ pour télécharger une photo -->
+                        <div class="form-group">
+                            <label for="photo">Photo du Produit</label>
+                            <input type="file" class="form-control-file" id="photo" name="photo">
+                        </div>
 
                         <button type="submit" class="btn btn-primary">Créer</button>
                     </form>

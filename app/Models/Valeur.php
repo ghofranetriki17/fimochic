@@ -21,5 +21,5 @@ class Valeur extends Model
     public function produits()
     {
         return $this->belongsToMany(Valeur::class, 'produit_valeurs')
-        ->withPivot( 'prix');    }
+       ;    }
 }

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Produit extends Model
+class Produit extends Model 
 {
     use HasFactory;
 
@@ -15,7 +15,7 @@ class Produit extends Model
 
     public function valeurs()
     {
-        return $this->belongsToMany(Valeur::class, 'produit_valeurs')->withPivot( 'prix');
+        return $this->belongsToMany(Valeur::class, 'produit_valeurs');
     }
 
     public function ligneCmds()

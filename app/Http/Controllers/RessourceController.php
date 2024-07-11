@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Storage;
 
 use App\Models\Ressource;
 use Illuminate\Http\Request;
@@ -28,6 +29,13 @@ class RessourceController extends Controller
     {
         return view('ressources.create');
     }
+// Récupérer et afficher une ressource spécifique
+public function show($id)
+{
+    $ressource = Ressource::findOrFail($id); // Récupère la ressource par son ID, ou renvoie une erreur 404 si non trouvée
+
+    return view('ressources.show', compact('ressource'));
+}
 
     /**
      * Stocke une nouvelle ressource dans la base de données.
@@ -63,4 +71,26 @@ class RessourceController extends Controller
 
     return redirect()->route('ressources.index')->with('success', 'Ressource ajoutée avec succès.');
 }
+   /**
+     * Supprime une ressource spécifiée.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        // Récupérer la ressource à supprimer depuis la base de données
+        $ressource = Ressource::findOrFail($id);
+
+        // Supprimer l'image associée si elle existe dans le stockage
+        if ($ressource->image) {
+            Storage::disk('public')->delete($ressource->image);
+        }
+
+        // Supprimer la ressource de la base de données
+        $ressource->delete();
+
+        return redirect()->route('ressources.index')->with('success', 'Ressource supprimée avec succès.');
+    }
+
 }

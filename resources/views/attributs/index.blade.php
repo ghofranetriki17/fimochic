@@ -2,6 +2,8 @@
 @include('dashboard.layout.nav')
 @include('dashboard.layout.asside')
 @include('dashboard.layout.script')
+@include('dashboard.layout.cssperso')
+
 <div class="container">
     <h1>Liste des Attributs</h1>
     @if(session('success'))
