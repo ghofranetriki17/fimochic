@@ -15,7 +15,7 @@ class Produit extends Model
 
     public function valeurs()
     {
-        return $this->belongsToMany(Valeur::class, 'produit_valeurs')->withPivot('image', 'prix');
+        return $this->belongsToMany(Valeur::class, 'produit_valeurs')->withPivot( 'prix');
     }
 
     public function ligneCmds()

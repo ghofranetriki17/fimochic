@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('produit_id');
             $table->unsignedBigInteger('commande_id');
+            $table->integer('qtecmnd')->nullable();
 
             $table->foreign('produit_id')->references('id')->on('produits')->onDelete('cascade');
             $table->foreign('commande_id')->references('id')->on('commandes')->onDelete('cascade');

@@ -2,22 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ProduitValeur extends Model
 {
-    use HasFactory;
+    protected $table = 'produit_valeurs'; // Nom de la table pivot
 
     protected $fillable = [
-        'produit_id', 'valeur_id', 'image', 'prix',
+        'produit_id', 'valeur_id', 'prix'
     ];
 
+    // Relation avec le produit
     public function produit()
     {
         return $this->belongsTo(Produit::class);
     }
 
+    // Relation avec la valeur
     public function valeur()
     {
         return $this->belongsTo(Valeur::class);

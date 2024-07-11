@@ -91,6 +91,14 @@
                                 <span class="text-red-500">{{ $message }}</span>
                                 @enderror
                             </div>
+                            <div class="input-field">
+    <input id="password" type="password" name="password" required>
+    <label for="password">Mot de passe</label>
+    @error('password')
+    <span class="text-red-500">{{ $message }}</span>
+    @enderror
+</div>
+
 
                             <button type="submit" class="btn btn-primary">Ajouter Client</button>
                         </form>

@@ -16,11 +16,19 @@ return new class extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignId('user_id')->constrained();
+            $table->string('preNom')->nullable();
+            $table->string('nom')->nullable(); // Correspond au 'name' de l'utilisateur
+            $table->string('age')->nullable();
+            $table->string('numeroTel')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('adresse')->nullable();
+            $table->string('statut')->nullable();
+            $table->string('image')->nullable();
+            $table->string('cv')->nullable();
+
+
+
             $table->timestamps();
         });
     }

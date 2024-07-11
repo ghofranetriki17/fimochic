@@ -33,7 +33,7 @@
     </a>
 </li>
         <li>
-            <a href="{{ route('produits.index') }}">
+            <a href="{{ route('produits.create') }}">
                 <i class="bi bi-circle"></i><span> Mettre à Jour le Stock</s</span>
             </a>
         </li>

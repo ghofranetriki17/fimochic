@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produit;
-use App\Models\Valeur;
+use App\Models\Valeur;use App\Models\ProduitValeur;
+
 use Illuminate\Http\Request;
 
 class ProduitValeurController extends Controller
@@ -44,24 +45,28 @@ class ProduitValeurController extends Controller
      * @param  \App\Models\Produit  $produit
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, Produit $produit)
+    public function store(Request $request)
     {
-        // Valider les données du formulaire
-        $request->validate([
-            'valeur_id' => 'required|exists:valeurs,id',
-            'image' => 'nullable|string',
-            'prix' => 'required|numeric',
-        ]);
+           // Valider les données du formulaire
+    $request->validate([
+        'produit_id' => 'required|exists:produits,id',
+        'valeur_id' => 'required|exists:valeurs,id',
+        'prix' => 'required|numeric',
+    ]);
 
-        // Associer une nouvelle valeur au produit
-        $produit->valeurs()->attach($request->valeur_id, [
-            'image' => $request->image,
-            'prix' => $request->prix,
-        ]);
+    // Créer une nouvelle entrée dans la table pivot produit_valeurs
+    ProduitValeur::create([
+        'produit_id' => $request->produit_id,
+        'valeur_id' => $request->valeur_id,
+        'prix' => $request->prix,
+    ]);
+
+       
 
         // Rediriger vers les produits avec un message de succès
-        return redirect()->route('produits.index')->with('success', 'Association produit-valeur créée avec succès.');
+        return redirect()->route('produits.index')->with('success', 'Produit créé avec succès.');
     }
+
 
     // Autres méthodes du contrôleur (show, edit, update, destroy)...
 }

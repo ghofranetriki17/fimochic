@@ -17,8 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('produit_id');
             $table->unsignedBigInteger('valeur_id');
-            $table->string('image');
-            $table->float('prix');
+           
 
             // Ajoutez vos clés étrangères ici
             $table->foreign('produit_id')->references('id')->on('produits')->onDelete('cascade');
