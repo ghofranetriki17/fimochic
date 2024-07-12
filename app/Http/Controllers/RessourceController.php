@@ -44,34 +44,35 @@ public function show($id)
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
-{
-    $request->validate([
-        'nom' => 'required|string',
-        'quantite' => 'required|integer',
-        'couleur' => 'required|string',
-        'type' => 'required|string',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    ]);
-
-    // Gérer l'upload de l'image si elle est présente
-    if ($request->hasFile('image')) {
-        $imagePath = $request->file('image')->store('images', 'public');
-    } else {
-        $imagePath = null;
+    {
+        $request->validate([
+            'nom' => 'required|string',
+            'quantite' => 'required|integer',
+            'couleur' => 'required|string',
+            'type' => 'required|string',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+    
+        $photoName = null;
+    
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo');
+            $photoName = time() . '.' . $photo->getClientOriginalExtension();
+            $photo->move(public_path('img'), $photoName);
+        }
+    
+        // Créer la ressource
+        $ressource = new Ressource();
+        $ressource->nom = $request->nom;
+        $ressource->quantite = $request->quantite;
+        $ressource->couleur = $request->couleur;
+        $ressource->type = $request->type;
+        $ressource->image = $photoName; // Assigner le nom du fichier si présent
+        $ressource->save();
+    
+        return redirect()->route('ressources.index')->with('success', 'Ressource ajoutée avec succès.');
     }
-
-    // Créer la ressource
-    $ressource = new Ressource();
-    $ressource->nom = $request->nom;
-    $ressource->quantite = $request->quantite;
-    $ressource->couleur = $request->couleur;
-    $ressource->type = $request->type;
-    $ressource->image = $imagePath;
-    $ressource->save();
-
-    return redirect()->route('ressources.index')->with('success', 'Ressource ajoutée avec succès.');
-}
-   /**
+      /**
      * Supprime une ressource spécifiée.
      *
      * @param  int  $id

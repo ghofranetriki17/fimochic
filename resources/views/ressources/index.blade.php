@@ -20,7 +20,6 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nom</th>
                     <th>Quantité</th>
                     <th>Couleur</th>
@@ -31,7 +30,6 @@
             <tbody>
                 @foreach ($groupedRessources as $ressource)
                     <tr>
-                        <td>{{ $ressource->id }}</td>
                         <td>{{ $ressource->nom }}</td>
                         <td>{{ $ressource->quantite }}</td>
                         <td>{{ $ressource->couleur }}</td>

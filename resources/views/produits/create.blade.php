@@ -6,7 +6,6 @@
 @include('dashboard.layout.script')
 @include('dashboard.layout.cssperso')
 
-
 <div class="pagetitle">
     <h1>Créer un Produit</h1>
     <nav>
@@ -28,6 +27,12 @@
                     <!-- Form for creating a new product -->
                     <form action="{{ route('produits.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+
+                        <!-- Champ pour télécharger une photo -->
+                        <div class="form-group">
+                            <label for="photo">Photo du Produit</label>
+                            <input type="file" class="form-control-file" id="photo" name="photo">
+                        </div>
                         <div class="form-group">
                             <label for="name">Nom du Produit</label>
                             <input type="text" class="form-control" id="name" name="name" required>
@@ -55,21 +60,16 @@
 
                         <!-- Sélection des attributs et valeurs -->
                         @foreach ($attributs as $attribut)
-                        <div class="form-group">
-                            <label for="attribut_{{ $attribut->id }}">{{ $attribut->nom }}</label>
-                            <select class="form-control" id="attribut_{{ $attribut->id }}" name="attribute_values[{{ $attribut->id }}][]" multiple>
-                                @foreach ($attribut->valeurs as $valeur)
-                                <option value="{{ $valeur->id }}">{{ $valeur->nom }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                            <div class="form-group">
+                                <label for="attribut_{{ $attribut->id }}">{{ $attribut->nom }}</label>
+                                <select class="form-control" id="attribut_{{ $attribut->id }}"
+                                    name="attribute_values[{{ $attribut->id }}][]" multiple>
+                                    @foreach ($attribut->valeurs as $valeur)
+                                        <option value="{{ $valeur->id }}">{{ $valeur->nom }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         @endforeach
-
-                        <!-- Champ pour télécharger une photo -->
-                        <div class="form-group">
-                            <label for="photo">Photo du Produit</label>
-                            <input type="file" class="form-control-file" id="photo" name="photo">
-                        </div>
 
                         <button type="submit" class="btn btn-primary">Créer</button>
                     </form>

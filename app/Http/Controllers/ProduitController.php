@@ -44,8 +44,8 @@ class ProduitController extends Controller
      */
     public function store(Request $request)
     {
-        // Validation des données du formulaire
-        $request->validate([
+         // Validation des données du formulaire
+         $request->validate([
             'name' => 'required|string|max:255',
             'prix' => 'required|numeric',
             'qte_dispo' => 'required|integer',
@@ -56,6 +56,12 @@ class ProduitController extends Controller
             'attribute_values' => 'required|array',
         ]);
 
+
+        $photo = $request->file('photo');
+        $photoName = time() . '.' . $photo->getClientOriginalExtension();
+        $photo->move(public_path('img'),$photoName);
+
+
         // Création du produit
         $produit = new Produit();
         $produit->name = $request->name;
@@ -64,16 +70,11 @@ class ProduitController extends Controller
         $produit->type = $request->type;
         $produit->date_ajout = $request->date_ajout;
         $produit->description = $request->description;
-
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('img', 'public');
-            $produit->image = $imagePath;
-        }
-
+        $produit->image = $photoName;
         $produit->save();
 
-        // Association des valeurs sélectionnées au produit
-        foreach ($request->attribute_values as $attribut_id => $valeur_ids) {
+         // Association des valeurs sélectionnées au produit
+         foreach ($request->attribute_values as $attribut_id => $valeur_ids) {
             foreach ($valeur_ids as $valeur_id) {
                 $produit->valeurs()->attach($valeur_id);
             }
@@ -109,6 +110,7 @@ class ProduitController extends Controller
         $produit = Produit::findOrFail($id);
         return view('produits.edit', compact('produit'));
     }
+    
 
     /**
      * Met à jour la ressource spécifiée dans le stockage.
@@ -121,32 +123,24 @@ class ProduitController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'prix' => 'nullable|numeric|min:0',
             'qte_dispo' => 'nullable|integer|min:0',
-            'type' => 'nullable|string|max:255',
-            'date_ajout' => 'nullable|date',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
+    
         $produit = Produit::findOrFail($id);
-
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images', 'public');
-            $produit->image = $imagePath;
-        }
-
-        $produit->update([
-            'name' => $request->name,
-            'prix' => $request->prix,
-            'qte_dispo' => $request->qte_dispo,
-            'type' => $request->type,
-            'date_ajout' => $request->date_ajout,
-            'description' => $request->description,
-        ]);
-
+    
+        // Mettre à jour uniquement les champs modifiés
+        $produit->name = $request->name;
+        $produit->description = $request->description;
+        $produit->qte_dispo = $request->qte_dispo;
+    
+        // Sauvegarder les modifications
+        $produit->save();
+    
         return redirect()->route('produits.index')->with('success', 'Produit mis à jour avec succès.');
     }
+    
+
 
     /**
      * Supprime la ressource spécifiée du stockage.

@@ -1,4 +1,33 @@
 <style>
+    /* Add this to your dashboard.layout.cssperso or a separate CSS file */
+.card-body {
+    position: relative;
+    overflow: hidden; /* Ensures description doesn't overflow */
+}
+
+.card-body .description-hidden {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+    padding: 10px;
+    box-sizing: border-box;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth transition */
+}
+
+.card-body:hover .description-hidden {
+    opacity: 1; /* Show on hover */
+}
+
+.button-group {
+    position: relative;
+    z-index: 1; /* Ensure buttons are above the description */
+    margin-top: -50px; /* Adjust as needed to position buttons */
+}
+
     /* Styles personnalisés pour les cartes de produits */
 .card {
     border: 1px solid #ddd; /* Bordure légère */

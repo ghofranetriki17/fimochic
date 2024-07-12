@@ -6,21 +6,33 @@
 @include('dashboard.layout.script')
 @include('dashboard.layout.cssperso')
 
-
-
-<div class="container">
+<div class="container mt-5">
     <h1>{{ $produit->nom }}</h1>
-    <p>{{ $produit->prix }} DT</p>
-    <p>Quantité disponible : {{ $produit->qte_dispo }}</p>
-    <p>Type : {{ $produit->type }}</p>
-    <p>Date d'ajout : {{ $produit->date_ajout }}</p>
-    <p>Description : {{ $produit->description }}</p>
-    <p>Valeurs :</p>
+    <p><strong>ID :</strong> {{ $produit->id }}</p>
+    <p><strong>Prix :</strong> {{ $produit->prix }} DT</p>
+    <p><strong>Quantité disponible :</strong> {{ $produit->qte_dispo }}</p>
+    <p><strong>Type :</strong> {{ $produit->type }}</p>
+    <p><strong>Date d'ajout :</strong> {{ $produit->date_ajout }}</p>
+    <p><strong>Description :</strong> {{ $produit->description }}</p>
+    <p><strong>Valeurs :</strong></p>
     <ul>
         @foreach ($produit->valeurs as $valeur)
             <li>{{ $valeur->nom }}</li>
         @endforeach
     </ul>
+    @if($produit->image)
+        <div class="mt-4">
+            <img src="{{ asset('img/' . $produit->image) }}" alt="{{ $produit->nom }}" class="img-fluid" style="max-width: 200px;">
+        </div>
+    @else
+        <p class="mt-4">Aucune image disponible pour ce produit.</p>
+    @endif
+
+    <!-- Boutons Retour et Modifier -->
+    <div class="mt-4">
+        <a href="{{ route('produits.index') }}" class="btn btn-secondary">Retour à la page index</a>
+        <a href="{{ route('produits.edit', $produit->id) }}" class="btn btn-primary ml-2">Modifier le produit</a>
+    </div>
 </div>
 
 @include('dashboard.layout.footer')
