@@ -1,8 +1,10 @@
 <?php
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 
 class ClientController extends Controller
@@ -37,7 +39,6 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
             'prenom' => 'nullable|string|max:255',
             'nom' => 'nullable|string|max:255',
             'mail' => 'nullable|email|max:255',
@@ -45,10 +46,19 @@ class ClientController extends Controller
             'numero_tel' => 'nullable|numeric',
             'sexe' => 'nullable|string|max:255',
             'adresse' => 'nullable|string|max:255',
+            'password' => 'required|string|min:8', // Validation du mot de passe requise
         ]);
     
-        Client::create([
-            'user_id' => $request->user_id,
+        // Création de l'utilisateur
+        $user = User::create([
+            'name' => $request->nom, // Assurez-vous que 'name' est correctement défini dans votre modèle User
+            'email' => $request->mail,
+            'password' => Hash::make($request->password),
+        ]);
+    
+        // Création du client associé à l'utilisateur
+        $client = Client::create([
+            'user_id' => $user->id, // Assurez-vous que 'user_id' est correctement défini dans votre modèle Client
             'prenom' => $request->prenom,
             'nom' => $request->nom,
             'mail' => $request->mail,
@@ -60,7 +70,8 @@ class ClientController extends Controller
     
         return redirect()->route('clients.index')
             ->with('success', 'Client ajouté avec succès.');
-    }/*********************** */
+    }
+    
 
     /**
      * Affiche les détails d'un client spécifique.

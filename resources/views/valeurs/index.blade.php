@@ -2,6 +2,7 @@
 @include('dashboard.layout.nav')
 @include('dashboard.layout.asside')
 @include('dashboard.layout.script')
+@include('dashboard.layout.cssperso')
 
 <h1>Liste des attributs et valeurs associées</h1>
 
@@ -53,7 +54,6 @@
                 <tr>
                     <th>Attribut</th>
                     <th>Valeurs</th>
-                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -64,11 +64,7 @@
                             <ul>
                                 @foreach ($attribut->valeurs as $valeur)
                                     <li>{{ $valeur->nom }}</li>
-                                @endforeach
-                            </ul>
-                        </td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Actions">
+                                    <div class="btn-group" role="group" aria-label="Actions">
                                 <!-- Bouton Modifier -->
                                 <a href="{{ route('valeurs.edit', $valeur) }}" class="btn btn-sm btn-primary">Modifier</a>
                                 
@@ -79,6 +75,10 @@
                                     <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
                                 </form>
                             </div>
+                                @endforeach
+                            </ul>
+                     
+                            
                         </td>
                     </tr>
                 @endforeach

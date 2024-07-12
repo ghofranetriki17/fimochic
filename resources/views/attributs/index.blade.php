@@ -15,7 +15,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Nom</th>
                 <th>Actions</th>
             </tr>
@@ -23,7 +22,6 @@
         <tbody>
             @foreach($attributs as $attribut)
                 <tr>
-                    <td>{{ $attribut->id }}</td>
                     <td>{{ $attribut->nom }}</td>
                     <td>
                         <a href="{{ route('attributs.edit', $attribut->id) }}" class="btn btn-warning">Modifier</a>
