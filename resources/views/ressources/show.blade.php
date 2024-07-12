@@ -16,7 +16,7 @@
                 <p class="card-text">Couleur: {{ $ressource->couleur }}</p>
                 <p class="card-text">Type: {{ $ressource->type }}</p>
                 @if ($ressource->image)
-                    <img src="{{ asset('storage/' . $ressource->image) }}" alt="Image de la ressource" class="img-fluid">
+                    <img src="{{ asset('img/' . $ressource->image) }}" alt="Image de la ressource" class="img-fluid">
                 @else
                     <p>Aucune image disponible</p>
                 @endif

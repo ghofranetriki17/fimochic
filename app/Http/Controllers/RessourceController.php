@@ -93,5 +93,44 @@ public function show($id)
 
         return redirect()->route('ressources.index')->with('success', 'Ressource supprimée avec succès.');
     }
+    public function edit($id)
+{
+    $ressource = Ressource::findOrFail($id);
+    return view('ressources.edit', compact('ressource'));
+}
+
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'nom' => 'required|string|max:255',
+        'quantite' => 'required|integer',
+        'couleur' => 'required|string|max:255',
+        'type' => 'required|string|max:255',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    $ressource = Ressource::findOrFail($id);
+    $ressource->nom = $request->nom;
+    $ressource->quantite = $request->quantite;
+    $ressource->couleur = $request->couleur;
+    $ressource->type = $request->type;
+
+    // Gérer l'image si elle est mise à jour
+    if ($request->hasFile('image')) {
+        // Supprimer l'ancienne image si nécessaire
+        if ($ressource->image) {
+            Storage::delete('img/' . $ressource->image);
+        }
+        // Enregistrer la nouvelle image
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('img'), $imageName);
+        $ressource->image = $imageName;
+    }
+
+    $ressource->save();
+
+    return redirect()->route('ressources.index')->with('success', 'Ressource mise à jour avec succès !');
+}
+
 
 }

@@ -8,6 +8,11 @@
 
 <div class="container">
     <h1>Liste des Produits</h1>
+    
+    <!-- Bouton pour accéder à la page de création d'un nouveau produit -->
+    <div class="mb-4">
+        <a href="{{ route('produits.create') }}" class="btn btn-info">Ajouter un Nouveau Produit</a>
+    </div>
 
     @foreach ($produitsParType as $type => $produits)
         <div class="section">
@@ -51,7 +56,6 @@
             </div>
         </div>
     @endforeach
-    
 </div>
 
 @include('dashboard.layout.footer')
