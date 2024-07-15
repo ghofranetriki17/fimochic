@@ -6,6 +6,8 @@
 @include('dashboard.layout.script')
 @include('dashboard.layout.cssperso')
 
+
+
 <div class="container">
     <h1>Liste des Produits</h1>
     
@@ -21,13 +23,14 @@
                 @foreach ($produits as $produit)
                     <div class="col-md-4">
                         <div class="card mb-4 shadow-sm @if ($produit->qte_dispo < 3) bg-danger text-white @endif">
-                            @if ($produit->image)
+                         
+                            <div class="card-body">
+                                <h3>{{ $produit->name }}</h3>
+                                @if ($produit->image)
                                 <img src="{{ asset('img/' . $produit->image) }}" class="card-img-top" alt="Image du produit">
                             @else
                                 <div class="image-placeholder">Image non disponible</div>
                             @endif
-                            <div class="card-body">
-                                <h3>{{ $produit->name }}</h3>
                                 <p>Prix: {{ $produit->prix }} DT</p>
                                 <p>Quantité disponible : {{ $produit->qte_dispo }}</p>
 

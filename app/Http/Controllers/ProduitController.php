@@ -108,23 +108,20 @@ class ProduitController extends Controller
     public function edit($id)
     {
         $produit = Produit::findOrFail($id);
-        return view('produits.edit', compact('produit'));
+        $valeurs = $produit->valeurs; // Récupérer les valeurs associées pour l'édition
+    
+        return view('produits.edit', compact('produit', 'valeurs'));
     }
     
-
-    /**
-     * Met à jour la ressource spécifiée dans le stockage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'qte_dispo' => 'nullable|integer|min:0',
             'description' => 'nullable|string',
+            'type' => 'nullable|string|max:255',
+            'date_ajout' => 'nullable|date',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
     
         $produit = Produit::findOrFail($id);
@@ -133,6 +130,22 @@ class ProduitController extends Controller
         $produit->name = $request->name;
         $produit->description = $request->description;
         $produit->qte_dispo = $request->qte_dispo;
+        $produit->type = $request->type;
+        $produit->date_ajout = $request->date_ajout;
+    
+        // Vérifier si une nouvelle image a été téléchargée
+        if ($request->hasFile('image')) {
+            // Supprimer l'ancienne image si nécessaire
+            if ($produit->image) {
+                \File::delete(public_path('img/' . $produit->image));
+            }
+    
+            // Sauvegarder la nouvelle image
+            $photo = $request->file('image');
+            $photoName = time() . '.' . $photo->getClientOriginalExtension();
+            $photo->move(public_path('img'), $photoName);
+            $produit->image = $photoName; // Mettre à jour le nom de l'image
+        }
     
         // Sauvegarder les modifications
         $produit->save();
