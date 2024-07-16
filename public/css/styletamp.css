@@ -1,4 +1,75 @@
+.product-navigation {
+    display: flex;
+    align-items: center;
+}
 
+.product-container {
+    display: flex;
+    overflow-x: auto; /* Permet le défilement horizontal */
+    padding: 10px 0; /* Espacement autour du conteneur */
+    scroll-behavior: smooth; /* Transition douce pour le défilement */
+    scrollbar-width: none; /* Pour Firefox */
+}
+
+.product-container::-webkit-scrollbar {
+    display: none; /* Pour Chrome, Safari et Opera */
+}
+
+.fruite-item {
+    min-width: 200px; /* Ajustez la largeur selon vos besoins */
+    height: 350px; /* Hauteur fixe pour assurer la même taille */
+    margin-right: 15px; /* Espacement entre les produits */
+    position: relative; /* Nécessaire pour le positionnement de l'icône */
+}
+
+.icon-container {
+    position: absolute;
+    bottom: 50px; /* Ajustez la position verticale */
+    left: 50%;
+    transform: translateX(-50%);
+    display: none; /* Caché par défaut */
+}
+
+.fruite-item:hover .icon-container {
+    display: block; /* Affiche les icônes au survol */
+}
+
+.eye-icon, .cart-icon {
+    color: white; /* Couleur des icônes */
+    font-size: 30px;
+    margin: 0 5px; /* Espacement entre les icônes */
+}
+
+.nav-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.fruite-item {
+    transition: transform 0.6s, background-color 0.5s; /* Ajout de la transition pour la couleur de fond */
+}
+
+.fruite-item:hover {
+    transform: scale(1.05);
+    background-color: #f5d7dc; /* Couleur rose bébé */
+}
+
+.p-4 {
+    height: calc(100% - 200px); /* Ajustez en fonction de la taille de l'image */
+}
+
+.frute-img {
+    height: 150px; /* Hauteur fixe pour l'image */
+    overflow: hidden; /* Masquer le débordement de l'image */
+}
+
+.frute-img img {
+    height: 100%; /* S'assurer que l'image occupe toute la hauteur */
+    object-fit: cover; /* Maintenir le ratio d'aspect de l'image */
+}
+/***...........................................***/
 /*** Spinner Start ***/
 #spinner {
     opacity: 0;
@@ -178,10 +249,8 @@
 
 /*** Hero Header ***/
 .hero-header {
-    background: linear-gradient(rgba(248, 223, 173, 0.1), rgba(248, 223, 173, 0.1)), url(../img/hero-img.jpg);
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background: linear-gradient(rgba(248, 223, 173, 0.1), rgba(240, 193, 231, 0.27)), url("{{ asset('img/1720815172.jpg') }}");
+  
 }
 
 .carousel-item {
