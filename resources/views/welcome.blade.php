@@ -35,125 +35,155 @@
     <!-- Modal Search End -->
 
 
-    <!-- Hero Start -->
-    <div class="container-fluid py-5 mb-5 hero-header">
-        <div class="container py-5">
-            <div class="row g-5 align-items-center">
-                <div class="col-md-12 col-lg-7">
-                    <h4 class="mb-3 text-secondary">100% Handmade</h4>
-                    <h1 class="mb-5 display-3 text-primary">Façonné avec Amour, Porté avec Joie</h1>
-                    <div class="position-relative mx-auto">
-                        <input class="form-control border-2 border-secondary w-75 py-3 px-4 rounded-pill" type="number"
-                            placeholder="Search">
-                        <button type="submit"
-                            class="btn btn-primary border-2 border-secondary py-3 px-4 position-absolute rounded-pill text-white h-100"
-                            style="top: 0; right: 25%;">Submit Now</button>
-                    </div>
-                </div>
-                <div class="col-md-12 col-lg-5">
-                    <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
-                        <div class="carousel-inner" role="listbox">
-                            <div class="carousel-item active rounded">
-                                <img src="img/hero-img-1.png" class="img-fluid w-100 h-100 bg-secondary rounded"
-                                    alt="First slide">
-                                <a href="#" class="btn px-4 py-2 text-white rounded">Fruites</a>
+<!-- Hero Start -->
+<div class="container-fluid py-5 mb-5 hero-header position-relative">
+    <video autoplay loop muted class="w-100 h-100 position-absolute top-0 start-0" style="object-fit: cover;">
+        <source src="/img/hero.mp4" type="video/mp4">
+        Votre navigateur ne prend pas en charge la vidéo.
+    </video>
+    <div class="container py-5 position-relative">
+        <div class="row g-5 align-items-center justify-content-center text-center">
+            <div class="col-md-12">
+                <h2 class="mb-5 display-3 text-white">Bienvenue sur </h2>
+                <h1 class="mb-5 display-3 text-pink">Fimo Chic</h1>
+
+                <h4 class="b-3 text-white">Façonné avec Amour, Porté avec Joie</h4>
+                <h4 class="mb-3 text-green">100% Handmade</h4>
+
+                <a href="#" class="btn btn-pink rounded-pill px-4 py-2">Acheter Maintenant</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hero End -->
+
+
+
+
+
+
+<!-- Section Best Sellers -->
+<div class="container py-5">
+    <h1>Meilleures Ventes</h1>
+    <div class="product-navigation">
+        <button class="nav-btn" id="prev"></button>
+        <button class="nav-btn" id="next"></button>
+
+        <div class="product-container">
+            <div class="d-flex"> <!-- Utiliser flexbox pour tous les produits sur la même ligne -->
+                @foreach($bestSellers as $produit)
+                    <div class="fruite-item best">
+                        <div class="fruite-img">
+                            <img src="{{ asset('img/' . $produit->image) }}" class="img-fluid w-100 rounded-top" alt="">
+                            <div class="bestr text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
+                                Best sellers
                             </div>
-                            <div class="carousel-item rounded">
-                                <img src="img/hero-img-2.jpg" class="img-fluid w-100 h-100 rounded" alt="Second slide">
-                                <a href="#" class="btn px-4 py-2 text-white rounded">Vesitables</a>
+                            <div class="icon-container">
+                                <a href="#" class="eye-icon" title="Voir Détails">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a href="#" class="cart-icon" title="Ajouter au Panier">
+                                    <i class="fa fa-shopping-bag"></i>
+                                </a>
                             </div>
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselId"
-                            data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselId"
-                            data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                            <h4>{{ $produit->name }}</h4>
+                            <h6>prix:{{ $produit->prix }}dt</h6>
+
+                           
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('next').onclick = function() {
+    document.querySelector('.product-container').scrollBy({ left: 300, behavior: 'smooth' });
+};
+document.getElementById('prev').onclick = function() {
+    document.querySelector('.product-container').scrollBy({ left: -300, behavior: 'smooth' });
+};
+</script>
+
+  <!-- Featurs Section Start -->
+<div class="container-fluid featurs py-5">
+    <div class="container py-5">
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="featurs-item text-center rounded bg-fcbff8 p-4">
+                    <div class="featurs-icon btn-square rounded-circle bg-b9fac3 mb-5 mx-auto">
+                        <i class="fas fa-car-side fa-3x text-white"></i>
+                    </div>
+                    <div class="featurs-content text-center">
+                        <h5 class="text-b9bbfa">Livraison Gratuite</h5>
+                        <p class="mb-0">Gratuite sur les commandes de plus de 300 DT</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="featurs-item text-center rounded bg-fcbff8 p-4">
+                    <div class="featurs-icon btn-square rounded-circle bg-b9fac3 mb-5 mx-auto">
+                        <i class="fas fa-user-shield fa-3x text-white"></i>
+                    </div>
+                    <div class="featurs-content text-center">
+                        <h5 class="text-b9bbfa">Paiement Sécurisé</h5>
+                        <p class="mb-0">100% de sécurité lors du paiement</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="featurs-item text-center rounded bg-fcbff8 p-4">
+                    <div class="featurs-icon btn-square rounded-circle bg-b9fac3 mb-5 mx-auto">
+                        <i class="fas fa-exchange-alt fa-3x text-white"></i>
+                    </div>
+                    <div class="featurs-content text-center">
+                        <h5 class="text-b9bbfa">Retour de 30 Jours</h5>
+                        <p class="mb-0">Garantie de remboursement de 30 jours</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="featurs-item text-center rounded bg-fcbff8 p-4">
+                    <div class="featurs-icon btn-square rounded-circle bg-b9fac3 mb-5 mx-auto">
+                        <i class="fa fa-phone-alt fa-3x text-white"></i>
+                    </div>
+                    <div class="featurs-content text-center">
+                        <h5 class="text-b9bbfa">Support 24/7</h5>
+                        <p class="mb-0">Support rapide à tout moment</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Hero End -->
-
-
-    <!-- Featurs Section Start -->
-    <div class="container-fluid featurs py-5">
-        <div class="container py-5">
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-3">
-                    <div class="featurs-item text-center rounded bg-light p-4">
-                        <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
-                            <i class="fas fa-car-side fa-3x text-white"></i>
-                        </div>
-                        <div class="featurs-content text-center">
-                            <h5>Free Shipping</h5>
-                            <p class="mb-0">Free on order over $300</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="featurs-item text-center rounded bg-light p-4">
-                        <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
-                            <i class="fas fa-user-shield fa-3x text-white"></i>
-                        </div>
-                        <div class="featurs-content text-center">
-                            <h5>Security Payment</h5>
-                            <p class="mb-0">100% security payment</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="featurs-item text-center rounded bg-light p-4">
-                        <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
-                            <i class="fas fa-exchange-alt fa-3x text-white"></i>
-                        </div>
-                        <div class="featurs-content text-center">
-                            <h5>30 Day Return</h5>
-                            <p class="mb-0">30 day money guarantee</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="featurs-item text-center rounded bg-light p-4">
-                        <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
-                            <i class="fa fa-phone-alt fa-3x text-white"></i>
-                        </div>
-                        <div class="featurs-content text-center">
-                            <h5>24/7 Support</h5>
-                            <p class="mb-0">Support every time fast</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Featurs Section End -->
+</div>
+<!-- Featurs Section End -->
 
 <!-- Fruits Shop Start -->
 <div class="container-fluid fruite py-5">
     <div class="container py-5">
         <div class="tab-class text-center">
-            <div class="row g-4">
-                <div class="col-lg-4 text-start">
-                    <h1>Palette de Plaisirs</h1>
-                </div>
-                <div class="col-lg-8 text-end">
-                    <ul class="nav nav-pills d-inline-flex text-center mb-5">
-                        @foreach($groupedProducts as $valeurName => $produits)
-                            <li class="nav-item">
-                                <a class="d-flex m-2 py-2 bg-light rounded-pill {{ $loop->first ? 'active' : '' }}" data-bs-toggle="pill" href="#tab-{{ Str::slug($valeurName) }}">
-                                    <span class="text-dark" style="width: 130px;">{{ $valeurName }}</span>
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
+        <div class="row g-4">
+    <div class="col-lg-4 text-start">
+        <h1 class="title b">Palette de Plaisirs</h1>
+    </div>
+    <div class="col-lg-8 text-end">
+        <ul class="nav nav-pills d-inline-flex text-center mb-5">
+            @foreach($groupedProducts as $valeurName => $produits)
+                <li class=" nav-item ">
+                    <a class="nav-link d-flex m-2 py-2 rounded-pill {{ $loop->first ? 'active' : '' }}" data-bs-toggle="pill" href="#tab-{{ Str::slug($valeurName) }}">
+                        <span class=" b" style="width: 130px;">{{ $valeurName }}</span>
+                    </a>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+</div>
+
             <div class="tab-content">
             <button class="nav-btn" id="prev"></button>
             <button class="nav-btn" id="next">
@@ -207,101 +237,83 @@ document.getElementById('prev').onclick = function() {
 
 
 
-<!-- Section Best Sellers -->
-<div class="container py-5">
-    <h1>Meilleures Ventes</h1>
-    <div class="product-navigation">
-        <button class="nav-btn" id="prev"></button>
-        <button class="nav-btn" id="next"></button>
 
-        <div class="product-container">
-            <div class="d-flex"> <!-- Utiliser flexbox pour tous les produits sur la même ligne -->
-                @foreach($bestSellers as $produit)
-                    <div class="fruite-item">
-                        <div class="fruite-img">
-                            <img src="{{ asset('img/' . $produit->image) }}" class="img-fluid w-100 rounded-top" alt="">
-                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
-                                Best sellers
-                            </div>
-                            <div class="icon-container">
-                                <a href="#" class="eye-icon" title="Voir Détails">
-                                    <i class="fa fa-eye"></i>
-                                </a>
-                                <a href="#" class="cart-icon" title="Ajouter au Panier">
-                                    <i class="fa fa-shopping-bag"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                            <h4>{{ $produit->name }}</h4>
-                            <h6>prix:{{ $produit->prix }}dt</h6>
 
-                           
+
+<!-- Features Start -->
+<!-- Features Start -->
+<div class="container-fluid service py-5">
+    <div class="container py-5">
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-6 col-lg-3">
+                <a href="boutique.html">
+                    <div class="service-item bg-secondaryyy rounded border border-secondary">
+                        <img src="img/featur-1.jpg" class="img-fluid rounded-top w-100" alt="">
+                        <div class="px-4 rounded-bottom">
+                            <div class="service-content bg-light text-center p-4 rounded">
+                                <h5 class="text-primary">30% sur le premier achat</h5>
+                                <h3 class="mb-0">Découvrez la boutique</h3>
+                                <p>Profitez de notre offre spéciale !</p>
+                            </div>
                         </div>
                     </div>
-                @endforeach
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <a href="personnalisation.html">
+                    <div class="service-item bg-dark rounded border border-dark">
+                        <img src="img/featur-2.jpg" class="img-fluid rounded-top w-100" alt="">
+                        <div class="px-4 rounded-bottom">
+                            <div class="service-content bg-light text-center p-4 rounded">
+                                <h5 class="text-primary">Paquets Cadeaux Personnalisés</h5>
+                                <h3 class="mb-0">Pour chaque occasion</h3>
+                                <p>Choisissez le thème parfait !</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <a href="personnalisation-boucles.html">
+                    <div class="service-item bg-primary rounded border border-primary">
+                        <img src="img/featur-3.jpeg" class="img-fluid rounded-top w-100" alt="">
+                        <div class="px-4 rounded-bottom">
+                            <div class="service-content bg-light text-center p-4 rounded">
+                                <h5 class="text-primary">Personnalisation des Boucles</h5>
+                                <h3 class="mb-0">À votre goût</h3>
+                                <p>Créez des boucles uniques et Participez au marathon créatif : le design le plus aimé remporte des surprises </p>
+
+
+
+
+
+
+</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <a href="tirage-au-sort.html">
+                    <div class="service-item bg-secondaryy rounded border border-secondary">
+                        <img src="img/featur-4.jpg" class="img-fluid rounded-top w-100" alt="">
+                        <div class="px-4 rounded-bottom">
+                            <div class="service-content bg-light text-center p-4 rounded">
+                                <h5 class="text-primary">Gagnez des Boucles</h5>
+                                <h3 class="mb-0">Tirage au sort mensuel</h3>
+                                <p>Achetez à partir de 40 DT pour participer !</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
 </div>
+<!-- Features End -->
 
-<script>
-document.getElementById('next').onclick = function() {
-    document.querySelector('.product-container').scrollBy({ left: 300, behavior: 'smooth' });
-};
-document.getElementById('prev').onclick = function() {
-    document.querySelector('.product-container').scrollBy({ left: -300, behavior: 'smooth' });
-};
-</script>
-
-
-    <!-- Featurs Start -->
-    <div class="container-fluid service py-5">
-        <div class="container py-5">
-            <div class="row g-4 justify-content-center">
-                <div class="col-md-6 col-lg-4">
-                    <a href="#">
-                        <div class="service-item bg-secondary rounded border border-secondary">
-                            <img src="img/featur-1.jpg" class="img-fluid rounded-top w-100" alt="">
-                            <div class="px-4 rounded-bottom">
-                                <div class="service-content bg-primary text-center p-4 rounded">
-                                    <h5 class="text-white">Fresh Apples</h5>
-                                    <h3 class="mb-0">20% OFF</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <a href="#">
-                        <div class="service-item bg-dark rounded border border-dark">
-                            <img src="img/featur-2.jpg" class="img-fluid rounded-top w-100" alt="">
-                            <div class="px-4 rounded-bottom">
-                                <div class="service-content bg-light text-center p-4 rounded">
-                                    <h5 class="text-primary">Tasty Fruits</h5>
-                                    <h3 class="mb-0">Free delivery</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <a href="#">
-                        <div class="service-item bg-primary rounded border border-primary">
-                            <img src="img/featur-3.jpg" class="img-fluid rounded-top w-100" alt="">
-                            <div class="px-4 rounded-bottom">
-                                <div class="service-content bg-secondary text-center p-4 rounded">
-                                    <h5 class="text-white">Exotic Vegitable</h5>
-                                    <h3 class="mb-0">Discount 30$</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Featurs End -->
+<!-- Features End -->
 
 
     <!-- Vesitable Shop Start-->
@@ -309,22 +321,7 @@ document.getElementById('prev').onclick = function() {
         <div class="container py-5">
             <h1 class="mb-0">Fresh Organic Vegetables</h1>
             <div class="owl-carousel vegetable-carousel justify-content-center">
-                <div class="border border-primary rounded position-relative vesitable-item">
-                    <div class="vesitable-img">
-                        <img src="img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
-                        style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 rounded-bottom">
-                        <h4>Parsely</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="border border-primary rounded position-relative vesitable-item">
                     <div class="vesitable-img">
                         <img src="img/vegetable-item-1.jpg" class="img-fluid w-100 rounded-top" alt="">
@@ -341,101 +338,7 @@ document.getElementById('prev').onclick = function() {
                         </div>
                     </div>
                 </div>
-                <div class="border border-primary rounded position-relative vesitable-item">
-                    <div class="vesitable-img">
-                        <img src="img/vegetable-item-3.png" class="img-fluid w-100 rounded-top bg-light" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
-                        style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 rounded-bottom">
-                        <h4>Banana</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-primary rounded position-relative vesitable-item">
-                    <div class="vesitable-img">
-                        <img src="img/vegetable-item-4.jpg" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
-                        style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 rounded-bottom">
-                        <h4>Bell Papper</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-primary rounded position-relative vesitable-item">
-                    <div class="vesitable-img">
-                        <img src="img/vegetable-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
-                        style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 rounded-bottom">
-                        <h4>Potatoes</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-primary rounded position-relative vesitable-item">
-                    <div class="vesitable-img">
-                        <img src="img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
-                        style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 rounded-bottom">
-                        <h4>Parsely</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-primary rounded position-relative vesitable-item">
-                    <div class="vesitable-img">
-                        <img src="img/vegetable-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
-                        style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 rounded-bottom">
-                        <h4>Potatoes</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-primary rounded position-relative vesitable-item">
-                    <div class="vesitable-img">
-                        <img src="img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
-                        style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 rounded-bottom">
-                        <h4>Parsely</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
+              
                 </div>
             </div>
         </div>
@@ -480,7 +383,7 @@ document.getElementById('prev').onclick = function() {
     <div class="container-fluid py-5">
         <div class="container py-5">
             <div class="text-center mx-auto mb-5" style="max-width: 700px;">
-                <h1 class="display-4">Bestseller Products</h1>
+                <h1 class="display-4">vos creations les plus aimees</h1>
                 <p>Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which
                     looks reasonable.</p>
             </div>
