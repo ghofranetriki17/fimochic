@@ -20,13 +20,33 @@
             <li>{{ $valeur->nom }}</li>
         @endforeach
     </ul>
-    @if($produit->image)
+    @if ($produit->image)
         <div class="mt-4">
             <img src="{{ asset('img/' . $produit->image) }}" alt="{{ $produit->nom }}" class="img-fluid" style="max-width: 200px;">
         </div>
     @else
         <p class="mt-4">Aucune image disponible pour ce produit.</p>
     @endif
+
+    <!-- Affichage des images de type "R" et "L" -->
+    @foreach ($galleries as $gallery)
+        @if ($gallery->type === 'R' || $gallery->type === 'L')
+            <div class="mt-4">
+                <img src="{{ asset('img/' . $gallery->image) }}" alt="Image {{ $gallery->type }}" class="img-fluid" style="max-width: 200px;">
+                <p>Type d'image : {{ $gallery->type }}</p>
+            </div>
+        @endif
+    @endforeach
+
+    <!-- Affichage des autres images -->
+    @foreach ($galleries as $gallery)
+        @if ($gallery->type !== 'R' && $gallery->type !== 'L')
+            <div class="mt-4">
+                <img src="{{ asset('img/' . $gallery->image) }}" alt="Autre image" class="img-fluid" style="max-width: 200px;">
+                <p>Type d'image : {{ $gallery->type }}</p>
+            </div>
+        @endif
+    @endforeach
 
     <!-- Boutons Retour et Modifier -->
     <div class="mt-4">

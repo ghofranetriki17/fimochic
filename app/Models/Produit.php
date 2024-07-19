@@ -22,4 +22,8 @@ class Produit extends Model
     {
         return $this->hasMany(LigneCmd::class);
     }
+    public function galleries()
+    {
+        return $this->hasMany(Gallery::class);
+    }
 }

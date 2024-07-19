@@ -1,3 +1,5 @@
+<!-- resources/views/produits/edit.blade.php -->
+
 @include('dashboard.layout.header')
 @include('dashboard.layout.nav')
 @include('dashboard.layout.asside')
@@ -11,6 +13,7 @@
         @csrf
         @method('PUT')
 
+        <!-- Champs pour modifier les informations du produit -->
         <div class="form-group">
             <label for="nom">Nom du Produit</label>
             <input type="text" class="form-control" id="nom" name="name" value="{{ old('name', $produit->name) }}" required>
@@ -39,7 +42,37 @@
         <div class="form-group">
             <label for="image">Image du Produit</label>
             <input type="file" class="form-control" id="image" name="image">
-            <small>Image actuelle : <img src="{{ asset('img/' . $produit->image) }}" alt="Image actuelle" style="max-width: 100px;"></small>
+            @if ($produit->image)
+                <small>Image actuelle : <img src="{{ asset('img/' . $produit->image) }}" alt="Image actuelle" style="max-width: 100px;"></small>
+            @else
+                <small>Aucune image actuelle pour ce produit.</small>
+            @endif
+        </div>
+
+        <!-- Section pour modifier et supprimer les images de la galerie -->
+        <div class="mt-4">
+            <h2>Modifier et Supprimer les Images de la Galerie</h2>
+            @foreach ($galleries as $gallery)
+                @if ($gallery->produit_id === $produit->id)
+                    <div class="form-group">
+                        <label for="image_galerie_{{ $gallery->id }}">Image de type "{{ $gallery->type }}"</label>
+                        <input type="file" class="form-control" id="image_galerie_{{ $gallery->id }}" name="image_galerie_{{ $gallery->id }}">
+                        @if ($gallery->image)
+                            <small>Image actuelle : <img src="{{ asset('img/' . $gallery->image) }}" alt="Image actuelle" style="max-width: 100px;"></small>
+                            <br>
+                            <!-- Ajouter une case à cocher pour supprimer l'image de la galerie -->
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" id="delete_image_galerie_{{ $gallery->id }}" name="delete_image_galerie_{{ $gallery->id }}">
+                                <label class="form-check-label" for="delete_image_galerie_{{ $gallery->id }}">
+                                    Supprimer cette image de la galerie
+                                </label>
+                            </div>
+                        @else
+                            <small>Aucune image actuelle pour ce type.</small>
+                        @endif
+                    </div>
+                @endif
+            @endforeach
         </div>
 
         <button type="submit" class="btn btn-primary">Mettre à jour</button>

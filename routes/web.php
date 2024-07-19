@@ -4,11 +4,15 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\ProduitValeurController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\GalleryController;
+
 use App\Http\Controllers\ValeurController;
 use App\Http\Controllers\AttributController;
 use App\Http\Controllers\RessourceController;
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BoutiqueController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -55,3 +59,6 @@ Route::resources([
 Route::resource('attributs', AttributController::class);
 Route::get('/valeurs/{valeur}/edit', [ValeurController::class, 'edit'])->name('valeurs.edit');
 Route::resource('ressources', RessourceController::class);
+Route::resource('galleries', GalleryController::class);
+Route::get('/boutique', [BoutiqueController::class, 'index'])->name('boutique.index');
+Route::resource('boutique', BoutiqueController::class);

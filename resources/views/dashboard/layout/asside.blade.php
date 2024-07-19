@@ -38,6 +38,11 @@
             </a>
         </li>
         <li>
+            <a href="{{ route('galleries.create') }}">
+                <i class="bi bi-circle"></i><span> Mettre à Jour la gallerie</s</span>
+            </a>
+        </li>
+        <li>
             <a href="{{ route('attributs.index') }}">
                 <i class="bi bi-circle"></i><span> Gérer les categories(Attributs)</li>
         <li>

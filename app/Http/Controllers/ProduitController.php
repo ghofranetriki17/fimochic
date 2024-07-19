@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Produit;
 use App\Models\Attribut;
+use App\Models\Gallery;
+
 use App\Models\Valeur;
 
 use Illuminate\Http\Request;
@@ -19,9 +21,11 @@ class ProduitController extends Controller
     {
         // Récupérer tous les produits avec leurs attributs et valeurs associées, et les grouper par type
         $produitsParType = Produit::with('valeurs')->get()->groupBy('type');
+        $galleries = Gallery::all(); // Assurez-vous d'importer le modèle Gallery en haut du fichier
     
-        return view('produits.index', compact('produitsParType'));
+        return view('produits.index', compact('produitsParType', 'galleries'));
     }
+    
 
     /**
      * Affiche le formulaire de création d'une nouvelle ressource.
@@ -94,8 +98,11 @@ class ProduitController extends Controller
     {
         $produit = Produit::findOrFail($id);
         $valeurs = $produit->valeurs;
-
-        return view('produits.show', compact('produit', 'valeurs'));
+     
+            $galleries = Gallery::where('produit_id', $id)->get();
+        
+       
+        return view('produits.show', compact('produit', 'valeurs','galleries'));
     }
 
 
@@ -109,8 +116,9 @@ class ProduitController extends Controller
     {
         $produit = Produit::findOrFail($id);
         $valeurs = $produit->valeurs; // Récupérer les valeurs associées pour l'édition
-    
-        return view('produits.edit', compact('produit', 'valeurs'));
+        $galleries = Gallery::where('produit_id', $produit->id)->get(); // Récupérer les images de la galerie associées au produit
+
+        return view('produits.edit', compact('produit', 'valeurs', 'galleries'));
     }
     
     public function update(Request $request, $id)
@@ -147,13 +155,20 @@ class ProduitController extends Controller
             $produit->image = $photoName; // Mettre à jour le nom de l'image
         }
     
-        // Sauvegarder les modifications
+        // Sauvegarder les modifications du produit
         $produit->save();
+    
+        // Supprimer les images de la galerie si les cases à cocher sont cochées
+        foreach ($produit->galleries as $gallery) {
+            if ($request->has("delete_image_galerie_{$gallery->id}")) {
+                \File::delete(public_path('img/' . $gallery->image));
+                $gallery->delete();
+            }
+        }
     
         return redirect()->route('produits.index')->with('success', 'Produit mis à jour avec succès.');
     }
     
-
 
     /**
      * Supprime la ressource spécifiée du stockage.
