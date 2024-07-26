@@ -109,6 +109,55 @@
     border-color: #ff8f9c;
 }
 
+
+/* Conteneur de la pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+    margin: 0;
+}
+
+/* Liens de pagination */
+.pagination .page-link {
+    display: block;
+    padding: 0.5rem 1rem;
+    margin: 0 0.1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    color: #007bff; /* Couleur des liens */
+    text-decoration: none;
+    font-size: 0.9rem;
+    background-color: #fff;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Liens de pagination au survol */
+.pagination .page-link:hover {
+    background-color: #e9ecef; /* Couleur de fond au survol */
+    color: #0056b3; /* Couleur du texte au survol */
+}
+
+/* Liens de pagination désactivés */
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    cursor: not-allowed;
+}
+
+/* Liens de pagination actifs */
+.pagination .page-item.active .page-link {
+    background-color: #007bff; /* Couleur de fond pour l'élément actif */
+    color: #fff; /* Couleur du texte pour l'élément actif */
+    border-color: #007bff; /* Couleur de la bordure pour l'élément actif */
+}
+
+/* Flèches de pagination */
+.pagination .page-item .page-link i {
+    font-size: 1rem; /* Taille des icônes de navigation */
+}
+
 </style>
 
   <!-- Single Page Header start -->
@@ -141,220 +190,134 @@
                             <div class="col-6"></div>
                             <div class="col-xl-3">
                                 <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
-                                    <label for="fruits">Default Sorting:</label>
-                                    <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3" form="fruitform">
-                                        <option value="volvo">Nothing</option>
-                                        <option value="saab">Popularity</option>
-                                        <option value="opel">Organic</option>
-                                        <option value="audi">Fantastic</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                                <!-- sort and searchp Start-->
-
-                        <div class="row g-4">
-                            <div class="col-lg-3">
-                                <div class="row g-4">
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <h4>Categories</h4>
-                                            <ul class="list-unstyled fruite-categorie">
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Apples</a>
-                                                        <span>(3)</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Oranges</a>
-                                                        <span>(5)</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Strawbery</a>
-                                                        <span>(2)</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Banana</a>
-                                                        <span>(8)</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Pumpkin</a>
-                                                        <span>(5)</span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <h4 class="mb-2">Price</h4>
-                                            <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput" min="0" max="500" value="0" oninput="amount.value=rangeInput.value">
-                                            <output id="amount" name="amount" min-velue="0" max-value="500" for="rangeInput">0</output>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <h4>Additional</h4>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-1" name="Categories-1" value="Beverages">
-                                                <label for="Categories-1"> Organic</label>
-                                            </div>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-2" name="Categories-1" value="Beverages">
-                                                <label for="Categories-2"> Fresh</label>
-                                            </div>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-3" name="Categories-1" value="Beverages">
-                                                <label for="Categories-3"> Sales</label>
-                                            </div>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-4" name="Categories-1" value="Beverages">
-                                                <label for="Categories-4"> Discount</label>
-                                            </div>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-5" name="Categories-1" value="Beverages">
-                                                <label for="Categories-5"> Expired</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <h4 class="mb-3">Featured products</h4>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                                <img src="img/featur-1.jpg" class="img-fluid rounded" alt="">
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                                <img src="img/featur-2.jpg" class="img-fluid rounded" alt="">
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                                <img src="img/featur-3.jpg" class="img-fluid rounded" alt="">
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-center my-4">
-                                            <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Vew More</a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="position-relative">
-                                            <img src="img/banner-fruits.jpg" class="img-fluid w-100 rounded" alt="">
-                                            <div class="position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
-                                                <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--start-->
-                            
-                            <div class="col-lg-9">
-                                <div class="row g-4 justify-content-center">
-                                @foreach($produits as $produit)
-    @php
-        $galleryHover = $galleries->where('produit_id', $produit->id)->where('type', 'hover')->first();
-    @endphp
-    <div class="col-md-6 col-lg-6 col-xl-4">
-        <div class="product-card">
-            <div class="category-badge">{{ $produit->categorie }}</div>
-            <img src="{{ asset('img/' . $produit->image) }}" alt="{{ $produit->name }}">
-            @if($galleryHover)
-                <img src="{{ asset('img/' . $galleryHover->image) }}" class="hover-image" alt="{{ $produit->name }} Hover">
-            @endif
-            <div class="card-body">
-            
-                <h4>{{ $produit->name }}</h4>
-                <div class="d-flex justify-content-between">
-                    <p class="text-dark fs-5 fw-bold mb-0">{{ $produit->prix }} DT</p>
+                                       <!-- Default Sorting -->
+            <div class="col-lg-12">
+                <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
+                    <form method="GET" action="{{ route('boutique.index') }}">
+                        <label for="sort">Trier par:</label>
+                        <select id="sort" name="sort" class="border-0 form-select-sm bg-light me-3" onchange="this.form.submit()">
+                            <option value="">Sélectionner</option>
+                            <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Prix croissant</option>
+                            <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Prix décroissant</option>
+                            <option value="name_asc" {{ request('sort') == 'name_asc' ? 'selected' : '' }}>Nom A-Z</option>
+                            <option value="name_desc" {{ request('sort') == 'name_desc' ? 'selected' : '' }}>Nom Z-A</option>
+                        </select>
+                    </form>
                 </div>
             </div>
-            <div class="icon-container">
-                <a href="#" class="btn-icon cart-icon">
-                    <i class="fas fa-shopping-cart"></i>
-                </a>
-                <a href="{{ route('boutique.show', $produit->id) }}" class="btn-icon eye-icon">
-                    <i class="fas fa-eye"></i>
-                </a>
+                            </div>
+                        </div>
+    <!-- Sort and Search Start -->
+<div class="row g-4">
+<div class="col-lg-3">
+    <div class="row g-4">
+        <!-- Categories -->
+        <div class="col-lg-12">
+            <div class="mb-3">
+                <h4>Catégories</h4>
+                <ul class="list-group">
+                    @foreach($attributs as $attribut)
+                        <li class="list-group-item">
+                            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $attribut->id }}" aria-expanded="false" aria-controls="collapse{{ $attribut->id }}">
+                                {{ $attribut->nom }}
+                            </button>
+                            <div class="collapse" id="collapse{{ $attribut->id }}">
+                                <ul class="list-group mt-2">
+                                    @foreach($attribut->valeurs as $valeur)
+                                        <li class="list-group-item">
+                                            <a href="{{ route('boutique.index', ['valeur_id' => $valeur->id]) }}">
+                                                {{ $valeur->nom }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+ <!-- Filtre de Prix -->
+<div class="col-lg-12">
+    <div class="mb-3">
+        <h4 class="mb-2">Prix</h4>
+        <form method="GET" action="{{ route('boutique.index') }}">
+            <input type="range" class="form-range w-100" id="rangeMin" name="price_min" min="{{ $minPrice }}" max="{{ $maxPrice }}" value="{{ $minPrice }}" oninput="updateMinValue(this.value)">
+            <output id="minAmount" name="minAmount">{{ $minPrice }}</output>
+            <input type="range" class="form-range w-100" id="rangeMax" name="price_max" min="{{ $minPrice }}" max="{{ $maxPrice }}" value="{{ $maxPrice }}" oninput="updateMaxValue(this.value)">
+            <output id="maxAmount" name="maxAmount">{{ $maxPrice }}</output>
+            <button type="submit" class="btn btn-primary mt-2">Filtrer</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function updateMinValue(val) {
+        document.getElementById('minAmount').textContent = val;
+    }
+    
+    function updateMaxValue(val) {
+        document.getElementById('maxAmount').textContent = val;
+    }
+</script>
+
+        
+        <!-- Banner -->
+        <div class="col-lg-12">
+            <div class="position-relative">
+                <img src="{{ asset('img/banner-fruits.jpg') }}" class="img-fluid w-100 rounded" alt="">
+                <div class="position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
+                    <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
+                </div>
             </div>
         </div>
     </div>
-@endforeach
+</div>
 
-        
 
-                                    <div class="col-12">
-                                        <div class="pagination d-flex justify-content-center mt-5">
-                                            <a href="#" class="rounded">&laquo;</a>
-                                            <a href="#" class="active rounded">1</a>
-                                            <a href="#" class="rounded">2</a>
-                                            <a href="#" class="rounded">3</a>
-                                            <a href="#" class="rounded">4</a>
-                                            <a href="#" class="rounded">5</a>
-                                            <a href="#" class="rounded">6</a>
-                                            <a href="#" class="rounded">&raquo;</a>
-                                        </div>
-                                    </div>
-                                </div>
+
+
+    <!-- Products Display -->
+    <div class="col-lg-9">
+        <div class="row g-4 justify-content-center">
+            @foreach($produits as $produit)
+                @php
+                    $galleryHover = $galleries->where('produit_id', $produit->id)->where('type', 'hover')->first();
+                @endphp
+                <div class="col-md-6 col-lg-6 col-xl-4">
+                    <div class="product-card">
+                        <div class="category-badge">{{ $produit->categorie }}</div>
+                        <img src="{{ asset('img/' . $produit->image) }}" alt="{{ $produit->name }}">
+                        @if($galleryHover)
+                            <img src="{{ asset('img/' . $galleryHover->image) }}" class="hover-image" alt="{{ $produit->name }} Hover">
+                        @endif
+                        <div class="card-body">
+                            <h4>{{ $produit->name }}</h4>
+                            <div class="d-flex justify-content-between">
+                                <p class="text-dark fs-5 fw-bold mb-0">{{ $produit->prix }} DT</p>
                             </div>
-                            <!--end-->
+                        </div>
+                        <div class="icon-container">
+                            <a href="#" class="btn-icon cart-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </a>
+                            <a href="{{ route('boutique.show', $produit->id) }}" class="btn-icon eye-icon">
+                                <i class="fas fa-eye"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endforeach
+            <div class="row">
+        <div class="col-12 text-center">
+            {{ $produits->links('pagination::bootstrap-4') }}
         </div>
-        <!-- Fruits Shop End-->
-
-
+    </div>
+        </div>
+            <!-- Pagination Links -->
+   
+   
+    </div>
+</div>
+<!-- Sort and Search End -->
 @include('welcome.layout.footer')
