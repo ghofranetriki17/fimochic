@@ -26,4 +26,8 @@ class Produit extends Model
     {
         return $this->hasMany(Gallery::class);
     }
+    public function promotions()
+    {
+        return $this->hasMany(Promotion::class, 'product_id');
+    }
 }

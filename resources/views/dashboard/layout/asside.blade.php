@@ -148,6 +148,24 @@
             </ul>
         </li>
         
+<!-- Nouvelle section pour les promotions -->
+<li class="nav-item">
+    <a class="nav-link collapsed" data-bs-target="#promo-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-tags"></i><span>Gestion des Promotions</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="promo-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
+            <a href="{{ route('promotions.create') }}">
+                <i class="bi bi-circle"></i><span>Créer une Promotion</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('promotions.index') }}">
+                <i class="bi bi-circle"></i><span>Gérer les Promotions</span>
+            </a>
+        </li>
+    </ul>
+</li>
 
 
         <li class="nav-item">

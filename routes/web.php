@@ -9,6 +9,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ValeurController;
 use App\Http\Controllers\AttributController;
 use App\Http\Controllers\RessourceController;
+use App\Http\Controllers\PromotionController;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BoutiqueController;
@@ -62,3 +63,5 @@ Route::resource('ressources', RessourceController::class);
 Route::resource('galleries', GalleryController::class);
 Route::get('/boutique', [BoutiqueController::class, 'index'])->name('boutique.index');
 Route::resource('boutique', BoutiqueController::class);
+
+Route::resource('promotions', PromotionController::class);
