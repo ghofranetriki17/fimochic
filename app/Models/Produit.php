@@ -30,4 +30,8 @@ class Produit extends Model
     {
         return $this->hasMany(Promotion::class, 'product_id');
     }
+    public function paniers()
+    {
+        return $this->hasMany(Panier::class);
+    }
 }

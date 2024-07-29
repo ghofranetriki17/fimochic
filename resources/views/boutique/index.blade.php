@@ -442,6 +442,14 @@
                     </div>
                     <div class="icon-container">
                         <a href="#" class="btn-icon cart-icon">
+                        <form action="{{ route('panier.store') }}" method="POST" style="display:inline;">
+    @csrf
+    <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+    <input type="number" name="quantite" value="1" min="1">
+    <button type="submit" class="btn-icon cart-icon">
+        <i class="fas fa-shopping-cart"></i>
+    </button>
+</form>
                             <i class="fas fa-shopping-cart"></i>
                         </a>
                         <a href="{{ route('boutique.show', $produit->id) }}" class="btn-icon eye-icon">
@@ -490,9 +498,14 @@
                                  
                                 </div>
                                 <div class="icon-container">
-                                    <a href="#" class="btn-icon cart-icon">
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </a>
+                                <form action="{{ route('panier.store') }}" method="POST" style="display:inline;">
+    @csrf
+    <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+    <input type="number" name="quantite" value="1" min="1">
+    <button type="submit" class="btn-icon cart-icon">
+        <i class="fas fa-shopping-cart"></i>
+    </button>
+</form>
                                     <a href="{{ route('boutique.show', $produit->id) }}" class="btn-icon eye-icon">
                                         <i class="fas fa-eye"></i>
                                     </a>

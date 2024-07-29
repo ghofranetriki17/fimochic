@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Auth; // Ajoutez cette ligne
 
 class ClientController extends Controller
 {
@@ -138,4 +138,15 @@ class ClientController extends Controller
         return redirect()->route('clients.index')
             ->with('success', 'Client supprimé avec succès.');
     }
+    public function compte()
+{
+    $client = Auth::user()->client; // Supposons que vous avez une relation entre User et Client
+
+    if (!$client) {
+        return redirect()->route('clients.index')->with('error', 'Client introuvable.');
+    }
+
+    return view('clients.compte', compact('client'));
+}
+
 }

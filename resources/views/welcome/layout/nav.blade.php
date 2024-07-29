@@ -40,7 +40,7 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="text-rose nav-link dropdown-toggle text-bleu-doux" data-bs-toggle="dropdown">Explorez</a>
                         <div class="dropdown-menu m-0 bg-jaune-pale rounded-0">
-                            <a href="cart.html" class="text-rose dropdown-item">Mon Panier</a>
+                            <a href="{{ route('panier.index') }}" class="text-rose dropdown-item">Mon Panier</a>
                             <a href="checkout.html" class="text-rose dropdown-item">Passer Commande</a>
                             <a href="testimonials.html" class="text-rose dropdown-item">Avis Clients</a>
                             <a href="404.html" class="text-rose dropdown-item">Page Non Trouvée</a>
@@ -53,13 +53,34 @@
                     <button class="btn-search btn border border-bleu-doux btn-md-square rounded-circle bg-blanc me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
                         <i class="fas fa-search text-bleu-doux"></i>
                     </button>
-                    <a href="#" class="position-relative me-4 my-auto">
+                 
+
+                    <a href="{{ route('panier.index') }}" class="position-relative me-4 my-auto">
                         <i class="fa fa-shopping-bag fa-2x text-bleu-doux"></i>
-                        <span class="position-absolute bg-vert-menthe rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                     </a>
-                    <a href="#" class="my-auto">
+                    <ul class="navbar-nav ml-auto">
+    <!-- Other navigation links -->
+
+    @if(Auth::check())
+            
+        <li class="nav-item">
+        <a href="{{ route('clients.compte') }}" class="my-auto">
+                        
+
                         <i class="fas fa-user fa-2x text-bleu-doux"></i>
-                    </a>
+                    </a>        </li>
+     
+    @else
+        <li class="nav-item">
+        <a href="{{ route('login') }}" class="my-auto">
+                        
+
+                        <i class="fas fa-user fa-2x text-bleu-doux"></i>
+                    </a>        </li>
+       
+    @endif
+</ul>
+                   
                 </div>
             </div>
         </nav>

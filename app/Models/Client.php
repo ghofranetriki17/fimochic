@@ -32,10 +32,17 @@ class Client extends Model
             }
         });
     }
-
+    public function paniers()
+    {
+        return $this->hasMany(Panier::class);
+    }
     // Define the relationship with User model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function commandes()
+    {
+        return $this->hasMany(Commande::class);
     }
 }
