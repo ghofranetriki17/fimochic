@@ -79,3 +79,4 @@ Route::middleware('auth')->group(function () {
 });
 Route::resource('commandes', CommandeController::class);
 
+Route::get('/commandes/{id}', [ClientController::class, 'showOrderDetails'])->name('commandes.details');

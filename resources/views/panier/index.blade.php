@@ -11,8 +11,7 @@
             </div>
         @endif
 
-        <!-- Le reste de votre vue pour afficher les articles du panier -->
-
+        <!-- Tableau des articles du panier -->
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -40,7 +39,7 @@
                                 <p class="mb-0 mt-4">{{ $item->produit->prix }}dt</p>
                             </td>
                             <td>
-                                <!-- For updating quantities -->
+                                <!-- Formulaires pour mettre à jour les quantités -->
                                 <form action="{{ route('panier.update', ['panier' => $item->id]) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('PATCH')
@@ -60,7 +59,7 @@
                                 <p class="mb-0 mt-4">{{ $item->quantite * $item->produit->prix }}dt</p>
                             </td>
                             <td>
-                                <!-- For removing items -->
+                                <!-- Formulaire pour retirer les articles -->
                                 <form action="{{ route('panier.destroy', ['panier' => $item->id]) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
@@ -72,48 +71,72 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center">Your cart is empty.</td>
+                            <td colspan="6" class="text-center">Votre panier est vide.</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
-        <div class="mt-5">
-            <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code">
-            <button class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Apply Coupon</button>
-        </div>
-        <div class="row g-4 justify-content-end">
-            <div class="col-8"></div>
-            <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
-                <div class="bg-light rounded">
-                    <div class="p-4">
-                        <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
+
+        <!-- Bouton pour afficher le récapitulatif -->
+        <button type="button" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" data-bs-toggle="modal" data-bs-target="#orderSummaryModal">
+            Voir le Récapitulatif
+        </button>
+
+        <!-- Modale pour le récapitulatif -->
+        <div class="modal fade" id="orderSummaryModal" tabindex="-1" aria-labelledby="orderSummaryModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="orderSummaryModalLabel">Récapitulatif de la Commande</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h1 class="display-6 mb-4">Total <span class="fw-normal">du Panier</span></h1>
                         <div class="d-flex justify-content-between mb-4">
-                            <h5 class="mb-0 me-4">Subtotal:</h5>
+                            <h5 class="mb-0 me-4">Sous-total:</h5>
                             <p class="mb-0">{{ $total }}dt</p>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <h5 class="mb-0 me-4">Shipping</h5>
-                            <div class="">
-                                <p class="mb-0">Flat rate: 7.00dt</p>
+                            <h5 class="mb-0 me-4">Livraison</h5>
+                            <div>
+                                <p class="mb-0">Forfait: 7.00dt</p>
                             </div>
                         </div>
-                        <p class="mb-0 text-end">Shipping to Ukraine.</p>
+                        <p class="mb-0 text-end">Livraison en Ukraine.</p>
+                        <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
+                            <h5 class="mb-0 ps-4 me-4">Total</h5>
+                            <p class="mb-0 pe-4">{{ $total + 7.00 }}dt</p>
+                        </div>
                     </div>
-                    <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                        <h5 class="mb-0 ps-4 me-4">Total</h5>
-                        <p class="mb-0 pe-4">{{ $total + 7.00 }}dt</p>
+                    <div class="modal-footer">
+                        <form action="{{ route('commandes.store') }}" method="POST" class="w-100">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Adresse de Livraison</label>
+                                <input type="text" class="form-control" id="address" name="adresse" placeholder="Adresse de livraison" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="payment_method" class="form-label">Méthode de Paiement</label>
+                                <select class="form-select" id="payment_method" name="payment_method" required>
+                                    <option value="cash_on_delivery">Paiement à la livraison</option>
+                                    <option value="post">Chèque Postal</option>
+                                    <option value="visa">Carte Visa</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Code Promo">
+                                <button class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Appliquer le Code</button>
+                            </div>
+                            <input type="hidden" name="total_price" value="{{ $total + 7.00 }}">
+                            <button type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase">Procéder au Paiement</button>
+                        </form>
                     </div>
-                    <form action="{{ route('commandes.store') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4">Proceed to Checkout</button>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <!-- Cart Page End -->
 
 @include('welcome.layout.footer')

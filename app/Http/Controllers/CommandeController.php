@@ -49,21 +49,30 @@ class CommandeController extends Controller
             return redirect()->route('panier.index')->with('message', 'Votre panier est vide.');
         }
     
+        // Valider les données du formulaire
+        $validated = $request->validate([
+            'adresse' => 'required|string|max:255',
+            'payment_method' => 'required|in:cash_on_delivery,post,visa',
+            'total_price' => 'required|numeric',
+        ]);
+    
         // Créer une nouvelle commande
         $commande = new Commande();
         $commande->client_id = $clientId;
+        $commande->adresse = $validated['adresse'];
+        $commande->mode_paiement = $validated['payment_method'];
+        $commande->prix = $validated['total_price'];
         $commande->date_cmd = now();
         $commande->date_estimee_liv = now()->addDays(7); // Par exemple, 7 jours après la commande
-        $commande->etat = false;
-        
+        $commande->etat = '0'; // 'false' peut être remplacé par 'En attente' ou autre valeur significative
         $commande->save();
     
         // Ajouter les articles du panier à la commande
         foreach ($panier as $item) {
-            $ligneCommande = new ligneCmd();
+            $ligneCommande = new LigneCmd();
             $ligneCommande->commande_id = $commande->id;
             $ligneCommande->produit_id = $item->produit_id;
-            $ligneCommande->qtecmnd = $item->quantite; // Utiliser qtecmnd au lieu de quantite
+            $ligneCommande->qtecmnd = $item->quantite;
             $ligneCommande->save();
         }
     
@@ -73,6 +82,18 @@ class CommandeController extends Controller
         // Rediriger vers l'index du panier avec un message de succès
         return redirect()->route('panier.index')->with('success', 'Votre commande a été passée avec succès !');
     }
-    
+    public function show($id)
+    {
+        // Récupération de la commande avec ses lignes de commande associées
+        $commande = Commande::with('lignesCommande.produit')->find($id);
+
+        if (!$commande) {
+            return redirect()->route('clients.compte')->with('error', 'Commande introuvable.');
+        }
+
+        // Déboguer pour vérifier les données récupérées
+
+        return view('commandes.details', compact('commande'));
+    }
     
 }

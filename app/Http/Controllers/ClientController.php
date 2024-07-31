@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\Client;
+use App\Models\commande;
+
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth; // Ajoutez cette ligne
@@ -139,14 +141,19 @@ class ClientController extends Controller
             ->with('success', 'Client supprimé avec succès.');
     }
     public function compte()
-{
-    $client = Auth::user()->client; // Supposons que vous avez une relation entre User et Client
-
-    if (!$client) {
-        return redirect()->route('clients.index')->with('error', 'Client introuvable.');
+    {
+        $client = Auth::user()->client; // Supposons que vous avez une relation entre User et Client
+     
+        if (!$client) {
+            return redirect()->route('clients.index')->with('error', 'Client introuvable.');
+        }
+    
+        // Récupérer les commandes du client
+        $commandes = $client->commandes;
+    
+        return view('clients.compte', compact('client', 'commandes'));
     }
 
-    return view('clients.compte', compact('client'));
-}
+    
 
 }

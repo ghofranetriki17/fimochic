@@ -1,23 +1,23 @@
 <!-- Navbar start -->
 <div class="container-fluid fixed-top">
-<div class="container topbar bg-primary d-none d-lg-block">
-                <div class="d-flex justify-content-between">
-                    <div class="top-info ps-2">
-                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">Sfax, Tunisa</a></small>
-                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">fimochic@gmail.com</a></small>
-                    </div>
-                    <div class="top-link pe-2">
-                        <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
-                    </div>
-                </div>
+    <div class="container topbar bg-primary d-none d-lg-block">
+        <div class="d-flex justify-content-between">
+            <div class="top-info ps-2">
+                <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">Sfax, Tunisa</a></small>
+                <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">fimochic@gmail.com</a></small>
             </div>
+            <div class="top-link pe-2">
+                <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
+                <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
+                <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
+            </div>
+        </div>
+    </div>
     <div class="container px-0">
         <nav class="navbar navbar-light bg-rose-poudre navbar-expand-xl">
-            <a href="index.html" class="navbar-brand">
+            <a href="{{ route('home') }}" class="navbar-brand">
                 <h1 class="text-bleu-doux display-6 text-pink">
-                    <img src="img/logo.jpg" alt="Logo Fimo Chic" style="max-width: 40px;"> Fimo Chic
+                    <img src="{{ asset('img/logo.jpg') }}" alt="Logo Fimo Chic" style="max-width: 40px;"> Fimo Chic
                 </h1>
             </a>
             <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -34,7 +34,6 @@
                             <a href="earrings-personalization.html" class="text-rose dropdown-item">Personnaliser Boucles</a>
                             <a href="gifts-personalization.html" class="text-rose dropdown-item">Personnaliser Cadeaux</a>
                             <a href="gifts-personalization.html" class="text-rose dropdown-item">vos creations</a>
-
                         </div>
                     </div>
                     <div class="nav-item dropdown">
@@ -53,39 +52,28 @@
                     <button class="btn-search btn border border-bleu-doux btn-md-square rounded-circle bg-blanc me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
                         <i class="fas fa-search text-bleu-doux"></i>
                     </button>
-                 
-
                     <a href="{{ route('panier.index') }}" class="position-relative me-4 my-auto">
                         <i class="fa fa-shopping-bag fa-2x text-bleu-doux"></i>
                     </a>
                     <ul class="navbar-nav ml-auto">
-    <!-- Other navigation links -->
-
-    @if(Auth::check())
-            
-        <li class="nav-item">
-        <a href="{{ route('clients.compte') }}" class="my-auto">
-                        
-
-                        <i class="fas fa-user fa-2x text-bleu-doux"></i>
-                    </a>        </li>
-     
-    @else
-        <li class="nav-item">
-        <a href="{{ route('login') }}" class="my-auto">
-                        
-
-                        <i class="fas fa-user fa-2x text-bleu-doux"></i>
-                    </a>        </li>
-       
-    @endif
-</ul>
-                   
+                        @if(Auth::check())
+                            <li class="nav-item">
+                                <a href="{{ route('clients.compte') }}" class="my-auto">
+                                    <i class="fas fa-user fa-2x text-bleu-doux"></i>
+                                </a>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a href="{{ route('login') }}" class="my-auto">
+                                    <i class="fas fa-user fa-2x text-bleu-doux"></i>
+                                </a>
+                            </li>
+                        @endif
+                    </ul>
                 </div>
             </div>
         </nav>
     </div>
-    
 </div>
 <!-- Navbar End -->
 <style></style>

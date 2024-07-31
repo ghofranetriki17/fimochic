@@ -21,6 +21,6 @@ class LigneCmd extends Model
 
     public function commande()
     {
-        return $this->belongsTo(Commande::class);
+        return $this->belongsTo(commande::class);
     }
 }
