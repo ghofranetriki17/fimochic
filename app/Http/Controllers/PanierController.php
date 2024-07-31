@@ -67,40 +67,24 @@ class PanierController extends Controller
     /**
      * Mettre à jour la quantité d'un produit dans le panier.
      */
-    public function update(Request $request)
+    public function update(Request $request, Panier $panier)
     {
-        // Assurez-vous que l'utilisateur est connecté
         if (!Auth::check()) {
             return redirect()->route('login')->with('message', 'Vous devez vous connecter pour mettre à jour votre panier.');
         }
 
-        // Obtenez l'identifiant du client connecté
-        $clientId = Auth::user()->client->id;
-
-        // Valider la requête
         $request->validate([
-            'id' => 'required|exists:panier,id',
             'quantity' => 'required|integer|min:1',
             'action' => 'required|string|in:increment,decrement',
         ]);
 
-        $itemId = $request->input('id');
-        $quantity = $request->input('quantity');
-        $action = $request->input('action');
-
-        // Trouver l'article dans le panier
-        $item = Panier::where('client_id', $clientId)->where('id', $itemId)->first();
-
-        if ($item) {
-            // Mettre à jour la quantité en fonction de l'action
-            if ($action === 'increment') {
-                $item->quantite += $quantity;
-            } elseif ($action === 'decrement') {
-                $item->quantite = max(1, $item->quantite - $quantity); // Ne pas autoriser la quantité à être inférieure à 1
-            }
-
-            $item->save();
+        if ($request->action === 'increment') {
+            $panier->quantite += $request->quantity;
+        } elseif ($request->action === 'decrement') {
+            $panier->quantite = max(1, $panier->quantite - $request->quantity);
         }
+
+        $panier->save();
 
         return redirect()->route('panier.index')->with('success', 'Quantité mise à jour avec succès.');
     }

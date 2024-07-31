@@ -6,6 +6,7 @@ use App\Http\Controllers\ProduitValeurController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PanierController;
+use App\Http\Controllers\CommandeController;
 
 use App\Http\Controllers\ValeurController;
 use App\Http\Controllers\AttributController;
@@ -68,13 +69,7 @@ Route::resource('boutique', BoutiqueController::class);
 
 // routes/web.php
 
-// Panier routes
-Route::middleware(['auth'])->group(function () {
-    Route::get('/panier', [PanierController::class, 'index'])->name('panier.index');
-    Route::post('/panier/add/{id}', [PanierController::class, 'store'])->name('panier.add');
-    Route::post('/panier/update/{id}', [PanierController::class, 'update'])->name('panier.update');
-    Route::post('/panier/remove/{id}', [PanierController::class, 'destroy'])->name('panier.remove');
-});
+
 
 // Route resource pour le PanierController
 Route::resource('panier', PanierController::class);
@@ -82,3 +77,5 @@ Route::resource('promotions', PromotionController::class);
 Route::middleware('auth')->group(function () {
     Route::get('/compte', [ClientController::class, 'compte'])->name('clients.compte');
 });
+Route::resource('commandes', CommandeController::class);
+

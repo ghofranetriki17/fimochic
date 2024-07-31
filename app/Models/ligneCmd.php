@@ -10,7 +10,8 @@ class LigneCmd extends Model
     use HasFactory;
 
     protected $fillable = [
-        'produit_id', 'commande_id', 'qte',
+        'produit_id', 'commande_id',  'qtecmnd'
+
     ];
 
     public function produit()

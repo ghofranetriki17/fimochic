@@ -4,6 +4,15 @@
 <!-- Cart Page Start -->
 <div class="container-fluid py-5">
     <div class="container py-5">
+        <!-- Affichage des messages de succès -->
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <!-- Le reste de votre vue pour afficher les articles du panier -->
+
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -32,17 +41,17 @@
                             </td>
                             <td>
                                 <!-- For updating quantities -->
-                                <form action="#" method="POST" class="d-inline">
+                                <form action="{{ route('panier.update', ['panier' => $item->id]) }}" method="POST" class="d-inline">
                                     @csrf
-                                    <input type="hidden" name="id" value="{{ $item->id }}">
+                                    @method('PATCH')
                                     <input type="hidden" name="action" value="increment">
                                     <input type="number" name="quantity" value="{{ $item->quantite }}" min="1">
                                     <button type="submit" class="btn btn-sm btn-outline-primary">Add</button>
                                 </form>
 
-                                <form action="#" method="POST" class="d-inline">
+                                <form action="{{ route('panier.update', ['panier' => $item->id]) }}" method="POST" class="d-inline">
                                     @csrf
-                                    <input type="hidden" name="id" value="{{ $item->id }}">
+                                    @method('PATCH')
                                     <input type="hidden" name="action" value="decrement">
                                     <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
                                 </form>
@@ -52,10 +61,9 @@
                             </td>
                             <td>
                                 <!-- For removing items -->
-                                <form action="#" method="POST" class="d-inline">
+                                <form action="{{ route('panier.destroy', ['panier' => $item->id]) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
-                                    <input type="hidden" name="id" value="{{ $item->id }}">
                                     <button class="btn btn-md rounded-circle bg-light border mt-4">
                                         <i class="fa fa-times text-danger"></i>
                                     </button>
@@ -82,7 +90,7 @@
                         <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
                         <div class="d-flex justify-content-between mb-4">
                             <h5 class="mb-0 me-4">Subtotal:</h5>
-                            <p class="mb-0">${{ $total }}</p>
+                            <p class="mb-0">{{ $total }}dt</p>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h5 class="mb-0 me-4">Shipping</h5>
@@ -94,14 +102,18 @@
                     </div>
                     <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                         <h5 class="mb-0 ps-4 me-4">Total</h5>
-                        <p class="mb-0 pe-4">${{ $total + 3.00 }}</p>
+                        <p class="mb-0 pe-4">{{ $total + 7.00 }}dt</p>
                     </div>
-                    <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
+                    <form action="{{ route('commandes.store') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4">Proceed to Checkout</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <!-- Cart Page End -->
 
 @include('welcome.layout.footer')

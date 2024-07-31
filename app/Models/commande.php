@@ -18,8 +18,8 @@ class Commande extends Model
         return $this->belongsTo(Client::class);
     }
 
-    public function ligneCmds()
+    public function lignesCommande()
     {
-        return $this->hasMany(LigneCmd::class);
+        return $this->hasMany(ligneCmd::class, 'commande_id');
     }
 }

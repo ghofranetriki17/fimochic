@@ -2,84 +2,83 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ligneCmd;
 use Illuminate\Http\Request;
+use App\Models\ligneCmd;
 
 class LigneCmdController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Afficher la liste des lignes de commande.
      */
     public function index()
     {
-        //
+        $lignesCommande = ligneCmd::all();
+        return view('lignesCommande.index', compact('lignesCommande'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Afficher le formulaire de création d'une nouvelle ligne de commande.
      */
     public function create()
     {
-        //
+        return view('lignesCommande.create');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Enregistrer une nouvelle ligne de commande.
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'commande_id' => 'required|exists:commandes,id',
+            'produit_id' => 'required|exists:produits,id',
+            'quantite' => 'required|integer|min:1',
+        ]);
+
+        ligneCmd::create($request->all());
+
+        return redirect()->route('lignesCommande.index')->with('success', 'Ligne de commande ajoutée avec succès.');
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ligneCmd  $ligneCmd
-     * @return \Illuminate\Http\Response
+     * Afficher une ligne de commande spécifique.
      */
     public function show(ligneCmd $ligneCmd)
     {
-        //
+        return view('lignesCommande.show', compact('ligneCmd'));
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ligneCmd  $ligneCmd
-     * @return \Illuminate\Http\Response
+     * Afficher le formulaire de modification d'une ligne de commande.
      */
     public function edit(ligneCmd $ligneCmd)
     {
-        //
+        return view('lignesCommande.edit', compact('ligneCmd'));
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ligneCmd  $ligneCmd
-     * @return \Illuminate\Http\Response
+     * Mettre à jour une ligne de commande existante.
      */
     public function update(Request $request, ligneCmd $ligneCmd)
     {
-        //
+        $request->validate([
+            'commande_id' => 'required|exists:commandes,id',
+            'produit_id' => 'required|exists:produits,id',
+            'quantite' => 'required|integer|min:1',
+        ]);
+
+        $ligneCmd->update($request->all());
+
+        return redirect()->route('lignesCommande.index')->with('success', 'Ligne de commande mise à jour avec succès.');
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ligneCmd  $ligneCmd
-     * @return \Illuminate\Http\Response
+     * Supprimer une ligne de commande.
      */
     public function destroy(ligneCmd $ligneCmd)
     {
-        //
+        $ligneCmd->delete();
+
+        return redirect()->route('lignesCommande.index')->with('success', 'Ligne de commande supprimée avec succès.');
     }
 }
