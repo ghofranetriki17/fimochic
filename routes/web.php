@@ -79,4 +79,6 @@ Route::middleware('auth')->group(function () {
 });
 Route::resource('commandes', CommandeController::class);
 
-Route::get('/commandes/{id}', [ClientController::class, 'showOrderDetails'])->name('commandes.details');
+// Routes pour les commandes
+Route::get('/commandes/{id}', [CommandeController::class, 'show'])->name('commandes.show'); // Pour les détails de la commande (admin)
+Route::get('/commandes/details/{id}', [CommandeController::class, 'details'])->name('commandes.details'); // Pour les détails de la commande (client)

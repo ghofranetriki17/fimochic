@@ -68,12 +68,12 @@
             </a>
             <ul id="order-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="order-tracking.html">
+                    <a href="{{ route('commandes.index') }}">
                         <i class="bi bi-circle"></i><span>Suivi des Commandes</span>
                     </a>
                 </li>
                 <li>
-                    <a href="order-invoicing.html">
+                    <a href="{{ route('commandes.index') }}">
                         <i class="bi bi-circle"></i><span>Facturation Automatisée</span>
                     </a>
                 </li>

@@ -1,7 +1,7 @@
 @include('welcome.layout.head')
 @include('welcome.layout.nav')
 
-<div class="container">
+<div class="container mt-4">
     <h1>Mon Compte</h1>
 
     @if (session('success'))
@@ -35,33 +35,23 @@
             Mes Commandes
         </div>
         <div class="card-body">
-            <h5>Commandes En Attente</h5>
-            @if ($commandes->where('etat', 0)->count() > 0)
-                <ul class="list-group">
-                    @foreach ($commandes->where('etat', 0) as $commande)
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Commande #{{ $commande->id }} - {{ $commande->created_at }}
-                            <a href="{{ route('commandes.details', $commande->id) }}" class="btn btn-info btn-sm">Afficher</a>
-                        </li>
-                    @endforeach
-                </ul>
-            @else
-                <p>Aucune commande en attente.</p>
-            @endif
-
-            <h5 class="mt-4">Commandes Livrées</h5>
-            @if ($commandes->where('etat', 1)->count() > 0)
-                <ul class="list-group">
-                    @foreach ($commandes->where('etat', 1) as $commande)
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Commande #{{ $commande->id }} - {{ $commande->created_at }}
-                            <a href="{{ route('commandes.details', $commande->id) }}" class="btn btn-info btn-sm">Afficher</a>
-                        </li>
-                    @endforeach
-                </ul>
-            @else
-                <p>Aucune commande livrée.</p>
-            @endif
+            @foreach ($commandes as $commande)
+                <div class="timeline-item mt-4">
+                    <div class="timeline-content">
+                        <h5>Commande  {{ $commande->created_at->format('d M Y') }}</h5>
+                        <p><strong>Total :</strong> {{ $commande->prix}} DT</p>
+                        <a href="{{ route('commandes.details', $commande->id) }}" class="btn btn-info btn-sm">Afficher</a>
+                    </div>
+                    <div class="timeline">
+                        @for ($i = 0; $i <= 4; $i++)
+                            <div class="timeline-step {{ getStepClass($i, $commande->etat) }}">
+                                <div class="timeline-icon"></div>
+                                <div class="timeline-label">{{ getStepLabel($i) }}</div>
+                            </div>
+                        @endfor
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
 </div>
@@ -76,3 +66,88 @@
 </form>
 
 @include('welcome.layout.footer')
+
+<!-- Helper functions for status classes and labels -->
+@php
+function getStepClass($stepIndex, $currentStep) {
+    if ($stepIndex < $currentStep) {
+        return 'completed';
+    } elseif ($stepIndex == $currentStep) {
+        return 'current';
+    } else {
+        return 'upcoming';
+    }
+}
+
+function getStepLabel($stepIndex) {
+    switch ($stepIndex) {
+        case 0: return 'En attente';
+        case 1: return 'Confirmée';
+        case 2: return 'En stock/en fabrication';
+        case 3: return 'En route';
+        case 4: return 'Livrée';
+        default: return '';
+    }
+}
+@endphp
+<style>/* styles.css */
+
+/* Container for timeline */
+.timeline-item {
+    position: relative;
+    padding: 10px 0;
+}
+
+.timeline {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 30px;
+    margin-top: 20px;
+}
+
+.timeline-step {
+    position: relative;
+    flex: 1;
+    text-align: center;
+}
+
+.timeline-step .timeline-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #ddd;
+    margin: 0 auto;
+    position: relative;
+}
+
+.timeline-step .timeline-label {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #555;
+}
+
+/* Status colors */
+.timeline-step.completed .timeline-icon {
+    background-color: #32cd32; /* Vert lime pour complété */
+}
+
+.timeline-step.current .timeline-icon {
+    background-color: #1e90ff; /* Bleu pour en cours */
+}
+
+.timeline-step.upcoming .timeline-icon {
+    background-color: #ccc; /* Gris pour à venir */
+}
+
+.timeline-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    width: 100%;
+    height: 2px;
+    background-color: #ddd;
+    z-index: -1;
+}
+</style>

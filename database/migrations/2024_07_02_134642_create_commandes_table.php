@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('adresse')->nullable();
             $table->date('date_cmd');
             $table->date('date_estimee_liv');
-            $table->boolean('etat');
+            $table->integer('etat');
             $table->unsignedBigInteger('client_id');
             $table->timestamps();
 
