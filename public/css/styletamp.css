@@ -359,6 +359,36 @@ color:white;
         opacity: 0;
     }
 }
+.banner {
+    background-color: #ffdc97db !important;  /* Couleur très claire pour le fond de la bannière */
+    color: #e734c3; /* Couleur rose pour le texte */
+    padding: 20px 0;
+}
+
+.banner h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #e734c3; /* Couleur rose du titre */
+}
+
+.banner p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #e734c3; /* Couleur rose du texte */
+}
+
+.banner-btn {
+    font-size: 18px;
+    text-transform: uppercase;
+    border-color: #e734c3; /* Couleur de la bordure du bouton en rose */
+    background-color: #ffffff; /* Couleur de fond du bouton en blanc */
+    color: #e734c3; /* Couleur du texte du bouton en rose */
+}
+
+.banner-btn:hover {
+    background-color: #e734c3 !important; /* Couleur de fond du bouton au survol en rose */
+    color: #ffffff; /* Couleur du texte du bouton au survol en blanc */
+}
 
 .dropdown .dropdown-menu a:hover {
     background: var(--bs-secondary);
