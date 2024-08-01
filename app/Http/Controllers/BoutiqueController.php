@@ -73,7 +73,7 @@ class BoutiqueController extends Controller
         }
         
         // Récupérer les produits filtrés et triés
-        $produits = $produits->with('promotions')->paginate(12);
+        $produits = $produits->with(['promotions', 'galleries'])->paginate(12);
         
         // Récupérer toutes les galeries
         $galleries = Gallery::all();
@@ -84,18 +84,16 @@ class BoutiqueController extends Controller
         })->with('valeurs')->get();
         
         // Déterminer les produits ajoutés dans les 15 derniers jours
-        $date15Jours = Carbon::now()->subDays(15);
+        $date15Jours = Carbon::now()->subDays(30);
         $nouveauxProduits = Produit::where('date_ajout', '>=', $date15Jours)->get();
         
         // Récupérer les produits en promotion
-        $produitsEnPromo = Produit::whereHas('promotions', function ($query) {
-        })->get();
+        $produitsEnPromo = Produit::whereHas('promotions')->get();
         
         // Récupérer tous les types de produits
         $types = Produit::distinct()->pluck('type');
         
         return view('boutique.index', compact('produits', 'galleries', 'produitsEnPromo', 'attributs', 'bestSellers', 'minPrice', 'maxPrice', 'nouveauxProduits', 'types'));
     }
-    
-    
 }
+

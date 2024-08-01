@@ -59,110 +59,6 @@
 <!-- Hero End -->
 
 
-
-
-
-
-<!-- Section Best Sellers -->
-<div class="container py-5">
-    <h1>Meilleures Ventes</h1>
-    <div class="product-navigation">
-        <button class="nav-btn" id="prev"></button>
-        <button class="nav-btn" id="next"></button>
-
-        <div class="product-container">
-            <div class="d-flex"> <!-- Utiliser flexbox pour tous les produits sur la même ligne -->
-                @foreach($bestSellers as $produit)
-                    <div class="fruite-item best">
-                        <div class="fruite-img">
-                            <img src="{{ asset('img/' . $produit->image) }}" class="img-fluid w-100 rounded-top" alt="">
-                            <div class="bestr text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
-                                Best sellers
-                            </div>
-                            <div class="icon-container">
-                                <a href="#" class="eye-icon" title="Voir Détails">
-                                    <i class="fa fa-eye"></i>
-                                </a>
-                                <a href="#" class="cart-icon" title="Ajouter au Panier">
-                                    <i class="fa fa-shopping-bag"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                            <h4>{{ $produit->name }}</h4>
-                            <h6>prix:{{ $produit->prix }}dt</h6>
-
-                           
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-document.getElementById('next').onclick = function() {
-    document.querySelector('.product-container').scrollBy({ left: 300, behavior: 'smooth' });
-};
-document.getElementById('prev').onclick = function() {
-    document.querySelector('.product-container').scrollBy({ left: -300, behavior: 'smooth' });
-};
-</script>
-
-  <!-- Featurs Section Start -->
-<div class="container-fluid featurs py-5">
-    <div class="container py-5">
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-3">
-                <div class="featurs-item text-center rounded bg-fcbff8 p-4">
-                    <div class="featurs-icon btn-square rounded-circle bg-b9fac3 mb-5 mx-auto">
-                        <i class="fas fa-car-side fa-3x text-white"></i>
-                    </div>
-                    <div class="featurs-content text-center">
-                        <h5 class="text-b9bbfa">Livraison Gratuite</h5>
-                        <p class="mb-0">Gratuite sur les commandes de plus de 300 DT</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="featurs-item text-center rounded bg-fcbff8 p-4">
-                    <div class="featurs-icon btn-square rounded-circle bg-b9fac3 mb-5 mx-auto">
-                        <i class="fas fa-user-shield fa-3x text-white"></i>
-                    </div>
-                    <div class="featurs-content text-center">
-                        <h5 class="text-b9bbfa">Paiement Sécurisé</h5>
-                        <p class="mb-0">100% de sécurité lors du paiement</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="featurs-item text-center rounded bg-fcbff8 p-4">
-                    <div class="featurs-icon btn-square rounded-circle bg-b9fac3 mb-5 mx-auto">
-                        <i class="fas fa-exchange-alt fa-3x text-white"></i>
-                    </div>
-                    <div class="featurs-content text-center">
-                        <h5 class="text-b9bbfa">Retour de 30 Jours</h5>
-                        <p class="mb-0">Garantie de remboursement de 30 jours</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="featurs-item text-center rounded bg-fcbff8 p-4">
-                    <div class="featurs-icon btn-square rounded-circle bg-b9fac3 mb-5 mx-auto">
-                        <i class="fa fa-phone-alt fa-3x text-white"></i>
-                    </div>
-                    <div class="featurs-content text-center">
-                        <h5 class="text-b9bbfa">Support 24/7</h5>
-                        <p class="mb-0">Support rapide à tout moment</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Featurs Section End -->
-
 <!-- Fruits Shop Start -->
 <div class="container-fluid fruite py-5">
     <div class="container py-5">
@@ -234,11 +130,6 @@ document.getElementById('prev').onclick = function() {
 </script>
 
 <!-- Fruits Shop End -->
-
-
-
-
-
 
 <!-- Features Start -->
 <!-- Features Start -->
@@ -312,38 +203,106 @@ document.getElementById('prev').onclick = function() {
     </div>
 </div>
 <!-- Features End -->
+<!-- Section Porte-Clés -->
+<div class="container py-5">
+    <h1>Porte-Clés</h1>
+    <div class="product-navigation">
+        <button class="nav-btn" id="prev"></button>
+        <button class="nav-btn" id="next"></button>
+
+        <div class="product-container">
+            <div class="d-flex"> <!-- Utiliser flexbox pour tous les produits sur la même ligne -->
+                @foreach($keychains as $porteClef)
+                    <div class="fruite-item porte-clef-item">
+                        <div class="fruite-img porte-clef-img">
+                            <img src="{{ asset('img/' . $porteClef->image) }}" class="img-fluid w-100 rounded-top" alt="{{ $porteClef->name }}">
+                            <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">
+                                Porte-clef
+                            </div>
+                            <div class="icon-container">
+                                <a href="#" class="eye-icon" title="Voir Détails">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a href="#" class="cart-icon" title="Ajouter au Panier">
+                                    <i class="fa fa-shopping-bag"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                            <h4>{{ $porteClef->name }}</h4>
+                            <p>{{ $porteClef->description }}</p>
+                            <div class="d-flex justify-content-between flex-lg-wrap">
+                                <p class="text-dark fs-5 fw-bold mb-0">{{ $porteClef->prix }} DT</p>
+                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                    <i class="fa fa-shopping-bag me-2 text-primary"></i> Ajouter au panier
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('next').onclick = function() {
+    document.querySelector('.product-container').scrollBy({ left: 300, behavior: 'smooth' });
+};
+document.getElementById('prev').onclick = function() {
+    document.querySelector('.product-container').scrollBy({ left: -300, behavior: 'smooth' });
+};
+</script>
 
 <!-- Features End -->
 
 
-    <!-- Vesitable Shop Start-->
-    <div class="container-fluid vesitable py-5">
-        <div class="container py-5">
-            <h1 class="mb-0">Fresh Organic Vegetables</h1>
-            <div class="owl-carousel vegetable-carousel justify-content-center">
-                
-                <div class="border border-primary rounded position-relative vesitable-item">
-                    <div class="vesitable-img">
-                        <img src="img/vegetable-item-1.jpg" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
-                        style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 rounded-bottom">
-                        <h4>Parsely</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+<!-- Section Best Sellers -->
+<div class="container py-5">
+    <h1>Meilleures Ventes</h1>
+    <div class="product-navigation">
+        <button class="nav-btn" id="prev"></button>
+        <button class="nav-btn" id="next"></button>
+
+        <div class="product-container">
+            <div class="d-flex"> <!-- Utiliser flexbox pour tous les produits sur la même ligne -->
+                @foreach($bestSellers as $produit)
+                    <div class="fruite-item best">
+                        <div class="fruite-img">
+                            <img src="{{ asset('img/' . $produit->image) }}" class="img-fluid w-100 rounded-top" alt="">
+                            <div class="bestr text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
+                                Best sellers
+                            </div>
+                            <div class="icon-container">
+                                <a href="#" class="eye-icon" title="Voir Détails">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a href="#" class="cart-icon" title="Ajouter au Panier">
+                                    <i class="fa fa-shopping-bag"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                            <h4>{{ $produit->name }}</h4>
+                            <h6>prix:{{ $produit->prix }}dt</h6>
+
+                           
                         </div>
                     </div>
-                </div>
-              
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
-    <!-- Vesitable Shop End -->
+</div>
+
+<script>
+document.getElementById('next').onclick = function() {
+    document.querySelector('.product-container').scrollBy({ left: 300, behavior: 'smooth' });
+};
+document.getElementById('prev').onclick = function() {
+    document.querySelector('.product-container').scrollBy({ left: -300, behavior: 'smooth' });
+};
+</script>
 
 
    <!-- Banner Section Start -->
@@ -369,6 +328,70 @@ document.getElementById('prev').onclick = function() {
     </div>
 </div>
 <!-- Banner Section End -->
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Featurs Section Start -->
+  <div class="container-fluid featurs py-5">
+    <div class="container py-5">
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="featurs-item text-center rounded bg-fcbff8 p-4">
+                    <div class="featurs-icon btn-square rounded-circle bg-b9fac3 mb-5 mx-auto">
+                        <i class="fas fa-car-side fa-3x text-white"></i>
+                    </div>
+                    <div class="featurs-content text-center">
+                        <h5 class="text-b9bbfa">Livraison Gratuite</h5>
+                        <p class="mb-0">Gratuite sur les commandes de plus de 300 DT</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="featurs-item text-center rounded bg-fcbff8 p-4">
+                    <div class="featurs-icon btn-square rounded-circle bg-b9fac3 mb-5 mx-auto">
+                        <i class="fas fa-user-shield fa-3x text-white"></i>
+                    </div>
+                    <div class="featurs-content text-center">
+                        <h5 class="text-b9bbfa">Paiement Sécurisé</h5>
+                        <p class="mb-0">100% de sécurité lors du paiement</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="featurs-item text-center rounded bg-fcbff8 p-4">
+                    <div class="featurs-icon btn-square rounded-circle bg-b9fac3 mb-5 mx-auto">
+                        <i class="fas fa-exchange-alt fa-3x text-white"></i>
+                    </div>
+                    <div class="featurs-content text-center">
+                        <h5 class="text-b9bbfa">Retour de 30 Jours</h5>
+                        <p class="mb-0">Garantie de remboursement de 30 jours</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="featurs-item text-center rounded bg-fcbff8 p-4">
+                    <div class="featurs-icon btn-square rounded-circle bg-b9fac3 mb-5 mx-auto">
+                        <i class="fa fa-phone-alt fa-3x text-white"></i>
+                    </div>
+                    <div class="featurs-content text-center">
+                        <h5 class="text-b9bbfa">Support 24/7</h5>
+                        <p class="mb-0">Support rapide à tout moment</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Featurs Section End -->
 
 
     <!-- Bestsaler Product Start -->

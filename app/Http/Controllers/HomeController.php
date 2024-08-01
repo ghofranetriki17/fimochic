@@ -30,8 +30,9 @@ class HomeController extends Controller
         $bestSellers = Produit::whereHas('valeurs', function ($query) {
             $query->where('nom', 'Best Sellers');
         })->with('valeurs')->get();
-    
-        return view('welcome', compact('groupedProducts', 'bestSellers'));
+        $keychains = Produit::where('type', 'porte-clef')->with('valeurs')->get();
+
+        return view('welcome', compact('keychains','groupedProducts', 'bestSellers'));
     }
     
     
