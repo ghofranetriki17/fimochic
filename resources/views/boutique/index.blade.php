@@ -1,6 +1,134 @@
 @include('welcome.layout.head')
 @include('welcome.layout.nav')
 <style>
+    /* Style général des titres */
+.filter-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #d63384; /* Couleur rose foncé */
+    margin-bottom: 20px;
+}
+
+/* Conteneur pour les plages de valeurs */
+.range-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.range-container .form-range {
+    -webkit-appearance: none; /* Retire le style par défaut du slider */
+    background: #f5d7dc; /* Fond rosé clair pour le slider */
+    height: 8px; /* Hauteur du slider */
+    border-radius: 5px; /* Coins arrondis */
+    width: calc(100% - 100px); /* Ajuste la largeur pour laisser de l'espace pour les valeurs */
+    margin: 0;
+}
+
+.range-container .form-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #d63384; /* Couleur rose foncé pour le curseur */
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.range-container .form-range::-moz-range-thumb {
+    background: #d63384;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.range-container output {
+    font-size: 1rem;
+    color: #d63384; /* Couleur rose foncé pour les valeurs */
+    width: 80px;
+    text-align: center;
+}
+
+/* Style du bouton de filtre */
+.btn-primary {
+    background-color: #d63384; /* Couleur rosé foncé */
+    border: none;
+    border-radius: 5px; /* Coins arrondis */
+    padding: 10px 20px;
+    color: white;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: white !important; /* Couleur rosé plus foncé au survol */
+    color: #d63384;
+
+}
+.nouveaux-produits {
+    margin-top: 40px;
+    height: 500px; /* Ajustez la valeur en fonction de vos besoins */
+}
+
+
+    /* Style général des titres */
+.filter-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #d63384; /* Couleur rose foncé */
+    margin-bottom: 20px; /* Espacement sous le titre */
+}
+
+/* Style de la liste de filtres */
+.list-group {
+    border: none; /* Retire la bordure par défaut */
+    background-color: transparent; /* Fond transparent */
+}
+
+.list-group-item {
+    border: 1px solid #f8d7da; /* Bordure légère en rose clair */
+    border-radius: 8px; /* Coins arrondis */
+    margin-bottom: 5px; /* Espacement entre les éléments */
+    background-color: #fff0f6; /* Fond légèrement rosé */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Transition douce */
+}
+
+.list-group-item:hover {
+    background-color: #f7c6c9; /* Couleur de fond au survol en rose plus intense */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre portée au survol */
+}
+
+/* Style des boutons */
+.btn-link {
+    color: #d63384; /* Couleur du texte en rose foncé */
+    text-decoration: none; /* Retire le soulignement */
+    font-weight: 600; /* Texte en gras */
+    transition: color 0.3s; /* Transition douce pour la couleur */
+}
+
+.btn-link:hover {
+    color: #c8235c; /* Couleur du texte au survol en rose plus foncé */
+}
+
+/* Style des sous-listes */
+.collapse .list-group {
+    padding-left: 0; /* Retire le padding gauche */
+}
+
+.collapse .list-group-item {
+    border: none; /* Retire la bordure des éléments internes */
+    background-color: #fff0f6; /* Fond rosé pour les sous-listes */
+}
+
+.collapse .list-group-item a {
+    color: #d63384; /* Couleur du texte des liens en rose foncé */
+    text-decoration: none; /* Retire le soulignement des liens */
+}
+
+.collapse .list-group-item a:hover {
+    color: #c8235c; /* Couleur du texte au survol des liens en rose plus foncé */
+}
+
     .modal-content {
     border-radius: 15px;
     overflow: hidden;
@@ -189,66 +317,61 @@
     border-color: #ff8f9c;
 }
 
-
-/* Conteneur de la pagination */
+/* Styles CSS girly pour la pagination */
 .pagination {
     display: flex;
     justify-content: center;
-    padding: 1rem 0;
-    margin: 0;
+    margin-top: 20px;
 }
 
-/* Liens de pagination */
+.pagination .page-item {
+    margin: 0 5px;
+}
+
 .pagination .page-link {
-    display: block;
-    padding: 0.5rem 1rem;
-    margin: 0 0.1rem;
-    border: 1px solid #ddd;
-    border-radius: 0.25rem;
-    color: #007bff; /* Couleur des liens */
-    text-decoration: none;
-    font-size: 0.9rem;
-    background-color: #fff;
-    transition: background-color 0.3s, color 0.3s;
+    color: #ff69b4; /* Couleur de texte rose vif */
+    background-color: #ffe4e1; /* Fond rose pâle */
+    border: 1px solid #ffb6c1; /* Bordure rose clair */
+    padding: 8px 12px; /* Espacement pour les liens de pagination */
+    border-radius: 50%; /* Arrondir les bords des liens de pagination */
+    transition: background-color 0.3s, color 0.3s; /* Animation de transition pour le survol */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ajout d'une légère ombre */
 }
 
-/* Liens de pagination au survol */
 .pagination .page-link:hover {
-    background-color: #e9ecef; /* Couleur de fond au survol */
-    color: #0056b3; /* Couleur du texte au survol */
+    color: #ffffff; /* Couleur du texte au survol */
+    background-color: #ff69b4; /* Couleur de fond au survol */
+    border-color: #ff69b4; /* Bordure au survol */
 }
 
-/* Liens de pagination désactivés */
-.pagination .page-item.disabled .page-link {
-    color: #6c757d;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    cursor: not-allowed;
-}
-
-/* Liens de pagination actifs */
 .pagination .page-item.active .page-link {
-    background-color: #007bff; /* Couleur de fond pour l'élément actif */
-    color: #fff; /* Couleur du texte pour l'élément actif */
-    border-color: #007bff; /* Couleur de la bordure pour l'élément actif */
+    z-index: 1;
+    color: #ffffff; /* Couleur du texte pour la page active */
+    background-color: #ff1493; /* Couleur de fond pour la page active */
+    border-color: #ff1493; /* Bordure pour la page active */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Ombre plus prononcée pour la page active */
 }
 
-/* Flèches de pagination */
-.pagination .page-item .page-link i {
-    font-size: 1rem; /* Taille des icônes de navigation */
+.pagination .page-item.disabled .page-link {
+    color: #ffc0cb; /* Couleur du texte pour les liens désactivés */
+    background-color: #fff0f5; /* Fond pour les liens désactivés */
+    border-color: #ffc0cb; /* Bordure pour les liens désactivés */
 }
+
 /* Styles pour la section des nouveaux produits */
 .nouveaux-produits {
     padding: 20px;
-    background-color: #f5f5f5; /* Utilisation d'une couleur douce pour l'arrière-plan */
+    background-color: #d59cffdb; /* Utilisation d'une couleur douce pour l'arrière-plan */
     border-radius: 8px;
 }
 
 .nouveaux-produits h2 {
     font-size: 2em;
-    color: #333; /* Couleur sombre pour le titre */
+    font-family: Arial, sans-serif ;
+    color: #783f86; /* Couleur sombre pour le titre */
     margin-bottom: 20px;
     text-align: center;
+    margin-top: 10px;
 }
 
 .produits-list {
@@ -588,45 +711,50 @@
 <div class="row g-4">
 <div class="col-lg-3">
     <div class="row g-4">
-        <!-- Categories -->
-        <div class="col-lg-12">
-            <div class="mb-3">
-                <h4>filtres</h4>
-                <ul class="list-group">
-                    @foreach($attributs as $attribut)
-                        <li class="list-group-item">
-                            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $attribut->id }}" aria-expanded="false" aria-controls="collapse{{ $attribut->id }}">
-                                {{ $attribut->nom }}
-                            </button>
-                            <div class="collapse" id="collapse{{ $attribut->id }}">
-                                <ul class="list-group mt-2">
-                                    @foreach($attribut->valeurs as $valeur)
-                                        <li class="list-group-item">
-                                            <a href="{{ route('boutique.index', ['valeur_id' => $valeur->id]) }}">
-                                                {{ $valeur->nom }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
- <!-- Filtre de Prix -->
+      <!-- Categories -->
 <div class="col-lg-12">
     <div class="mb-3">
-        <h4 class="mb-2">Prix</h4>
+        <h4 class="filter-title">Filtres</h4>
+        <ul class="list-group">
+            @foreach($attributs as $attribut)
+                <li class="list-group-item">
+                    <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $attribut->id }}" aria-expanded="false" aria-controls="collapse{{ $attribut->id }}">
+                        {{ $attribut->nom }}
+                    </button>
+                    <div class="collapse" id="collapse{{ $attribut->id }}">
+                        <ul class="list-group mt-2">
+                            @foreach($attribut->valeurs as $valeur)
+                                <li class="list-group-item">
+                                    <a href="{{ route('boutique.index', ['valeur_id' => $valeur->id]) }}">
+                                        {{ $valeur->nom }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+</div>
+<!-- Filtre de Prix -->
+<div class="col-lg-12">
+    <div class="mb-3">
+        <h4 class="filter-title">Prix</h4>
         <form method="GET" action="{{ route('boutique.index') }}">
-            <input type="range" class="form-range w-100" id="rangeMin" name="price_min" min="{{ $minPrice }}" max="{{ $maxPrice }}" value="{{ $minPrice }}" oninput="updateMinValue(this.value)">
-            <output id="minAmount" name="minAmount">{{ $minPrice }}</output>
-            <input type="range" class="form-range w-100" id="rangeMax" name="price_max" min="{{ $minPrice }}" max="{{ $maxPrice }}" value="{{ $maxPrice }}" oninput="updateMaxValue(this.value)">
-            <output id="maxAmount" name="maxAmount">{{ $maxPrice }}</output>
+            <div class="range-container">
+                <input type="range" class="form-range" id="rangeMin" name="price_min" min="{{ $minPrice }}" max="{{ $maxPrice }}" value="{{ $minPrice }}" oninput="updateMinValue(this.value)">
+                <output id="minAmount">{{ $minPrice }}</output>
+            </div>
+            <div class="range-container mt-3">
+                <input type="range" class="form-range" id="rangeMax" name="price_max" min="{{ $minPrice }}" max="{{ $maxPrice }}" value="{{ $maxPrice }}" oninput="updateMaxValue(this.value)">
+                <output id="maxAmount">{{ $maxPrice }}</output>
+            </div>
             <button type="submit" class="btn btn-primary mt-2">Filtrer</button>
         </form>
     </div>
 </div>
+
 
 <script>
     function updateMinValue(val) {
@@ -638,13 +766,111 @@
     }
 </script>
 
-        
+        <!-- Create Your Earrings Section Start -->
+<!-- Create Your Earrings Section Start -->
+<div class="container-fluid create-earrings-section py-3" id="create-earrings-section">
+    <div class="text-center">
+        <h4  id="create-earrings-title">Créez Vos Boucles d'Oreilles!</h4>
+        <p  id="create-earrings-description">Exprimez votre créativité avec des boucles d'oreilles uniques. Utilisez notre outil de personnalisation pour donner vie à vos idées!</p>
+        <a href="/page-customize" class="btn btn-primary btn-md" id="create-earrings-button">Commencez à Créer</a>
+    </div>
+</div>
+<style>#create-earrings-section {
+    background-color: #f5f7fa; /* Pastel Blue */
+    border-radius: 8px;
+    padding: 20px;
+}
+
+#create-earrings-title {
+    color: #6c757d; /* Pastel Gray */
+}
+
+#create-earrings-description {
+    color: #495057; /* Pastel Dark Gray */
+}
+
+#create-earrings-button {
+    background-color: #d1e7dd; /* Pastel Green */
+    border-color: #d1e7dd; /* Match border color with background */
+}
+
+#create-earrings-button:hover {
+    background-color: #cff4fc; /* Pastel Teal */
+    border-color: #cff4fc; /* Match border color with background */
+}
+</style>
+
+ <!-- Section Produits en Promotion -->
+ <div class="container py-5">
+    <h4 class="text-center mb-4">À ne pas rater!</h4>
+    <div id="produitsEnPromotionCarousel" class="carousel slide">
+        <div class="carousel-inner">
+            @forelse($produitsEnPromo->chunk(1) as $chunk)
+                <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                    <div class="d-flex flex-wrap gap-3 justify-content-center">
+                        @foreach($chunk as $produit)
+                            <div class="product-card">
+                                <img src="{{ asset('img/' . $produit->image) }}" alt="{{ $produit->name }}">
+                                <div class="card-body">
+                                    <h4>{{ $produit->name }}</h4>
+                                    @if($produit->promotions->isNotEmpty())
+                                        @php
+                                            $promotion = $produit->promotions->first();
+                                        @endphp
+                                        <p class="text-dark fs-5 fw-bold mb-0">
+                                            <span class="text-decoration-line-through">{{ $produit->prix }} DT</span>
+                                            <span class="text-danger ms-2">{{ $promotion->new_price }} DT</span>
+                                        </p>
+                                    @else
+                                        <p class="text-dark fs-5 fw-bold mb-0">{{ $produit->prix }} DT</p>
+                                    @endif
+                                    <div class="icon-container">
+                                        <!-- Formulaire d'ajout au panier -->
+                                        <form action="{{ route('panier.store') }}" method="POST" style="display: inline;">
+                                            @csrf
+                                            <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+                                            <input type="hidden" name="quantite" value="1" min="1" class="quantity-input">
+                                            <button type="submit" class="btn-icon cart-icon">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </button>
+                                        </form>
+                                        <!-- Lien vers la fenêtre modal -->
+                                        <button type="button" class="btn-icon eye-icon" data-bs-toggle="modal" data-bs-target="#producttttModal{{ $produit->id }}">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @empty
+                <div class="carousel-item active">
+                    <div class="text-center">
+                        <p>Aucun produit en promotion pour le moment.</p>
+                    </div>
+                </div>
+            @endforelse
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#produitsEnPromotionCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Précédent</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#produitsEnPromotionCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Suivant</span>
+        </button>
+    </div>
+</div>
+<!-- Create Your Earrings Section End -->
+
+<!-- Create Your Earrings Section End -->
+
 
 
     
     </div>
 </div>
-
 
 <!-- Products Display -->
 <div class="col-lg-9">
@@ -652,7 +878,7 @@
         @foreach($types as $type)
             <a href="{{ route('boutique.index', ['type' => $type]) }}" class="btn btn-primary">{{ $type }}</a>
         @endforeach
-        <a href="{{ route('boutique.index') }}" class="btn btn-secondary">Tous</a>
+        <a href="{{ route('boutique.index') }}" class="btn btn-primary">Tous</a>
     </div>
 
     <div class="row g-4 justify-content-center">
@@ -790,103 +1016,37 @@
                                         <h4>{{ $produit->name }}</h4>
                                         <p class="text-muted">{{ $produit->categorie }}</p>
                                         <p>{{ $produit->description }}</p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <p class="text-dark fs-5 fw-bold mb-0">
-                                                @if($produit->promotions->isNotEmpty())
-                                                    <span class="text-decoration-line-through">{{ $produit->prix }} DT</span>
-                                                    <span class="text-danger ms-2">{{ $produit->promotions->first()->new_price }} DT</span>
-                                                @else
-                                                    {{ $produit->prix }} DT
-                                                @endif
-                                            </p>
-                                            <form action="{{ route('panier.store') }}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="produit_id" value="{{ $produit->id }}">
-                                                <input type="hidden" name="quantite" value="1" min="1" class="quantity-input">
-                                                <button type="submit" class="btn btn-primary">Ajouter au Panier</button>
-                                            </form>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <form action="{{ route('panier.store') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+                                <input type="hidden" name="quantite" value="1" min="1" class="quantity-input">
+                                <button type="submit" class="btn btn-primary">Ajouter au Panier</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         @endforeach
     </div>
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center">
+        {{ $produits->links('pagination::bootstrap-4') }}
+    </div>
 </div>
+
+
 
 
 </div>
 <!-- Sort and Search End -->
  
 
- <!-- Section Produits en Promotion -->
-<div class="container py-5">
-    <h1 class="text-center mb-4">Offre Spéciale en Cours!</h1>
-    <div id="produitsEnPromotionCarousel" class="carousel slide">
-        <div class="carousel-inner">
-            @forelse($produitsEnPromo->chunk(3) as $chunk)
-                <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                    <div class="d-flex flex-wrap gap-3 justify-content-center">
-                        @foreach($chunk as $produit)
-                            <div class="product-card">
-                                <img src="{{ asset('img/' . $produit->image) }}" alt="{{ $produit->name }}">
-                                <div class="card-body">
-                                    <h4>{{ $produit->name }}</h4>
-                                    @if($produit->promotions->isNotEmpty())
-                                        @php
-                                            $promotion = $produit->promotions->first();
-                                        @endphp
-                                        <p class="text-dark fs-5 fw-bold mb-0">
-                                            <span class="text-decoration-line-through">{{ $produit->prix }} DT</span>
-                                            <span class="text-danger ms-2">{{ $promotion->new_price }} DT</span>
-                                        </p>
-                                    @else
-                                        <p class="text-dark fs-5 fw-bold mb-0">{{ $produit->prix }} DT</p>
-                                    @endif
-                                    <div class="icon-container">
-                                        <!-- Formulaire d'ajout au panier -->
-                                        <form action="{{ route('panier.store') }}" method="POST" style="display: inline;">
-                                            @csrf
-                                            <input type="hidden" name="produit_id" value="{{ $produit->id }}">
-                                            <input type="hidden" name="quantite" value="1" min="1" class="quantity-input">
-                                            <button type="submit" class="btn-icon cart-icon">
-                                                <i class="fas fa-shopping-cart"></i>
-                                            </button>
-                                        </form>
-                                        <!-- Lien vers la fenêtre modal -->
-                                        <button type="button" class="btn-icon eye-icon" data-bs-toggle="modal" data-bs-target="#producttttModal{{ $produit->id }}">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            @empty
-                <div class="carousel-item active">
-                    <div class="text-center">
-                        <p>Aucun produit en promotion pour le moment.</p>
-                    </div>
-                </div>
-            @endforelse
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#produitsEnPromotionCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Précédent</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#produitsEnPromotionCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Suivant</span>
-        </button>
-    </div>
-</div>
 
 <!-- Fenêtres modales pour chaque produit -->
 @foreach($produitsEnPromo as $produit)
@@ -957,13 +1117,5 @@
     </div>
 @endforeach
 
- <!-- Create Your Earrings Section Start -->
- <div class="container-fluid create-earrings-section py-5">
-    <div class="text-center">
-        <h2 class="display-4 text-primary mb-4">Créez Vos Propre Boucles d'Oreilles!</h2>
-        <p class="lead text-secondary mb-4">Exprimez votre créativité et concevez des boucles d'oreilles uniques qui reflètent votre style personnel. Utilisez notre outil de personnalisation pour voir vos idées prendre vie!</p>
-        <a href="/page-customize" class="btn btn-primary btn-lg">Commencez à Créer</a>
-    </div>
-</div>
-<!-- Create Your Earrings Section End -->
+
 @include('welcome.layout.footer')

@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Produit;
 
+use App\Models\Produit;
+use App\Models\Gallery;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
-{public function index()
+{
+    public function index()
     {
         $desiredValues = ['Été', 'Tendance/Mode', 'Quotidien', 'Travail/Professionnel'];
     
@@ -30,19 +32,19 @@ class HomeController extends Controller
         $bestSellers = Produit::whereHas('valeurs', function ($query) {
             $query->where('nom', 'Best Sellers');
         })->with('valeurs')->get();
-        $keychains = Produit::where('type', 'porte-clef')->with('valeurs')->get();
-
-        return view('welcome', compact('keychains','groupedProducts', 'bestSellers'));
-    }
-    
-    
-    
-    
-    
-    
         
-    
-    
+        // Récupérer les produits de type porte-clé
+        $keychains = Produit::where('type', 'porte-clef')->with('valeurs')->get();
+        
+        // Paginator pour les produits
+        $produits = Produit::with(['promotions', 'galleries'])->paginate(9);
+        
+        // Récupérer toutes les galeries
+        $galleries = Gallery::all();
+        $produitsEnPromo = Produit::whereHas('promotions')->get();
+
+        return view('welcome', compact('produits', 'galleries', 'produitsEnPromo', 'keychains', 'groupedProducts', 'bestSellers'));
+    }
 
     public function create()
     {
