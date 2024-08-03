@@ -361,7 +361,6 @@
 /* Styles pour la section des nouveaux produits */
 .nouveaux-produits {
     padding: 20px;
-    background-color: #d59cffdb; /* Utilisation d'une couleur douce pour l'arrière-plan */
     border-radius: 8px;
 }
 
@@ -443,6 +442,25 @@
     margin: 0; /* Pas d'espacement entre les images */
 }
 
+/* Base styles for the text */
+.text-content {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+/* Animation for fading in and out */
+.fade-in-out {
+    animation: fadeInOut 10s infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
 
 </style>
 
@@ -454,18 +472,63 @@
 
 <!-- Shop Page Header with QR Code Introduction Start -->
 <div class="container-fluid page-header py-3">
-    <h1 class="text-center text-white display-4">Bienvenue à Notre Boutique</h1>
-    <!-- QR Code Introduction Section Start -->
-<div class="container-fluid qr-code-section py-3">
-    <div class="text-center mb-4">
-        <h2 class="display-5 text-primary">Essayez Nos Boucles d'Oreilles Virtuellement!</h2>
-        <p class="lead text-secondary">Scannez le code QR unique associé à chaque produit pour voir comment il vous va grâce à notre technologie de réalité augmentée!</p>
-    </div>
     
+    <!-- QR Code Introduction Section Start -->
+    <div class="text-center mb-4">
+        <h3 class="display-5 text-primary" id="intro-title"></h3>
+        <p class="lead text-secondary" id="intro-description"></p>
+    </div>
+    <!-- QR Code Introduction Section End -->
 </div>
-<!-- QR Code Introduction Section End -->
 
-</div>
+
+<!-- Add the following JavaScript at the bottom of your Blade template or in a separate JS file -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const phrases = [
+        { title: 'Bienvenue à Notre Boutique', description: '' },
+        { title: 'Des Créations Uniques en Fimo', description: 'Plongez dans notre collection exceptionnelle de bijoux faits main, où chaque pièce raconte une histoire.' },
+
+        { title: 'Découvrez Nos Produits en 3D', description: 'Vivez une expérience immersive en scannant le code QR pour voir nos créations en réalité augmentée, comme si vous les aviez déjà en main.' },
+        { title: 'Concevez Votre Chef-d\'Œuvre Personnel', description: 'Rendez votre pièce vraiment unique en visitant notre page de personnalisation et en ajoutant votre touche personnelle.' },
+
+        { title: 'Cadeaux Personnalisés à Votre Image', description: 'Transformez chaque occasion en un souvenir inoubliable avec nos boîtes sur-mesure, créées selon vos préférences et vos célébrations.' }
+    ];
+
+    let currentIndex = 0;
+
+    function showPhrase(index) {
+        const titleElement = document.getElementById('intro-title');
+        const descriptionElement = document.getElementById('intro-description');
+
+        titleElement.textContent = phrases[index].title;
+        descriptionElement.textContent = phrases[index].description;
+
+        // Add fade-in-out class for animation
+        titleElement.classList.add('fade-in-out');
+        descriptionElement.classList.add('fade-in-out');
+
+        // Remove class after animation to allow reapplication
+        setTimeout(() => {
+            titleElement.classList.remove('fade-in-out');
+            descriptionElement.classList.remove('fade-in-out');
+        }, 10000); // 10 seconds matches the animation duration
+    }
+
+    function cyclePhrases() {
+        currentIndex = (currentIndex + 1) % phrases.length;
+        showPhrase(currentIndex);
+    }
+
+    // Show the first phrase initially
+    showPhrase(currentIndex);
+
+    // Cycle through phrases every 10 seconds
+    setInterval(cyclePhrases, 10000);
+});
+
+</script>
+
  
 
 
@@ -480,188 +543,10 @@
 
 
 
-        <div class="nouveaux-produits">
-    <div class="container py-5">
-        <h2 class="text-center mb-4">Révélations Fraîches</h2>
-        <div id="nouveauxProduitsCarousel" class="carousel slide">
-            <div class="carousel-inner">
-                @forelse($nouveauxProduits->chunk(4) as $chunk) <!-- Ajustez la taille du chunk selon le nombre d'articles par diapositive -->
-                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                        <div class="row g-4 justify-content-center">
-                            @foreach($chunk as $produit)
-                                @php
-                                                $qrCodeImage = $galleries->where('produit_id', $produit->id)->where('type', 'qr')->first();
-
-                                    $galleryHover = $galleries->where('produit_id', $produit->id)->where('type', 'hover')->first();
-                                    $promotion = $produit->promotions->first(); // Supposons qu'il y a une seule promotion active
-                                @endphp
-                                <div class="col-md-3 col-lg-3 col-xl-3"> <!-- 4 produits par ligne -->
-                                <div class="product-card">
-                                        <div class="category-badge">{{ $produit->categorie }}</div>
-                                        <img src="{{ asset('img/' . $produit->image) }}" alt="{{ $produit->name }}">
-                                        @if($galleryHover)
-                                            <img src="{{ asset('img/' . $galleryHover->image) }}" class="hover-image" alt="{{ $produit->name }} Hover">
-                                        @endif
-                                        <div class="card-body">
-                                        @if($qrCodeImage)
-    <a href="#" class="btn-icon qr-icon" data-bs-toggle="modal" data-bs-target="#qrrModal{{ $produit->id }}">
-        <i class="fas fa-qrcode"></i>
-    </a>
-@endif
-                                            <h4>{{ $produit->name }}</h4>
-
-
-                                             <!-- Icône QR Code et lien vers la modale -->
-                       
-                                            <div class="d-flex justify-content-between">
-                                                @if($promotion)
-                                                    <p class="text-dark fs-5 fw-bold mb-0">
-                                                        <span class="text-decoration-line-through">{{ $produit->prix }} DT</span>
-                                                        <span class="text-danger ms-2">{{ $promotion->new_price }} DT</span>
-                                                    </p>
-                                                @else
-                                                    <p class="text-dark fs-5 fw-bold mb-0">{{ $produit->prix }} DT</p>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <!-- Container des icônes -->
-                                        <div class="icon-container">
-                                            <!-- Formulaire d'ajout au panier -->
-                                            <form action="{{ route('panier.store') }}" method="POST" style="display: inline;">
-                                                @csrf
-                                                <input type="hidden" name="produit_id" value="{{ $produit->id }}">
-                                                <input type="hidden" name="quantite" value="1" min="1" class="quantity-input">
-                                                <button type="submit" class="btn-icon cart-icon">
-                                                    <i class="fas fa-shopping-cart"></i>
-                                                </button>
-                                            </form>
-
-                                            <!-- Lien vers la fenêtre modale -->
-                                            <button type="button" class="btn-icon eye-icon" data-bs-toggle="modal" data-bs-target="#producttModal{{ $produit->id }}">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                                  <!-- Modale QR Code -->
-            @if($qrCodeImage)
-                <div class="modal fade" id="qrrModal{{ $produit->id }}" tabindex="-1" aria-labelledby="qrModalLabel{{ $produit->id }}" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="qrModalLabel{{ $produit->id }}">Code QR pour {{ $produit->name }}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body text-center">
-                                <img src="{{ asset('img/' . $qrCodeImage->image) }}" alt="QR Code" class="img-fluid">
-                                <p>Scannez ce code QR pour voir le produit en réalité augmentée.</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
-
-<!-- Fenêtre modale -->
-<div class="modal fade" id="producttModal{{ $produit->id }}" tabindex="-1" aria-labelledby="productModalLabel{{ $produit->id }}" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content" 
-             @php
-                 $leftImage = $produit->galleries->where('type', 'L')->first();
-             @endphp
-             style="@if($leftImage) background-image: url('{{ asset('img/' . $leftImage->image) }}'); background-size: cover; background-position: center; background-repeat: no-repeat; @endif">
-            <div class="modal-header">
-                <h5 class="modal-title" id="productModalLabel{{ $produit->id }}">Détails du Produit</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="details-container">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="image-gallery d-flex justify-content-center align-items-center">
-                                <div class="left-images">
-                                    @foreach ($produit->galleries as $gallery)
-                                        @if ($gallery->type == 'L')
-                                            <img src="{{ asset('img/' . $gallery->image) }}" alt="Image L" class="img-fluid mb-2">
-                                        @endif
-                                    @endforeach
-                                </div>
-                                <div class="main-image mx-0">
-                                    <img src="{{ asset('img/' . $produit->image) }}" alt="Image du produit" class="img-fluid mb-2">
-                                </div>
-                                <div class="right-images">
-                                    @foreach ($produit->galleries as $gallery)
-                                        @if ($gallery->type == 'R')
-                                            <img src="{{ asset('img/' . $gallery->image) }}" alt="Image R" class="img-fluid mb-2">
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 mt-4">
-                            <h4 class="product-title">{{ $produit->name }}</h4>
-                            <p class="category-label text-muted">{{ $produit->categorie }}</p>
-                            <p class="product-description">{{ $produit->description }}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="price-info text-dark fs-5 fw-bold mb-0">
-                                    @if($produit->promotions->isNotEmpty())
-                                        <span class="original-price text-decoration-line-through">{{ $produit->prix }} DT</span>
-                                        <span class="discounted-price text-danger ms-2">{{ $produit->promotions->first()->new_price }} DT</span>
-                                    @else
-                                        {{ $produit->prix }} DT
-                                    @endif
-                                </p>
-                                <form action="{{ route('panier.store') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="produit_id" value="{{ $produit->id }}">
-                                    <button type="submit" class="btn btn-primary add-to-cart-btn">Ajouter au Panier</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-                            @endforeach
-                        </div>
-                    </div>
-                @empty
-                    <div class="carousel-item active">
-                        <div class="text-center">
-                            <p>Aucun produit nouveau pour le moment.</p>
-                        </div>
-                    </div>
-                @endforelse
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#nouveauxProduitsCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Précédent</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#nouveauxProduitsCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Suivant</span>
-            </button>
-        </div>
-    </div>
-</div>
-
         <!-- Fruits Shop Start-->
         <div class="container-fluid fruite py-5">
             <div class="container py-5">
-                <h1 class="mb-4">Notre collection</h1>
+                <h1 class="display-5 text-primary mb-4"></h1>
 
 
                 <div class="row g-4">
@@ -1118,4 +1003,182 @@
 @endforeach
 
 
+
+        <div class="nouveaux-produits">
+    <div class="container py-5">
+        <h2 class="text-center mb-4"> Nouvelle Collection</h2>
+        <div id="nouveauxProduitsCarousel" class="carousel slide">
+            <div class="carousel-inner">
+                @forelse($nouveauxProduits->chunk(4) as $chunk) <!-- Ajustez la taille du chunk selon le nombre d'articles par diapositive -->
+                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                        <div class="row g-4 justify-content-center">
+                            @foreach($chunk as $produit)
+                                @php
+                                                $qrCodeImage = $galleries->where('produit_id', $produit->id)->where('type', 'qr')->first();
+
+                                    $galleryHover = $galleries->where('produit_id', $produit->id)->where('type', 'hover')->first();
+                                    $promotion = $produit->promotions->first(); // Supposons qu'il y a une seule promotion active
+                                @endphp
+                                <div class="col-md-3 col-lg-3 col-xl-3"> <!-- 4 produits par ligne -->
+                                <div class="product-card">
+                                        <div class="category-badge">{{ $produit->categorie }}</div>
+                                        <img src="{{ asset('img/' . $produit->image) }}" alt="{{ $produit->name }}">
+                                        @if($galleryHover)
+                                            <img src="{{ asset('img/' . $galleryHover->image) }}" class="hover-image" alt="{{ $produit->name }} Hover">
+                                        @endif
+                                        <div class="card-body">
+                                        @if($qrCodeImage)
+    <a href="#" class="btn-icon qr-icon" data-bs-toggle="modal" data-bs-target="#qrrModal{{ $produit->id }}">
+        <i class="fas fa-qrcode"></i>
+    </a>
+@endif
+                                            <h4>{{ $produit->name }}</h4>
+
+
+                                             <!-- Icône QR Code et lien vers la modale -->
+                       
+                                            <div class="d-flex justify-content-between">
+                                                @if($promotion)
+                                                    <p class="text-dark fs-5 fw-bold mb-0">
+                                                        <span class="text-decoration-line-through">{{ $produit->prix }} DT</span>
+                                                        <span class="text-danger ms-2">{{ $promotion->new_price }} DT</span>
+                                                    </p>
+                                                @else
+                                                    <p class="text-dark fs-5 fw-bold mb-0">{{ $produit->prix }} DT</p>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <!-- Container des icônes -->
+                                        <div class="icon-container">
+                                            <!-- Formulaire d'ajout au panier -->
+                                            <form action="{{ route('panier.store') }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+                                                <input type="hidden" name="quantite" value="1" min="1" class="quantity-input">
+                                                <button type="submit" class="btn-icon cart-icon">
+                                                    <i class="fas fa-shopping-cart"></i>
+                                                </button>
+                                            </form>
+
+                                            <!-- Lien vers la fenêtre modale -->
+                                            <button type="button" class="btn-icon eye-icon" data-bs-toggle="modal" data-bs-target="#producttModal{{ $produit->id }}">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                  <!-- Modale QR Code -->
+            @if($qrCodeImage)
+                <div class="modal fade" id="qrrModal{{ $produit->id }}" tabindex="-1" aria-labelledby="qrModalLabel{{ $produit->id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="qrModalLabel{{ $produit->id }}">Code QR pour {{ $produit->name }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <img src="{{ asset('img/' . $qrCodeImage->image) }}" alt="QR Code" class="img-fluid">
+                                <p>Scannez ce code QR pour voir le produit en réalité augmentée.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+<!-- Fenêtre modale -->
+<div class="modal fade" id="producttModal{{ $produit->id }}" tabindex="-1" aria-labelledby="productModalLabel{{ $produit->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" 
+             @php
+                 $leftImage = $produit->galleries->where('type', 'L')->first();
+             @endphp
+             style="@if($leftImage) background-image: url('{{ asset('img/' . $leftImage->image) }}'); background-size: cover; background-position: center; background-repeat: no-repeat; @endif">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel{{ $produit->id }}">Détails du Produit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="details-container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="image-gallery d-flex justify-content-center align-items-center">
+                                <div class="left-images">
+                                    @foreach ($produit->galleries as $gallery)
+                                        @if ($gallery->type == 'L')
+                                            <img src="{{ asset('img/' . $gallery->image) }}" alt="Image L" class="img-fluid mb-2">
+                                        @endif
+                                    @endforeach
+                                </div>
+                                <div class="main-image mx-0">
+                                    <img src="{{ asset('img/' . $produit->image) }}" alt="Image du produit" class="img-fluid mb-2">
+                                </div>
+                                <div class="right-images">
+                                    @foreach ($produit->galleries as $gallery)
+                                        @if ($gallery->type == 'R')
+                                            <img src="{{ asset('img/' . $gallery->image) }}" alt="Image R" class="img-fluid mb-2">
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-4">
+                            <h4 class="product-title">{{ $produit->name }}</h4>
+                            <p class="category-label text-muted">{{ $produit->categorie }}</p>
+                            <p class="product-description">{{ $produit->description }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <p class="price-info text-dark fs-5 fw-bold mb-0">
+                                    @if($produit->promotions->isNotEmpty())
+                                        <span class="original-price text-decoration-line-through">{{ $produit->prix }} DT</span>
+                                        <span class="discounted-price text-danger ms-2">{{ $produit->promotions->first()->new_price }} DT</span>
+                                    @else
+                                        {{ $produit->prix }} DT
+                                    @endif
+                                </p>
+                                <form action="{{ route('panier.store') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+                                    <button type="submit" class="btn btn-primary add-to-cart-btn">Ajouter au Panier</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+                            @endforeach
+                        </div>
+                    </div>
+                @empty
+                    <div class="carousel-item active">
+                        <div class="text-center">
+                            <p>Aucun produit nouveau pour le moment.</p>
+                        </div>
+                    </div>
+                @endforelse
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#nouveauxProduitsCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Précédent</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#nouveauxProduitsCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Suivant</span>
+            </button>
+        </div>
+    </div>
+</div>
 @include('welcome.layout.footer')

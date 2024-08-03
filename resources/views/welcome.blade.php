@@ -577,7 +577,7 @@ document.getElementById('prev').onclick = function() {
             <div class="col-lg-6">
                 <div class="py-4 text-center text-lg-start">
                     <h1 class="display-3 text-pink">Testez Avant d'Acheter !</h1>
-                    <p class="fw-normal text-pink mb-4">Scannez le QR code pour essayer nos bijoux en réalité augmentée et participez à notre concours pour gagner des cadeaux exclusifs.</p>
+                    <p class="fw-normal text-pink mb-4">Scannez le QR code pour essayer nos produits en réalité augmentée et participez à notre concours pour gagner des cadeaux exclusifs.</p>
                     <p class="text-pink mb-4">Partagez votre look avec #FimoChicTest pour tenter de gagner des prix !</p>
                     <a href="#" class="banner-btn btn border-2 border-pink rounded-pill text-pink py-3 px-5">Scannez le QR Code</a>
                 </div>

@@ -443,7 +443,6 @@ color:white;
 
 .page-header {
     position: relative;
-    background: linear-gradient(rgba(233, 213, 213, 0.896), rgba(165, 70, 70, 0.618)), url('../img/cart-page-header-img.jpg');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
