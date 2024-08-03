@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\RessourcePersonnalisationController;
 
 use App\Http\Controllers\ValeurController;
 use App\Http\Controllers\AttributController;
@@ -82,3 +83,16 @@ Route::resource('commandes', CommandeController::class);
 // Routes pour les commandes
 Route::get('/commandes/{id}', [CommandeController::class, 'show'])->name('commandes.show'); // Pour les détails de la commande (admin)
 Route::get('/commandes/details/{id}', [CommandeController::class, 'details'])->name('commandes.details'); // Pour les détails de la commande (client)
+
+// routes/web.php
+
+
+Route::resource('ressources_personnalisation', RessourcePersonnalisationController::class);
+use App\Http\Controllers\ClientRessourcePersonnalisationController;
+
+Route::resource('personnalisation', ClientRessourcePersonnalisationController::class)
+   ; // Exclure 'create' et 'edit' si vous n'en avez pas besoin
+
+// Routes personnalisées
+
+Route::post('/store-personnalisation', [ClientRessourcePersonnalisationController::class, 'store'])->name('personnalisation.store');

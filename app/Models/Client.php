@@ -45,4 +45,8 @@ class Client extends Model
     {
         return $this->hasMany(Commande::class);
     }
+    public function ressourcesPersonnalisation()
+    {
+        return $this->hasMany(ClientRessourcePersonnalisation::class);
+    }
 }

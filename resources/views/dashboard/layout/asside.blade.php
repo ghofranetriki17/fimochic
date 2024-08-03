@@ -73,6 +73,11 @@
                     </a>
                 </li>
                 <li>
+                <a href="{{ route('ressources_personnalisation.index') }}" >
+                <i class="bi bi-circle"></i><span>options de personnalisation des Commandes</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('commandes.index') }}">
                         <i class="bi bi-circle"></i><span>Facturation Automatisée</span>
                     </a>
