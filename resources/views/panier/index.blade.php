@@ -27,79 +27,73 @@
             </div>
         @endif
 
-        <!-- Tableau des articles du panier -->
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Products</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Total</th>
-                        <th scope="col">Handle</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($cart as $item)
-                        <tr>
-                            <th scope="row">
-                                <div class="d-flex align-items-center">
-                                    <img src="{{ asset('img/' . $item->produit->image) }}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
-                                </div>
-                            </th>
-                            <td>
-                                <p class="mb-0 mt-4">{{ $item->produit->name }}</p>
-                            </td>
-                            <td>
-                                <p class="mb-0 mt-4">{{ $item->produit->prix }}dt</p>
-                            </td>
-                            <td>
-                                <!-- Formulaires pour mettre à jour les quantités -->
-    <div class="cart-item d-flex align-items-center mb-3">
-        <!-- Formulaire pour incrémenter la quantité -->
-        <form action="{{ route('panier.update', ['panier' => $item->id]) }}" method="POST" class="d-inline me-2">
-            @csrf
-            @method('PATCH')
-            <input type="hidden" name="action" value="increment">
-            <button type="submit" class="btn btn-sm btn-outline-primary">+</button>
-        </form>
-        <!-- Affichage de la quantité -->
-        <span class="quantity-display me-2">{{ $item->quantite }}</span>
-        <!-- Formulaire pour décrémenter la quantité -->
-        <form action="{{ route('panier.update', ['panier' => $item->id]) }}" method="POST" class="d-inline">
-            @csrf
-            @method('PATCH')
-            <input type="hidden" name="action" value="decrement">
-            <button type="submit" class="btn btn-sm btn-outline-danger">-</button>
-        </form>
-    </div>
+       <!-- Tableau des articles du panier -->
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Produits</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Quantité</th>
+                <th scope="col">Total</th>
+                <th scope="col">Gérer</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($cart as $item)
+                <tr>
+                    <th scope="row">
+                        <div class="d-flex align-items-center">
+                            <img src="{{ asset('img/' . $item->produit->image) }}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                        </div>
+                    </th>
+                    <td>
+                        <p class="mb-0 mt-4">{{ $item->produit->name }}</p>
+                    </td>
+                    <td>
+                        <p class="mb-0 mt-4">{{ $item->getPrix() }}dt</p>
+                    </td>
+                    <td>
+                        <!-- Formulaires pour mettre à jour les quantités -->
+                        <div class="cart-item d-flex align-items-center mb-3">
+                            <form action="{{ route('panier.update', ['panier' => $item->id]) }}" method="POST" class="d-inline me-2">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="action" value="increment">
+                                <button type="submit" class="btn btn-sm btn-outline-primary">+</button>
+                            </form>
+                            <span class="quantity-display me-2">{{ $item->quantite }}</span>
+                            <form action="{{ route('panier.update', ['panier' => $item->id]) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="action" value="decrement">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">-</button>
+                            </form>
+                        </div>
+                    </td>
+                    <td>
+                        <p class="mb-0 mt-4">{{ $item->quantite * $item->getPrix() }}dt</p>
+                    </td>
+                    <td>
+                        <form action="{{ route('panier.destroy', $item->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-md rounded-circle bg-light border mt-4">
+                                <i class="fa fa-times text-danger"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="6" class="text-center">Votre panier est vide.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
 
-
-                            </td>
-                            <td>
-                                <p class="mb-0 mt-4">{{ $item->quantite * $item->produit->prix }}dt</p>
-                            </td>
-                            <td>
-                                <!-- Formulaire pour retirer les articles -->
-                                <form action="{{ route('panier.destroy', $item->id) }}" method="POST" class="d-inline">
-    @csrf
-    @method('DELETE')
-    <button class="btn btn-md rounded-circle bg-light border mt-4">
-        <i class="fa fa-times text-danger"></i>
-    </button>
-</form>
-
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6" class="text-center">Votre panier est vide.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
 
         <!-- Bouton pour afficher le récapitulatif -->
         <button type="button" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" data-bs-toggle="modal" data-bs-target="#orderSummaryModal">

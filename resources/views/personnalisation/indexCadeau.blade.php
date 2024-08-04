@@ -75,8 +75,29 @@
         display: block;
         margin-top: 10px;
     }
+    .btn-toggle-preview {
+    background-color: #cfe2ff; /* Couleur de fond douce pour le bouton */
+    border: none;
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Effet de transition pour les changements de couleur */
+}
 
-    .btn-primary {
+.btn-toggle-preview:hover {
+    background-color: #adcde6; /* Couleur de fond au survol */
+    color: #fff; /* Couleur du texte au survol */
+}
+
+.btn-toggle-preview.active {
+    background-color: #d1e7dd; /* Couleur de fond lorsque le bouton est actif */
+    color: #333; /* Couleur du texte lorsque le bouton est actif */
+}
+
+
+    .btn-primary  {
         background-color: #d1e7dd; /* Soft Green */
         border-color: #d1e7dd;
         color: #0101b8;
@@ -265,4 +286,134 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<div class="cart-items">
+    @foreach($cart as $item)
+        <div class="cart-item">
+            <img src="{{ asset('img/'.$item->produit->image) }}" alt="{{ $item->produit->nom }}" class="img-thumbnail">
+            <div class="cart-item-details">
+                <h3>{{ $item->produit->nom }}</h3>
+                <p>Prix: {{ $item->produit->prix }} DT</p>
+                <p>Quantité: {{ $item->quantite }}</p>
+                <p>Total: {{ $item->produit->prix * $item->quantite }} DT</p>
+
+                @if($item->produit->galleries->isNotEmpty())
+                    <button class="btn-toggle-preview" data-image="{{ asset('img/'.$item->produit->galleries->first()->image) }}">tester</button>
+              
+                @endif
+            </div>
+        </div>
+    @endforeach
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const preview = document.getElementById('preview');
+    const previewContainer = document.querySelector('#preview');
+    
+    // Fonction pour ajouter une image de superposition
+    function addOverlayImage(imageUrl) {
+        const overlayImage = document.createElement('div');
+        overlayImage.className = 'preview-image';
+        overlayImage.style.backgroundImage = `url('${imageUrl}')`;
+        preview.appendChild(overlayImage);
+    }
+
+    // Fonction pour mettre à jour l'aperçu
+    function updatePreview() {
+        const addedResources = document.querySelectorAll('.preview-image');
+        preview.innerHTML = ''; // Vide d'abord pour réinitialiser l'affichage
+        addedResources.forEach(image => {
+            preview.appendChild(image); // Réajoute les images superposées
+        });
+    }
+
+    // Gestion des clics sur les boutons d'aperçu
+    document.querySelectorAll('.btn-toggle-preview').forEach(button => {
+        button.addEventListener('click', function () {
+            const imageUrl = this.getAttribute('data-image');
+
+            if (this.classList.contains('active')) {
+                // Si le bouton est déjà activé, annule l'affichage
+                const overlayImages = document.querySelectorAll(`.preview-image[style*="${imageUrl}"]`);
+                overlayImages.forEach(image => image.remove());
+                this.classList.remove('active');
+                this.textContent = 'tester';
+            } else {
+                // Sinon, ajoute l'image superposée
+                addOverlayImage(imageUrl);
+                this.classList.add('active');
+                this.textContent = 'Annuler';
+            }
+        });
+    });
+
+    // Initialisation de l'aperçu avec les ressources déjà ajoutées (si applicable)
+    updatePreview();
+});
+</script>
+
+
+
+                <style>.cart-items {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Espacement entre les cartes */
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: calc(20% - 20px); /* Ajuster la largeur pour 5 cartes par ligne */
+    box-sizing: border-box; /* Inclure le padding et la bordure dans la largeur */
+}
+
+.cart-item img {
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.cart-item-details {
+    flex: 1;
+}
+
+.cart-item-details h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #205681; /* Couleur personnalisée pour le titre */
+}
+
+.cart-item-details p {
+    margin: 5px 0;
+    font-size: 1em;
+    color: #333;
+}
+
+.cart-item-details p:first-of-type {
+    font-weight: bold;
+}
+
+.cart-item-details p:last-of-type {
+    font-weight: bold;
+    color: #d1e7dd; /* Couleur pour le total */
+}
+
+.cart-item-details p:nth-of-type(2) {
+    color: #cfe2ff; /* Couleur pour le prix */
+}
+
+.btn-toggle-preview {
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+</style>
 @include('welcome.layout.footer')

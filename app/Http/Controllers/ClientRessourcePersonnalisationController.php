@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\RessourcePersonnalisation;
+use App\Models\Panier;
+
 use App\Models\ClientRessourcePersonnalisation;
 
 class ClientRessourcePersonnalisationController extends Controller
@@ -16,9 +18,24 @@ class ClientRessourcePersonnalisationController extends Controller
     }
     public function indexCadeau()
     {
+        // Assurez-vous que l'utilisateur est connecté
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Vous devez être connecté pour personnaliser.');
+        }
+
         // Récupérer les ressources de personnalisation regroupées par type pour les cadeaux
         $ressourcesParType = RessourcePersonnalisation::where('cat', 'cadeau')->get()->groupBy('type');
-        return view('personnalisation.indexCadeau', compact('ressourcesParType'));
+
+        // Obtenir l'identifiant du client connecté
+        $clientId = Auth::user()->client->id;
+
+        // Récupérer les produits du panier pour le client connecté
+        $cart = Panier::where('client_id', $clientId)
+        ->with(['produit.galleries' => function($query) {
+            $query->where('type', 'sans');
+        }])
+        ->get();
+        return view('personnalisation.indexCadeau', compact('ressourcesParType', 'cart'));
     }
 
     public function store(Request $request)

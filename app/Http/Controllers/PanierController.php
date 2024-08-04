@@ -14,20 +14,16 @@ class PanierController extends Controller
      */
     public function index()
     {
-        // Assurez-vous que l'utilisateur est connecté
         if (!Auth::check()) {
             return redirect()->route('login')->with('message', 'Vous devez vous connecter pour voir votre panier.');
         }
     
-        // Obtenez l'identifiant du client connecté
-        $clientId = Auth::user()->client->id; // Supposons que vous avez une relation entre User et Client
+        $clientId = Auth::user()->client->id;
     
-        // Récupérez le panier du client connecté
         $cart = Panier::where('client_id', $clientId)->with('produit')->get();
     
-        // Calculer le total du panier
         $total = $cart->sum(function ($item) {
-            return $item->quantite * $item->produit->prix; // Remplacez `prix` par le nom correct du champ dans votre modèle Produit
+            return $item->quantite * $item->getPrix();
         });
     
         return view('panier.index', compact('cart', 'total'));

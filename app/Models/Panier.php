@@ -32,4 +32,14 @@ class Panier extends Model
     {
         return $this->belongsTo(Produit::class);
     }
+    public function promotion()
+    {
+        return $this->produit->promotions()->latest()->first();
+    }
+
+    public function getPrix()
+    {
+        $promotion = $this->promotion();
+        return $promotion ? $promotion->new_price : $this->produit->prix;
+    }
 }
