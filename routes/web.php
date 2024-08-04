@@ -96,3 +96,6 @@ Route::get('/personnalisation/boucles', [ClientRessourcePersonnalisationControll
 Route::get('/personnalisation/cadeau', [ClientRessourcePersonnalisationController::class, 'indexCadeau'])->name('personnalisation.cadeau');
 
 Route::post('/store-personnalisation', [ClientRessourcePersonnalisationController::class, 'store'])->name('personnalisation.store');
+use App\Http\Controllers\AboutController;
+
+Route::get('/apropos', [AboutController::class, 'index'])->name('apropos');

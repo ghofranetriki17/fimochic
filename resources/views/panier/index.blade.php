@@ -1,6 +1,9 @@
 @include('welcome.layout.head')
 @include('welcome.layout.nav')
-
+<style>
+.table-responsive{
+    margin-top: 150px;}
+    </style>
 <!-- Cart Page Start -->
 <div class="container-fluid py-5">
     <div class="container py-5">

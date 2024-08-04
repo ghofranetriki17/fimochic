@@ -51,6 +51,7 @@
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
+        
     }
 
     .custom-option {
@@ -58,6 +59,9 @@
         border-radius: 5px;
         padding: 10px;
         text-align: center;
+        width: 140px;
+                height: 270px;
+
         background-color: #fff;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
@@ -162,7 +166,7 @@ h2{color:#205681;}
             @foreach($ressourcesParType as $type => $ressources)
                 <div class="custom-form-group options-group" id="{{ $type }}-options" style="display: none;">
                     <label for="{{ $type }}">{{ ucfirst($type) }}</label>
-                    <div class="custom-option-group">
+                    <div class="custom-option-group" >
                         @foreach($ressources as $ressource)
                             <div class="custom-option">
                                 <img src="{{ asset('img/'.$ressource->image) }}" alt="{{ $ressource->nom }}" class="img-thumbnail" data-id="{{ $ressource->id }}">

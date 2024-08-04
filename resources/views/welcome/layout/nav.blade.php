@@ -27,7 +27,8 @@
                 <div class="navbar-nav mx-auto">
                     <a href="{{ route('home') }}" class="nav-item nav-link active text-bleu-doux">Accueil</a>
                     <a href="{{ route('boutique.index') }}" class="text-rose nav-item nav-link text-bleu-doux">Boutique</a>
-                    <a href="about.html" class="text-rose nav-item nav-link text-bleu-doux">À Propos</a>
+                    <a href="{{ route('apropos') }}" class="text-rose nav-item nav-link text-bleu-doux">À Propos</a>
+
                     <div class="nav-item dropdown">
                         <a href="#" class="text-rose nav-link dropdown-toggle text-bleu-doux" data-bs-toggle="dropdown">Personnalisation</a>
                         <div class="dropdown-menu m-0 bg-jaune-pale rounded-0">
