@@ -3,6 +3,19 @@
 <style>
 .table-responsive{
     margin-top: 150px;}
+    .cart-item {
+    display: flex;
+    align-items: center;
+}
+.btn{margin-top: 20px;}
+
+.quantity-display {
+    margin-top: 25px;
+    display: inline-block;
+    width: 40px;
+    text-align: center;
+}
+
     </style>
 <!-- Cart Page Start -->
 <div class="container-fluid py-5">
@@ -43,33 +56,40 @@
                             </td>
                             <td>
                                 <!-- Formulaires pour mettre à jour les quantités -->
-                                <form action="{{ route('panier.update', ['panier' => $item->id]) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('PATCH')
-                                    <input type="hidden" name="action" value="increment">
-                                    <input type="number" name="quantity" value="{{ $item->quantite }}" min="1">
-                                    <button type="submit" class="btn btn-sm btn-outline-primary">Add</button>
-                                </form>
+    <div class="cart-item d-flex align-items-center mb-3">
+        <!-- Formulaire pour incrémenter la quantité -->
+        <form action="{{ route('panier.update', ['panier' => $item->id]) }}" method="POST" class="d-inline me-2">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" name="action" value="increment">
+            <button type="submit" class="btn btn-sm btn-outline-primary">+</button>
+        </form>
+        <!-- Affichage de la quantité -->
+        <span class="quantity-display me-2">{{ $item->quantite }}</span>
+        <!-- Formulaire pour décrémenter la quantité -->
+        <form action="{{ route('panier.update', ['panier' => $item->id]) }}" method="POST" class="d-inline">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" name="action" value="decrement">
+            <button type="submit" class="btn btn-sm btn-outline-danger">-</button>
+        </form>
+    </div>
 
-                                <form action="{{ route('panier.update', ['panier' => $item->id]) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('PATCH')
-                                    <input type="hidden" name="action" value="decrement">
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
-                                </form>
+
                             </td>
                             <td>
                                 <p class="mb-0 mt-4">{{ $item->quantite * $item->produit->prix }}dt</p>
                             </td>
                             <td>
                                 <!-- Formulaire pour retirer les articles -->
-                                <form action="{{ route('panier.destroy', ['panier' => $item->id]) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-md rounded-circle bg-light border mt-4">
-                                        <i class="fa fa-times text-danger"></i>
-                                    </button>
-                                </form>
+                                <form action="{{ route('panier.destroy', $item->id) }}" method="POST" class="d-inline">
+    @csrf
+    @method('DELETE')
+    <button class="btn btn-md rounded-circle bg-light border mt-4">
+        <i class="fa fa-times text-danger"></i>
+    </button>
+</form>
+
                             </td>
                         </tr>
                     @empty

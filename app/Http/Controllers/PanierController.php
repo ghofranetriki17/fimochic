@@ -68,50 +68,52 @@ class PanierController extends Controller
      * Mettre à jour la quantité d'un produit dans le panier.
      */
     public function update(Request $request, Panier $panier)
-    {
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('message', 'Vous devez vous connecter pour mettre à jour votre panier.');
-        }
-
-        $request->validate([
-            'quantity' => 'required|integer|min:1',
-            'action' => 'required|string|in:increment,decrement',
-        ]);
-
-        if ($request->action === 'increment') {
-            $panier->quantite += $request->quantity;
-        } elseif ($request->action === 'decrement') {
-            $panier->quantite = max(1, $panier->quantite - $request->quantity);
-        }
-
-        $panier->save();
-
-        return redirect()->route('panier.index')->with('success', 'Quantité mise à jour avec succès.');
+{
+    if (!Auth::check()) {
+        return redirect()->route('login')->with('message', 'Vous devez vous connecter pour mettre à jour votre panier.');
     }
+
+    $request->validate([
+        'action' => 'required|string|in:increment,decrement',
+    ]);
+
+    if ($request->action === 'increment') {
+        $panier->quantite += 1;  // Incrémentation par 1
+    } elseif ($request->action === 'decrement') {
+        $panier->quantite = max(1, $panier->quantite - 1);  // Décrémentation par 1
+    }
+
+    $panier->save();
+
+    return redirect()->route('panier.index')->with('success', 'Quantité mise à jour avec succès.');
+}
+
 
     /**
      * Supprimer un produit du panier.
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
         // Assurez-vous que l'utilisateur est connecté
         if (!Auth::check()) {
             return redirect()->route('login')->with('message', 'Vous devez vous connecter pour gérer votre panier.');
         }
-
+    
         // Obtenez l'identifiant du client connecté
         $clientId = Auth::user()->client->id;
-
-        // Valider la requête
-        $request->validate([
-            'id' => 'required|exists:panier,id',
-        ]);
-
-        $itemId = $request->input('id');
-
-        // Supprimer le produit du panier
-        Panier::where('client_id', $clientId)->where('id', $itemId)->delete();
-
+    
+        // Trouvez l'article du panier
+        $panierItem = Panier::where('client_id', $clientId)->where('id', $id)->first();
+    
+        // Vérifiez que l'article existe et appartient au client connecté
+        if (!$panierItem) {
+            return redirect()->route('panier.index')->with('message', 'Article non trouvé dans votre panier.');
+        }
+    
+        // Supprimez l'article du panier
+        $panierItem->delete();
+    
         return redirect()->route('panier.index')->with('success', 'Produit supprimé du panier avec succès.');
     }
+    
 }
