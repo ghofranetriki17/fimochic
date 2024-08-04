@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+@include('welcome.layout.head')
+@include('welcome.layout.nav')
 
 <head>
     <meta charset="UTF-8">
@@ -124,7 +126,10 @@
 
     /* Style pour le conteneur principal */
     .wrapper {
-        width: 400px;
+        margin-top: 150px;
+        margin-bottom: 150px;
+
+        width: 600px;
         border-radius: 8px;
         padding: 30px;
         text-align: center;
@@ -134,6 +139,7 @@
         /* Positionnement absolu pour le fond flou */
         position: relative;
         z-index: 1;
+        margin-left: 200px;
     }
 
     /* Style pour le formulaire */

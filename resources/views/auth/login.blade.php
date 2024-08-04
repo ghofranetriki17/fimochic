@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - www.codingnepalweb.com -->
 <html>
+@include('welcome.layout.head')
+@include('welcome.layout.nav')
 
 <head>
     <meta charset="UTF-8">
@@ -105,7 +107,22 @@
         pointer-events: none;
         transition: 0.15s ease;
     }
+    .wrapper {
+        margin-top: 150px;
+        margin-bottom: 150px;
 
+        width: 600px;
+        border-radius: 8px;
+        padding: 30px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(9px);
+        -webkit-backdrop-filter: blur(9px);
+        /* Positionnement absolu pour le fond flou */
+        position: relative;
+        z-index: 1;
+        margin-left: 200px;
+    }
     .input-field input {
         width: 100%;
         height: 40px;
