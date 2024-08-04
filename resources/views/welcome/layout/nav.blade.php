@@ -31,8 +31,8 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="text-rose nav-link dropdown-toggle text-bleu-doux" data-bs-toggle="dropdown">Personnalisation</a>
                         <div class="dropdown-menu m-0 bg-jaune-pale rounded-0">
-                            <a href="{{ route('personnalisation.index') }}" class="text-rose dropdown-item">Personnaliser Boucles</a>
-                            <a href="gifts-personalization.html" class="text-rose dropdown-item">Personnaliser Cadeaux</a>
+                        <a href="{{ route('personnalisation.boucles') }}" class="text-rose dropdown-item">Personnaliser Boucles</a>
+                        <a href="{{ route('personnalisation.cadeau')}}" class="text-rose dropdown-item">Personnaliser Cadeaux</a>
                             <a href="gifts-personalization.html" class="text-rose dropdown-item">vos creations</a>
                         </div>
                     </div>

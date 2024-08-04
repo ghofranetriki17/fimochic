@@ -14,10 +14,10 @@ class RessourcePersonnalisationController extends Controller
      */
     public function index()
     {
-        $ressources = RessourcePersonnalisation::all();
-        return view('ressources_personnalisation.index', compact('ressources'));
+        $ressourcesParCatEtType = RessourcePersonnalisation::all()->groupBy(['cat', 'type']);
+        return view('ressources_personnalisation.index', compact('ressourcesParCatEtType'));
     }
-
+    
     /**
      * Affiche le formulaire pour créer une nouvelle ressource personnalisée.
      *

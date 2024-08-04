@@ -90,9 +90,9 @@ Route::get('/commandes/details/{id}', [CommandeController::class, 'details'])->n
 Route::resource('ressources_personnalisation', RessourcePersonnalisationController::class);
 use App\Http\Controllers\ClientRessourcePersonnalisationController;
 
-Route::resource('personnalisation', ClientRessourcePersonnalisationController::class)
-   ; // Exclure 'create' et 'edit' si vous n'en avez pas besoin
 
 // Routes personnalisées
+Route::get('/personnalisation/boucles', [ClientRessourcePersonnalisationController::class, 'indexBoucles'])->name('personnalisation.boucles');
+Route::get('/personnalisation/cadeau', [ClientRessourcePersonnalisationController::class, 'indexCadeau'])->name('personnalisation.cadeau');
 
 Route::post('/store-personnalisation', [ClientRessourcePersonnalisationController::class, 'store'])->name('personnalisation.store');

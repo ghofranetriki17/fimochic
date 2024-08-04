@@ -7,12 +7,18 @@ use App\Models\RessourcePersonnalisation;
 use App\Models\ClientRessourcePersonnalisation;
 
 class ClientRessourcePersonnalisationController extends Controller
-{
-    public function index()
+{  
+    public function indexBoucles()
     {
-        // Récupérer les ressources de personnalisation regroupées par type
+        // Récupérer les ressources de personnalisation regroupées par type pour les boucles
         $ressourcesParType = RessourcePersonnalisation::where('cat', 'boucles')->get()->groupBy('type');
-        return view('personnalisation.index', compact('ressourcesParType'));
+        return view('personnalisation.indexBoucles', compact('ressourcesParType'));
+    }
+    public function indexCadeau()
+    {
+        // Récupérer les ressources de personnalisation regroupées par type pour les cadeaux
+        $ressourcesParType = RessourcePersonnalisation::where('cat', 'cadeau')->get()->groupBy('type');
+        return view('personnalisation.indexCadeau', compact('ressourcesParType'));
     }
 
     public function store(Request $request)
@@ -21,10 +27,14 @@ class ClientRessourcePersonnalisationController extends Controller
         $request->validate([
             'ressources_json' => 'required|json',
         ]);
-    
+
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Vous devez être connecté pour personnaliser.');
+        }
+
         $clientId = Auth::user()->client->id;
         $ressourcesData = json_decode($request->input('ressources_json'), true);
-    
+
         foreach ($ressourcesData as $data) {
             ClientRessourcePersonnalisation::create([
                 'client_id' => $clientId,
@@ -33,10 +43,9 @@ class ClientRessourcePersonnalisationController extends Controller
                 'prix_total' => $data['quantity'] * RessourcePersonnalisation::find($data['id'])->prix,
             ]);
         }
-    
-        return redirect()->route('personnalisation.index')->with('success', 'Personnalisation enregistrée avec succès');
+
+        return redirect()->route('boutique.index')->with('success', 'Personnalisation enregistrée avec succès');
     }
-    
     
     
     
