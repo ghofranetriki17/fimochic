@@ -24,6 +24,10 @@
         <input type="text" class="form-control" id="nom" name="nom" required>
     </div>
     <div class="form-group">
+        <label for="nom">cat de la Ressource</label>
+        <input type="text" class="form-control" id="cat" name="cat" required>
+    </div>
+    <div class="form-group">
         <label for="quantite">prix</label>
         <input type="number" class="form-control" id="prix" name="prix" required>
     </div>

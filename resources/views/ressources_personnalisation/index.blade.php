@@ -19,6 +19,8 @@
                 <th>Photo</th>
                 <th>Nom</th>
                 <th>Type</th>
+                <th>cat</th>
+
                 <th>Prix</th>
                 <th>Actions</th>
             </tr>
@@ -33,6 +35,8 @@
                     </td>
                     <td>{{ $ressource->nom }}</td>
                     <td>{{ $ressource->type }}</td>
+                    <td>{{ $ressource->cat }}</td>
+
                     <td>{{ $ressource->prix }}</td>
                     <td>
                         <a href="{{ route('ressources_personnalisation.edit', $ressource->id) }}" class="btn btn-warning">Éditer</a>

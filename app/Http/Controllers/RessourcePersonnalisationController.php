@@ -38,6 +38,8 @@ class RessourcePersonnalisationController extends Controller
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'nom' => 'required|string|max:255',
             'type' => 'required|string|max:255',
+            'cat' => 'required|string|max:255',
+
             'prix' => 'required|numeric'
         ]);
 
@@ -52,6 +54,8 @@ class RessourcePersonnalisationController extends Controller
   $ressource->nom = $request->nom;
   $ressource->prix = $request->prix;
   $ressource->type = $request->type;
+  $ressource->cat = $request->cat;
+
   $ressource->image = $photoName; // Assigner le nom du fichier si présent
   $ressource->save();
 
@@ -77,6 +81,8 @@ class RessourcePersonnalisationController extends Controller
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'nom' => 'required|string|max:255',
             'type' => 'required|string|max:255',
+            'cat' => 'required|string|max:255',
+
             'prix' => 'required|numeric'
         ]);
     
@@ -92,7 +98,8 @@ class RessourcePersonnalisationController extends Controller
             $photo->move(public_path('img'), $photoName);
             $ressource_personnalisation->image = $photoName;
         }
-    
+        $ressource_personnalisation->cat = $request->cat;
+
         $ressource_personnalisation->nom = $request->nom;
         $ressource_personnalisation->type = $request->type;
         $ressource_personnalisation->prix = $request->prix;

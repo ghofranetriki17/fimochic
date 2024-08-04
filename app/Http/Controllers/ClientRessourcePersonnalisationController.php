@@ -11,7 +11,7 @@ class ClientRessourcePersonnalisationController extends Controller
     public function index()
     {
         // Récupérer les ressources de personnalisation regroupées par type
-        $ressourcesParType = RessourcePersonnalisation::all()->groupBy('type');
+        $ressourcesParType = RessourcePersonnalisation::where('cat', 'boucles')->get()->groupBy('type');
         return view('personnalisation.index', compact('ressourcesParType'));
     }
 

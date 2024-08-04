@@ -12,7 +12,7 @@ class RessourcePersonnalisation extends Model
     protected $table = 'ressources_personnalisation';
 
     protected $fillable = [
-        'type', 'nom', 'image', 'prix'
+        'type', 'nom', 'image', 'prix','cat'
     ];
     public function clientRessourcePersonnalisations()
     {

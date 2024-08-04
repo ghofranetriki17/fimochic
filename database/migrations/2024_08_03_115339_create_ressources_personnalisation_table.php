@@ -17,6 +17,8 @@ class CreateRessourcesPersonnalisationTable extends Migration
             $table->string('type'); // ex: 'couleur', 'forme', 'pendentif', etc.
             $table->string('nom'); // ex: 'rouge', 'cercle', 'coeur', etc.
             $table->string('image'); // chemin de l'image
+            $table->string('cat'); // chemin de l'image
+
             $table->decimal('prix', 8, 2); // prix de la ressource
             $table->timestamps();
         });
