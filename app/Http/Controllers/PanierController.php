@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Panier; // Assurez-vous que ce modèle existe
+use App\Models\ClientRessourcePersonnalisation; // Assurez-vous que ce modèle existe
+
 use App\Models\Produit; // Assurez-vous que ce modèle existe
 
 class PanierController extends Controller
@@ -25,8 +27,15 @@ class PanierController extends Controller
         $total = $cart->sum(function ($item) {
             return $item->quantite * $item->getPrix();
         });
+        $personnalisations = ClientRessourcePersonnalisation::where('client_id', $clientId)
+        ->with('ressourcePersonnalisation')
+        ->orderBy('created_at')
+        ->get()
+        ->groupBy(['created_at' => function ($item) {
+            return $item->created_at->format('Y-m-d H:i:s'); // Grouping by exact timestamp
+        }]);
     
-        return view('panier.index', compact('cart', 'total'));
+        return view('panier.index', compact('cart', 'personnalisations','total'));
     }
     
     /**
@@ -111,5 +120,6 @@ class PanierController extends Controller
     
         return redirect()->route('panier.index')->with('success', 'Produit supprimé du panier avec succès.');
     }
-    
+
+
 }

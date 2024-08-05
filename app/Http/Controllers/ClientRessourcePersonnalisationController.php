@@ -64,8 +64,40 @@ class ClientRessourcePersonnalisationController extends Controller
         return redirect()->route('boutique.index')->with('success', 'Personnalisation enregistrée avec succès');
     }
     
+    public function indexDashboard()
+    {
+        $personnalisations = ClientRessourcePersonnalisation::with(['client', 'ressourcePersonnalisation'])
+            ->orderBy('created_at')
+            ->get()
+            ->groupBy(['client_id', function ($item) {
+                return $item->created_at->format('Y-m-d H:i:s'); // Grouping by exact timestamp
+            }]);
+            
+        return view('personnalisation.index', compact('personnalisations'));
+    }
     
     
+    
+    public function updateQuantity(Request $request, $id)
+    {
+        $clientRessourcePersonnalisation = ClientRessourcePersonnalisation::findOrFail($id);
+        $quantite = $request->input('quantite');
+        $clientRessourcePersonnalisation->quantite = $quantite;
+        $clientRessourcePersonnalisation->prix_total = $clientRessourcePersonnalisation->ressourcePersonnalisation->prix * $quantite;
+        $clientRessourcePersonnalisation->save();
+    
+        return redirect()->back()->with('success', 'Quantité mise à jour avec succès.');
+    }
+    public function deleteAllByDate(Request $request, $date)
+    {
+        // Assurez-vous que la date est au format Y-m-d
+        $date = date('Y-m-d', strtotime($date));
+    
+        // Supprimer toutes les personnalisations où created_at est à la date spécifiée
+        ClientRessourcePersonnalisation::whereDate('created_at', $date)->delete();
+    
+        return redirect()->back()->with('success', 'Toutes les personnalisations de cette date ont été supprimées.');
+    }
     
     public function show()
     {
@@ -73,4 +105,12 @@ class ClientRessourcePersonnalisationController extends Controller
         $personnalisations = ClientRessourcePersonnalisation::where('client_id', $clientId)->get();
         return view('personnalisation.show', compact('personnalisations'));
     }
+    public function destroy($id)
+{
+    $clientRessourcePersonnalisation = ClientRessourcePersonnalisation::findOrFail($id);
+    $clientRessourcePersonnalisation->delete();
+
+    return redirect()->back()->with('success', 'Personnalisation supprimée avec succès.');
+}
+
 }

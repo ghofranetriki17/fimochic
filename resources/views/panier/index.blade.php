@@ -155,5 +155,63 @@
     </div>
 </div>
 <!-- Cart Page End -->
+   <!-- Affichage des personnalisations -->
+   <h2>Personnalisations</h2>
+@if(isset($personnalisations) && $personnalisations->isEmpty())
+    <p>Aucune personnalisation trouvée.</p>
+@else
+    @foreach($personnalisations as $date => $items)
+        <h3>Commande de: {{ $date }}</h3>
+        <form action="{{ route('clientRessourcePersonnalisations.deleteAllByDate', ['date' => $date]) }}" method="POST" style="display:inline;">
+            @csrf
+            <button type="submit" class="btn btn-danger">Supprimer toutes les personnalisations de cette date</button>
+        </form>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Type de Ressource</th>
+                    <th>Image</th>
+                    <th>Quantité</th>
+                    <th>Prix Total</th>
+                    <th>Date de Création</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($items as $item)
+                    <tr>
+                        <td>{{ $item->ressourcePersonnalisation->nom }}</td>
+                        <td>
+                            @if($item->ressourcePersonnalisation->image)
+                                <img src="{{ asset('img/' . $item->ressourcePersonnalisation->image) }}" alt="{{ $item->ressourcePersonnalisation->nom }}" width="50">
+                            @else
+                                Pas d'image
+                            @endif
+                        </td>
+                        <td>
+                            <!-- Formulaire pour mettre à jour la quantité -->
+                            <form action="{{ route('clientRessourcePersonnalisations.updateQuantity', ['clientRessourcePersonnalisation' => $item->id]) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('PATCH')
+                                <input type="number" name="quantite" value="{{ $item->quantite }}" min="1" class="form-control d-inline w-auto">
+                                <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                            </form>
+                        </td>
+                        <td>{{ $item->prix_total }}</td>
+                        <td>{{ $item->created_at }}</td>
+                        <td>
+                            <!-- Formulaire pour supprimer une ligne spécifique -->
+                            <form action="{{ route('clientRessourcePersonnalisations.destroy', ['clientRessourcePersonnalisation' => $item->id]) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endforeach
+@endif
 
 @include('welcome.layout.footer')

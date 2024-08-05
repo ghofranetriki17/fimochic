@@ -99,3 +99,7 @@ Route::post('/store-personnalisation', [ClientRessourcePersonnalisationControlle
 use App\Http\Controllers\AboutController;
 
 Route::get('/apropos', [AboutController::class, 'index'])->name('apropos');
+Route::get('/personnalisation', [ClientRessourcePersonnalisationController::class, 'indexDashboard'])->name('personnalisation.index');
+Route::patch('/clientRessourcePersonnalisations/{clientRessourcePersonnalisation}', [ClientRessourcePersonnalisationController::class, 'updateQuantity'])->name('clientRessourcePersonnalisations.updateQuantity');
+Route::post('/clientRessourcePersonnalisations/deleteAllByDate/{date}', [ClientRessourcePersonnalisationController::class, 'deleteAllByDate'])->name('clientRessourcePersonnalisations.deleteAllByDate');
+Route::delete('/clientRessourcePersonnalisations/{clientRessourcePersonnalisation}', [ClientRessourcePersonnalisationController::class, 'destroy'])->name('clientRessourcePersonnalisations.destroy');
