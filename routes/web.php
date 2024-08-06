@@ -103,3 +103,9 @@ Route::get('/personnalisation', [ClientRessourcePersonnalisationController::clas
 Route::patch('/clientRessourcePersonnalisations/{clientRessourcePersonnalisation}', [ClientRessourcePersonnalisationController::class, 'updateQuantity'])->name('clientRessourcePersonnalisations.updateQuantity');
 Route::post('/clientRessourcePersonnalisations/deleteAllByDate/{date}', [ClientRessourcePersonnalisationController::class, 'deleteAllByDate'])->name('clientRessourcePersonnalisations.deleteAllByDate');
 Route::delete('/clientRessourcePersonnalisations/{clientRessourcePersonnalisation}', [ClientRessourcePersonnalisationController::class, 'destroy'])->name('clientRessourcePersonnalisations.destroy');
+use App\Http\Controllers\CommandePersonnaliseeController;
+
+Route::resource('commandespersoonalisse', CommandePersonnaliseeController::class);
+// web.php
+Route::put('/commandespersoonalisse/{id}', [CommandePersonnaliseeController::class, 'updateAdmin'])->name('commandespersoonalisse.updateAdmin');
+Route::put('/commandespersoonalisse/{id}', [CommandePersonnaliseeController::class, 'updateAdmin'])->name('commandespersoonalisse.updateAdmin');

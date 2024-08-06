@@ -214,4 +214,122 @@
     @endforeach
 @endif
 
+
+
+
+<!-- Affichage des commandes personnalisées -->
+<h2>Commandes Personnalisées</h2>
+
+@if($commandes->isEmpty())
+    <p>Aucune commande personnalisée trouvée.</p>
+@else
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Image Réelle</th>
+            <th>Image Personnalisée</th>
+            <th>Date de Commande</th>
+            <th>Note</th>
+            <th>Prix Total</th>
+            <th>Adresse</th>
+            <th>Méthode de Paiement</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($commandes as $commande)
+            <tr>
+                <td>
+                    @if($commande->image_reelle)
+                        <img src="{{ asset('img/' . $commande->image_reelle) }}" alt="Image Réelle" width="50">
+                    @else
+                        Pas d'image
+                    @endif
+                </td>
+                <td>
+                    @if($commande->image_perso)
+                        <img src="{{ asset('img/' . $commande->image_perso) }}" alt="Image Personnalisée" width="50">
+                    @else
+                        Pas d'image
+                    @endif
+                </td>
+                <td>{{ $commande->commande_date }}</td>
+                <td>{{ $commande->note }}</td>
+                <td>{{ $commande->prix_total }}</td>
+                <td>{{ $commande->adresse }}</td>
+                <td>{{ $commande->methode_paiement }}</td>
+                <td>
+                <!-- Ligne du tableau -->
+    <!-- Bouton pour éditer la commande -->
+    <button 
+        type="button" 
+        class="btn btn-warning edit-order-btn" 
+        data-order-id="{{ $commande->id }}"
+        data-note="{{ $commande->note }}"
+        data-address="{{ $commande->adresse }}">
+        Modifier
+    </button>
+
+                </td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
+<!-- Modale pour Modifier Commande Personnalisée -->
+<!-- Modale pour Modifier Commande Personnalisée -->
+<div class="modal fade" id="editCustomOrderModal" tabindex="-1" aria-labelledby="editCustomOrderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCustomOrderModalLabel">Modifier Commande Personnalisée</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editCustomOrderForm" action="{{ route('commandespersoonalisse.update', ['commandespersoonalisse' => 'placeholder']) }}" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <div class="mb-3">
+                        <label for="editNote" class="form-label">Note</label>
+                        <input type="text" class="form-control" id="editNote" name="note" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editAddress" class="form-label">Adresse</label>
+                        <input type="text" class="form-control" id="editAddress" name="adresse" required>
+                    </div>
+                    <input type="hidden" id="editOrderId" name="order_id">
+                    <button type="submit" class="btn btn-warning">Mettre à jour</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.edit-order-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const orderId = this.dataset.orderId;
+                const note = this.dataset.note;
+                const address = this.dataset.address;
+
+                // Mettre à jour l'action du formulaire pour inclure l'ID de la commande
+                const form = document.getElementById('editCustomOrderForm');
+                form.action = form.action.replace('placeholder', orderId);
+
+                // Remplir les champs du formulaire
+                document.getElementById('editOrderId').value = orderId;
+                document.getElementById('editNote').value = note;
+                document.getElementById('editAddress').value = address;
+
+                // Afficher la modale
+                var myModal = new bootstrap.Modal(document.getElementById('editCustomOrderModal'));
+                myModal.show();
+            });
+        });
+    });
+</script>
+
+
+@endif
+
 @include('welcome.layout.footer')

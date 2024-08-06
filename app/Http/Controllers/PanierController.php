@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Panier; // Assurez-vous que ce modèle existe
 use App\Models\ClientRessourcePersonnalisation; // Assurez-vous que ce modèle existe
+use App\Models\CommandePersonnalisee; // Assurez-vous que ce modèle existe
 
 use App\Models\Produit; // Assurez-vous que ce modèle existe
 
@@ -34,8 +35,10 @@ class PanierController extends Controller
         ->groupBy(['created_at' => function ($item) {
             return $item->created_at->format('Y-m-d H:i:s'); // Grouping by exact timestamp
         }]);
-    
-        return view('panier.index', compact('cart', 'personnalisations','total'));
+        $commandes = CommandePersonnalisee::where('client_id', $clientId)
+        ->with('client')
+        ->get();
+        return view('panier.index', compact('cart', 'personnalisations','commandes','total'));
     }
     
     /**

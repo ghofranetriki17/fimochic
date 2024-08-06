@@ -84,6 +84,11 @@
                     </a>
                 </li>
                 <li>
+                <a href="{{ route('commandespersoonalisse.index') }}" >
+                <i class="bi bi-circle"></i><span> Commandesn confirmee</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('commandes.index') }}">
                         <i class="bi bi-circle"></i><span>Facturation Automatisée</span>
                     </a>
