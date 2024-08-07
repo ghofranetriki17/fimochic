@@ -109,3 +109,9 @@ Route::resource('commandespersoonalisse', CommandePersonnaliseeController::class
 // web.php
 Route::put('/commandespersoonalisse/{id}', [CommandePersonnaliseeController::class, 'updateAdmin'])->name('commandespersoonalisse.updateAdmin');
 Route::put('/commandespersoonalisse/{id}', [CommandePersonnaliseeController::class, 'updateAdmin'])->name('commandespersoonalisse.updateAdmin');
+use App\Http\Controllers\ProductLikeCommentController;
+
+// Routes pour les commentaires
+Route::resource('product_like_comments', ProductLikeCommentController::class);
+Route::post('product_like_comments/like', [ProductLikeCommentController::class, 'like'])->name('product_like_comments.like');
+Route::post('/produit/like', [ProductLikeCommentController::class, 'like'])->name('produit.like');

@@ -7,6 +7,7 @@ use App\Models\Attribut;
 use App\Models\Promotion; // Assurez-vous que ce modèle existe
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\ProductLikeComment; // Ajouter cette ligne
 
 class BoutiqueController extends Controller
 {
@@ -73,7 +74,7 @@ class BoutiqueController extends Controller
         }
         
         // Récupérer les produits filtrés et triés
-        $produits = $produits->with(['promotions', 'galleries'])->paginate(12);
+        $produits = $produits->with(['promotions', 'galleries', 'comments'])->paginate(12);
         
         // Récupérer toutes les galeries
         $galleries = Gallery::all();

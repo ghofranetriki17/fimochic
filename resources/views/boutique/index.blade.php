@@ -129,17 +129,19 @@
     color: #c8235c; /* Couleur du texte au survol des liens en rose plus foncé */
 }
 
-    .modal-content {
+.modal-content {
+    border: #ff949400;
     border-radius: 15px;
+    background-color: #cffcda00;
     overflow: hidden;
 }
-
 .modal-header {
     border-bottom: 1px solid #ddd;
 }
 
 .modal-body img {
     border-radius: 10px;
+    
 }
 
 .product-details {
@@ -207,11 +209,12 @@
 }
 
 .product-card {
+
     border: 1px solid #ddd;
     border-radius: 15px;
     overflow: hidden;
     margin-bottom: 50px;
-    height: 330px;
+    height: 350px !important;
     position: relative;
     transition: transform 0.3s ease, background-color 0.3s ease;
     background-color: #fff; /* Couleur de fond par défaut */
@@ -256,9 +259,11 @@
 }
 
 .icon-container .btn-icon {
-    margin: 5px 0; /* Espacement entre les icônes */
+    margin: 8px 0; /* Espacement entre les icônes */
 }
-
+.likes-info {
+    color: #fbb9c5;
+}
 
 .product-card:hover .icon-container {
     display: flex;
@@ -685,8 +690,8 @@
 }
 </style>
 
- <!-- Section Produits en Promotion -->
- <div class="container py-5">
+<!-- Section Produits en Promotion -->
+<div class="container py-5">
     <h4 class="text-center mb-4">À ne pas rater!</h4>
     <div id="produitsEnPromotionCarousel" class="carousel slide">
         <div class="carousel-inner">
@@ -694,6 +699,11 @@
                 <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                     <div class="d-flex flex-wrap gap-3 justify-content-center">
                         @foreach($chunk as $produit)
+                            @php
+                                // Remplacez ceci par la logique réelle pour obtenir le nombre de likes
+                                $likesCount =  $produit->getLikesCountAttribute($produit->id) 
+
+                            @endphp
                             <div class="product-card">
                                 <img src="{{ asset('img/' . $produit->image) }}" alt="{{ $produit->name }}">
                                 <div class="card-body">
@@ -709,6 +719,12 @@
                                     @else
                                         <p class="text-dark fs-5 fw-bold mb-0">{{ $produit->prix }} DT</p>
                                     @endif
+
+                                    <!-- Affichage du nombre de likes -->
+                                    <div class="likes-info">
+                                        <i class="fas fa-heart"></i> {{ $likesCount }}
+                                    </div>
+
                                     <div class="icon-container">
                                         <!-- Formulaire d'ajout au panier -->
                                         <form action="{{ route('panier.store') }}" method="POST" style="display: inline;">
@@ -747,15 +763,133 @@
         </button>
     </div>
 </div>
-<!-- Create Your Earrings Section End -->
-
-<!-- Create Your Earrings Section End -->
-
 
 
     
     </div>
 </div>
+<!-- Fenêtres modales pour chaque produit -->
+@foreach($produitsEnPromo as $produit)
+    <div class="modal fade" id="producttttModal{{ $produit->id }}" tabindex="-1" aria-labelledby="productModalLabel{{ $produit->id }}" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content"
+                 @php
+                     $leftImage = $produit->galleries->where('type', 'L')->first();
+                 @endphp
+                 style="@if($leftImage) background-image: url('#'); background-size: cover; background-position: center; background-repeat: no-repeat; @endif">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productModalLabel{{ $produit->id }}">Détails du Produit</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="details-container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="image-gallery d-flex justify-content-center align-items-center">
+                                    <div class="left-images">
+                                        @foreach ($produit->galleries as $gallery)
+                                            @if ($gallery->type == 'L')
+                                                <img src="{{ asset('img/' . $gallery->image) }}" alt="Image L" class="img-fluid mb-2">
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                    <div class="main-image mx-0">
+                                        <img src="{{ asset('img/' . $produit->image) }}" alt="Image du produit" class="img-fluid mb-2">
+                                    </div>
+                                    <div class="right-images">
+                                        @foreach ($produit->galleries as $gallery)
+                                            @if ($gallery->type == 'R')
+                                                <img src="{{ asset('img/' . $gallery->image) }}" alt="Image R" class="img-fluid mb-2">
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-4">
+                                <h4 class="product-title">{{ $produit->name }}</h4>
+                                <p class="category-label text-muted">{{ $produit->categorie }}</p>
+                                <p class="product-description">{{ $produit->description }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p class="price-info text-dark fs-5 fw-bold mb-0">
+                                        @if($produit->promotions->isNotEmpty())
+                                            <span class="original-price text-decoration-line-through">{{ $produit->prix }} DT</span>
+                                            <span class="discounted-price text-danger ms-2">{{ $produit->promotions->first()->new_price }} DT</span>
+                                        @else
+                                            {{ $produit->prix }} DT
+                                        @endif
+                                    </p>
+                                    <form action="{{ route('panier.store') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+                                        <input type="number" name="quantite" value="1" min="1" class="quantity-selector">
+                                        <button type="submit" class="btn btn-primary add-to-cart-btn">Ajouter au Panier</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- Section des commentaires et likes -->
+                            <div class="col-md-12 mt-4">
+                            <h5>Commentaires des Clients</h5>
+@foreach ($produit->comments as $comment)
+    @if ($comment->commentaire)
+        <div class="comment mb-3">
+            <p><strong>Client #{{ $comment->client_id }}:</strong> {{ $comment->commentaire }}</p>
+            @if ($comment->image)
+                <img src="{{ asset('img/' . $comment->image) }}" alt="Comment Image" width="100px"class="img-fluid mb-2">
+            @endif
+            @if ($comment->client_id == Auth::id())
+                <form action="{{ route('product_like_comments.destroy', $comment->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                </form>
+            @endif
+        </div>
+    @endif
+@endforeach
+
+                                
+                                <!-- Formulaire pour ajouter un commentaire -->
+                                <form action="{{ route('product_like_comments.store') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+                                    <div class="mb-3">
+                                        <textarea name="commentaire" class="form-control" rows="3" placeholder="Ajouter un commentaire..."></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="file" name="image" class="form-control">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Ajouter Commentaire</button>
+                                </form>
+
+                            <!-- Section pour le like/dislike -->
+<div class="mt-4">
+    
+    @if ($produit->userHasLiked(Auth::id()))
+        <form action="{{ route('product_like_comments.like') }}" method="POST">
+            @csrf
+            <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+            <button type="submit" class="btn btn-danger">Dislike</button>
+        </form>
+    @else
+        <form action="{{ route('product_like_comments.like') }}" method="POST">
+            @csrf
+            <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+            <button type="submit" class="btn btn-success">Like</button>
+        </form>
+    @endif
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
 
 <!-- Products Display -->
 <div class="col-lg-9">
@@ -768,6 +902,11 @@
 
     <div class="row g-4 justify-content-center">
         @foreach($produits as $produit)
+        @php
+                                // Remplacez ceci par la logique réelle pour obtenir le nombre de likes
+                                $likesCount =  $produit->getLikesCountAttribute($produit->id) 
+
+                            @endphp
             @php
                 $galleryHover = $galleries->where('produit_id', $produit->id)->where('type', 'hover')->first();
                 $promotion = $produit->promotions->first();
@@ -782,6 +921,7 @@
                     @endif
                     
                     <div class="card-body">
+                        
                            <!-- Icône QR Code et lien vers la modale -->
                            @if($qrCodeImage)
                             <a href="#" class="btn-icon qr-icon" data-bs-toggle="modal" data-bs-target="#qrModal{{ $produit->id }}">
@@ -790,7 +930,7 @@
                         @endif
                         <h4>{{ $produit->name }}</h4>
 
-                     
+               
 
                         <div class="d-flex justify-content-between">
                             @if($promotion)
@@ -802,7 +942,12 @@
                                 <p class="text-dark fs-5 fw-bold mb-0">{{ $produit->prix }} DT</p>
                             @endif
                         </div>
+                                 <!-- Affichage du nombre de likes -->
+        <div class="likes-info">
+                                        <i class="fas fa-heart"></i> {{ $likesCount }}
+                                    </div>
                     </div>
+     
 
                     <!-- Container des icônes -->
                     <div class="icon-container">
@@ -902,9 +1047,73 @@
                                         <p class="text-muted">{{ $produit->categorie }}</p>
                                         <p>{{ $produit->description }}</p>
                                     </div>
+                                                 <!-- Section pour le like/dislike -->
+<div class="mt-4 text-center">
+    <p><strong>Coup de cœur ? Cliquez ici !</strong></p>
+    @if ($produit->userHasLiked(Auth::id()))
+        <form action="{{ route('product_like_comments.like') }}" method="POST">
+            @csrf
+            <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+            <button type="submit" class="btn btn-link p-0 border-0" style="background: none;">
+                <i class="fas fa-heart text-danger" style="font-size: 24px;"></i>
+            </button>
+        </form>
+    @else
+        <form action="{{ route('product_like_comments.like') }}" method="POST">
+            @csrf
+            <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+            <button type="submit" class="btn btn-link p-0 border-0" style="background: none;">
+                <i class="far fa-heart text-success" style="font-size: 24px;"></i>
+            </button>
+        </form>
+    @endif
+</div>
+                                                                    <!-- Formulaire pour ajouter un commentaire -->
+                                <form action="{{ route('product_like_comments.store') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+                                    <div class="mb-3">
+                                        <textarea name="commentaire" class="form-control" rows="3" placeholder="Ajouter un commentaire..."></textarea>
+                                    </div>
+                                    <div class="mb-3">
+        <label for="photo" class="form-label">Ajouter une photo</label>
+        <input type="file" name="photo" class="form-control" id="photo">
+    </div>
+                                    <button type="submit" class="btn btn-primary">Ajouter Commentaire</button>
+                                </form>
+
+
+
+
+                                        <!-- Section des commentaires et likes -->
+                            <div class="col-md-12 mt-4">
+                            <h5>Commentaires des Clients</h5>
+@foreach ($produit->comments as $comment)
+    @if ($comment->commentaire)
+        <div class="comment mb-3">
+            <p><strong>Client #{{ $comment->client_id }}:</strong> {{ $comment->commentaire }}</p>
+            @if ($comment->image)
+                <img src="{{ asset('img/' . $comment->image) }}" alt="Comment Image"width="100px" class="img-fluid mb-2">
+            @endif
+            @if ($comment->client_id == Auth::id())
+                <form action="{{ route('product_like_comments.destroy', $comment->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                </form>
+            @endif
+        </div>
+    @endif
+@endforeach
+
+                                
+
+
+                            </div>
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                             <form action="{{ route('panier.store') }}" method="POST">
@@ -914,7 +1123,9 @@
                                 <button type="submit" class="btn btn-primary">Ajouter au Panier</button>
                             </form>
                         </div>
+                        
                     </div>
+                    
                 </div>
             </div>
         @endforeach
@@ -933,75 +1144,30 @@
  
 
 
-<!-- Fenêtres modales pour chaque produit -->
-@foreach($produitsEnPromo as $produit)
-    <div class="modal fade" id="producttttModal{{ $produit->id }}" tabindex="-1" aria-labelledby="productModalLabel{{ $produit->id }}" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content"
-                 @php
-                     $leftImage = $produit->galleries->where('type', 'L')->first();
-                 @endphp
-                 style="@if($leftImage) background-image: url('{{ asset('img/' . $leftImage->image) }}'); background-size: cover; background-position: center; background-repeat: no-repeat; @endif">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="productModalLabel{{ $produit->id }}">Détails du Produit</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="details-container">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="image-gallery d-flex justify-content-center align-items-center">
-                                    <div class="left-images">
-                                        @foreach ($produit->galleries as $gallery)
-                                            @if ($gallery->type == 'L')
-                                                <img src="{{ asset('img/' . $gallery->image) }}" alt="Image L" class="img-fluid mb-2">
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                    <div class="main-image mx-0">
-                                        <img src="{{ asset('img/' . $produit->image) }}" alt="Image du produit" class="img-fluid mb-2">
-                                    </div>
-                                    <div class="right-images">
-                                        @foreach ($produit->galleries as $gallery)
-                                            @if ($gallery->type == 'R')
-                                                <img src="{{ asset('img/' . $gallery->image) }}" alt="Image R" class="img-fluid mb-2">
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 mt-4">
-                                <h4 class="product-title">{{ $produit->name }}</h4>
-                                <p class="category-label text-muted">{{ $produit->categorie }}</p>
-                                <p class="product-description">{{ $produit->description }}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <p class="price-info text-dark fs-5 fw-bold mb-0">
-                                        @if($produit->promotions->isNotEmpty())
-                                            <span class="original-price text-decoration-line-through">{{ $produit->prix }} DT</span>
-                                            <span class="discounted-price text-danger ms-2">{{ $produit->promotions->first()->new_price }} DT</span>
-                                        @else
-                                            {{ $produit->prix }} DT
-                                        @endif
-                                    </p>
-                                    <form action="{{ route('panier.store') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="produit_id" value="{{ $produit->id }}">
-                                        <input type="number" name="quantite" value="1" min="1" class="quantity-selector">
-                                        <button type="submit" class="btn btn-primary add-to-cart-btn">Ajouter au Panier</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                </div>
-            </div>
-        </div>
-    </div>
-@endforeach
+<style>.comment {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
 
+.product-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.price-info {
+    font-size: 1.25rem;
+}
+
+.btn-success {
+    background-color: #28a745;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+}
+</style>
 
 
         <div class="nouveaux-produits">

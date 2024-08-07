@@ -34,4 +34,29 @@ class Produit extends Model
     {
         return $this->hasMany(Panier::class);
     }
+    public function comments()
+    {
+        return $this->hasMany(ProductLikeComment::class, 'produit_id');
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(ProductLikeComment::class, 'produit_id');
+    }
+    public function getLikesCountAttribute()
+    {
+        // Assuming 'likes' is a relationship method returning all likes
+        return $this->likes->where('like', true)->count();
+    }
+    
+    public function productLikeComments()
+    {
+        return $this->hasMany(ProductLikeComment::class);
+    }
+
+   
+    public function userHasLiked($userId)
+    {
+        return $this->productLikeComments()->where('client_id', $userId)->where('like', true)->exists();
+    }
 }

@@ -18,7 +18,7 @@
             <tbody>
                 @foreach ($promotions as $promotion)
                     <tr>
-                        <td>{{ $promotion->produit->name }}</td>
+                        <td>{{ $promotion->produit->id }}:{{ $promotion->produit->name }}</td>
                         <td>{{ $promotion->produit->prix }} €</td>
                         <td>{{ $promotion->new_price }} €</td>
                         <td>

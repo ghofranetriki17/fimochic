@@ -49,4 +49,8 @@ class Client extends Model
     {
         return $this->hasMany(ClientRessourcePersonnalisation::class);
     }
+    public function likesComments()
+{
+    return $this->hasMany(ProductLikeComment::class);
+}
 }
