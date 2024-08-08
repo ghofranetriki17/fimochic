@@ -73,7 +73,7 @@ body {
 }
 
 .text-pink {
-    color: #ffa9e7; /* Couleur rose pastel */
+    color: #ff96c9; /* Couleur rose pastel */
 }
 .text-green {
     color: #a9ffac; /* Couleur rose pastel */
@@ -320,10 +320,12 @@ color:white;
 /*** Topbar End ***/
 
 /*** Navbar Start ***/
+
 .navbar .navbar-nav .nav-link {
     padding: 10px 15px;
     font-size: 16px;
     transition: .5s;
+    color: #ffa9e7;
 }
 
 .navbar {
@@ -331,11 +333,8 @@ color:white;
     border-bottom: 1px solid rgba(255, 255, 255, .1);
 }
 
-.navbar .navbar-nav .nav-link:hover,
-.navbar .navbar-nav .nav-link.active,
-.fixed-top.bg-white .navbar .navbar-nav .nav-link:hover,
-.fixed-top.bg-white .navbar .navbar-nav .nav-link.active {
-    color: var(--bs-primary);
+.navbar .navbar-nav .nav-link:hover, .navbar .navbar-nav .nav-link.active, .fixed-top.bg-white .navbar .navbar-nav .nav-link:hover, .fixed-top.bg-white .navbar .navbar-nav .nav-link.active {
+    color: #a2fb00;
 }
 
 .navbar .dropdown-toggle::after {
@@ -714,7 +713,7 @@ color:white;
 }
 
 .dropdown-menu {
-    background-color: rgb(255, 132, 237) !important; /* Couleur de fond */
+    background-color:rgb(255 246 190) !important    ; /* Couleur de fond */
     border: none; /* Enlever la bordure si souhaité */
 }
 

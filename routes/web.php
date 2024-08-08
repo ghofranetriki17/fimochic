@@ -115,3 +115,7 @@ use App\Http\Controllers\ProductLikeCommentController;
 Route::resource('product_like_comments', ProductLikeCommentController::class);
 Route::post('product_like_comments/like', [ProductLikeCommentController::class, 'like'])->name('product_like_comments.like');
 Route::post('/produit/like', [ProductLikeCommentController::class, 'like'])->name('produit.like');
+use App\Http\Controllers\CreationController;
+
+Route::get('/creations', [CreationController::class, 'index'])->name('creations.index');
+Route::get('/creations/{creation}', [CreationController::class, 'show'])->name('creations.show');

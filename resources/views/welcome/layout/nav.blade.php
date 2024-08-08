@@ -1,18 +1,40 @@
 <!-- Navbar start -->
 <div class="container-fluid fixed-top">
-    <div class="container topbar bg-primary d-none d-lg-block">
-        <div class="d-flex justify-content-between">
-            <div class="top-info ps-2">
-                <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">Sfax, Tunisa</a></small>
-                <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">fimochic@gmail.com</a></small>
-            </div>
-            <div class="top-link pe-2">
-                <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
-                <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
-            </div>
+<style>
+   .topbar {
+    background-color: #b4e1f9 !important;
+}
+    .top-info small {
+        color: #ffffff !important; /* Changer la couleur du texte */
+    }
+    .text-whitee {
+    color: #ffffff;}
+    .text-secondaryy {
+    color: #ffffff;
+}
+    .top-link a {
+        color: #ffffff !important; /* Changer la couleur des liens */
+    }
+
+    .top-link a:hover {
+        color: #ffd700 !important; /* Couleur des liens au survol */
+    }
+</style>
+
+<div class="container topbar bg-primary d-none d-lg-block">
+    <div class="d-flex justify-content-between">
+        <div class="top-info ps-2">
+            <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondaryy"></i> <a href="#" class="text-whitee">Sfax, Tunisia</a></small>
+            <small class="me-3"><i class="fas fa-envelope me-2 text-secondaryy"></i><a href="#" class="text-whitee">fimochic@gmail.com</a></small>
+        </div>
+        <div class="top-link pe-2">
+            <a href="#" class="text-whitee"><small class="text-whitee mx-2">Privacy Policy</small>/</a>
+            <a href="#" class="text-whitee"><small class="text-whitee mx-2">Terms of Use</small>/</a>
+            <a href="#" class="text-whitee"><small class="text-whitee ms-2">Sales and Refunds</small></a>
         </div>
     </div>
+</div>
+
     <div class="container px-0">
         <nav class="navbar navbar-light bg-rose-poudre navbar-expand-xl">
             <a href="{{ route('home') }}" class="navbar-brand">
@@ -25,34 +47,35 @@
             </button>
             <div class="collapse navbar-collapse bg-rose-poudre" id="navbarCollapse">
                 <div class="navbar-nav mx-auto">
-                    <a href="{{ route('home') }}" class="nav-item nav-link active text-bleu-doux">Accueil</a>
-                    <a href="{{ route('boutique.index') }}" class="text-rose nav-item nav-link text-bleu-doux">Boutique</a>
-                    <a href="{{ route('apropos') }}" class="text-rose nav-item nav-link text-bleu-doux">À Propos</a>
+                    <a href="{{ route('home') }}" class="nav-item nav-link {{ request()->routeIs('home') ? 'active' : '' }} text-bleu-doux">Accueil</a>
+                    <a href="{{ route('boutique.index') }}" class="nav-item nav-link {{ request()->routeIs('boutique.index') ? 'active' : '' }} text-bleu-doux">Boutique</a>
+                    <a href="{{ route('apropos') }}" class="nav-item nav-link {{ request()->routeIs('apropos') ? 'active' : '' }} text-bleu-doux">À Propos</a>
 
                     <div class="nav-item dropdown">
-                        <a href="#" class="text-rose nav-link dropdown-toggle text-bleu-doux" data-bs-toggle="dropdown">Personnalisation</a>
+                        <a href="#" class="nav-link dropdown-toggle {{ request()->routeIs('personnalisation.*') ? 'active' : '' }} text-bleu-doux" data-bs-toggle="dropdown">Personnalisation</a>
                         <div class="dropdown-menu m-0 bg-jaune-pale rounded-0">
-                        <a href="{{ route('personnalisation.boucles') }}" class="text-rose dropdown-item">Personnaliser Boucles</a>
-                        <a href="{{ route('personnalisation.cadeau')}}" class="text-rose dropdown-item">Personnaliser Cadeaux</a>
-                            <a href="gifts-personalization.html" class="text-rose dropdown-item">vos creations</a>
+                            <a href="{{ route('personnalisation.boucles') }}" class="dropdown-item {{ request()->routeIs('personnalisation.boucles') ? 'active' : '' }} text-rose">Personnaliser Boucles</a>
+                            <a href="{{ route('personnalisation.cadeau') }}" class="dropdown-item {{ request()->routeIs('personnalisation.cadeau') ? 'active' : '' }} text-rose">Personnaliser Cadeaux</a>
+                            <a href="{{ route('creations.index') }}" class="dropdown-item {{ request()->routeIs('creations.index') ? 'active' : '' }} text-rose">Vos créations</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
-                        <a href="#" class="text-rose nav-link dropdown-toggle text-bleu-doux" data-bs-toggle="dropdown">Explorez</a>
+                        <a href="#" class="nav-link dropdown-toggle {{ request()->routeIs('panier.index') || request()->routeIs('checkout') || request()->routeIs('testimonials') || request()->routeIs('404') || request()->routeIs('tutorials') ? 'active' : '' }} text-bleu-doux" data-bs-toggle="dropdown">Explorez</a>
                         <div class="dropdown-menu m-0 bg-jaune-pale rounded-0">
-                            <a href="{{ route('panier.index') }}" class="text-rose dropdown-item">Mon Panier</a>
-                            <a href="checkout.html" class="text-rose dropdown-item">Passer Commande</a>
-                            <a href="testimonials.html" class="text-rose dropdown-item">Avis Clients</a>
-                            <a href="404.html" class="text-rose dropdown-item">Page Non Trouvée</a>
-                            <a href="tutorials.html" class=" text-rose dropdown-item">Voir Tutoriels</a> <!-- Ajout du lien vers la page des tutoriels -->
+                            <a href="{{ route('panier.index') }}" class="dropdown-item {{ request()->routeIs('panier.index') ? 'active' : '' }} text-rose">Mon Panier</a>
+                            <a href="checkout.html" class="dropdown-item {{ request()->routeIs('checkout') ? 'active' : '' }} text-rose">Passer Commande</a>
+                            <a href="testimonials.html" class="dropdown-item {{ request()->routeIs('testimonials') ? 'active' : '' }} text-rose">Avis Clients</a>
+                            <a href="404.html" class="dropdown-item {{ request()->routeIs('404') ? 'active' : '' }} text-rose">Page Non Trouvée</a>
+                            <a href="tutorials.html" class="dropdown-item {{ request()->routeIs('tutorials') ? 'active' : '' }} text-rose">Voir Tutoriels</a>
                         </div>
                     </div>
-                    <a href="contact.html" class="nav-item nav-link text-bleu-doux text-rose">Contact</a>
+                    <a href="contact.html" class="nav-item nav-link {{ request()->routeIs('contact') ? 'active' : '' }} text-bleu-doux text-rose">Contact</a>
                 </div>
                 <div class="d-flex m-3 me-0">
                     <button class="btn-search btn border border-bleu-doux btn-md-square rounded-circle bg-blanc me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
                         <i class="fas fa-search text-bleu-doux"></i>
                     </button>
+                    
                     <a href="{{ route('panier.index') }}" class="position-relative me-4 my-auto">
                         <i class="fa fa-shopping-bag fa-2x text-bleu-doux"></i>
                     </a>
@@ -77,4 +100,3 @@
     </div>
 </div>
 <!-- Navbar End -->
-<style></style>

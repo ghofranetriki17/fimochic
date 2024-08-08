@@ -303,8 +303,7 @@
 .card-body p {
     margin: auto;
     font-size: 1.2em;
-    color: #cff4fc!important; /* Couleur pastel douce pour le prix */
-    
+    color: #46bbd5 !important;
 }
 
 
