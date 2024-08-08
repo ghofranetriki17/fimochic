@@ -832,7 +832,7 @@
 @foreach ($produit->comments as $comment)
     @if ($comment->commentaire)
         <div class="comment mb-3">
-            <p><strong>Client #{{ $comment->client_id }}:</strong> {{ $comment->commentaire }}</p>
+            <p><strong>{{ $comment->client->nom }}:</strong> {{ $comment->commentaire }}</p>
             @if ($comment->image)
                 <img src="{{ asset('img/' . $comment->image) }}" alt="Comment Image" width="100px"class="img-fluid mb-2">
             @endif
@@ -860,24 +860,69 @@
                                     </div>
                                     <button type="submit" class="btn btn-primary">Ajouter Commentaire</button>
                                 </form>
-
-                            <!-- Section pour le like/dislike -->
-<div class="mt-4">
-    
+                                                 <!-- Section pour le like/dislike -->
+<div class="mt-4 text-center">
+    <p><strong>Coup de cœur ? Cliquez ici !</strong></p>
     @if ($produit->userHasLiked(Auth::id()))
         <form action="{{ route('product_like_comments.like') }}" method="POST">
             @csrf
             <input type="hidden" name="produit_id" value="{{ $produit->id }}">
-            <button type="submit" class="btn btn-danger">Dislike</button>
+            <button type="submit" class="btn btn-link p-0 border-0" style="background: none;">
+                <i class="fas fa-heart text-danger" style="font-size: 24px;"></i>
+            </button>
         </form>
     @else
         <form action="{{ route('product_like_comments.like') }}" method="POST">
             @csrf
             <input type="hidden" name="produit_id" value="{{ $produit->id }}">
-            <button type="submit" class="btn btn-success">Like</button>
+            <button type="submit" class="btn btn-link p-0 border-0" style="background: none;">
+                <i class="far fa-heart text-success" style="font-size: 24px;"></i>
+            </button>
         </form>
     @endif
 </div>
+                                                                    <!-- Formulaire pour ajouter un commentaire -->
+                                <form action="{{ route('product_like_comments.store') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+                                    <div class="mb-3">
+                                        <textarea name="commentaire" class="form-control" rows="3" placeholder="Ajouter un commentaire..."></textarea>
+                                    </div>
+                                    <div class="mb-3">
+        <label for="photo" class="form-label">Ajouter une photo</label>
+        <input type="file" name="photo" class="form-control" id="photo">
+    </div>
+                                    <button type="submit" class="btn btn-primary">Ajouter Commentaire</button>
+                                </form>
+
+
+
+
+                                        <!-- Section des commentaires et likes -->
+                            <div class="col-md-12 mt-4">
+                            <h5>Commentaires des Clients</h5>
+@foreach ($produit->comments as $comment)
+    @if ($comment->commentaire)
+        <div class="comment mb-3">
+            <p><strong>Client #{{ $comment->client->name }}:</strong> {{ $comment->commentaire }}</p>
+            @if ($comment->image)
+                <img src="{{ asset('img/' . $comment->image) }}" alt="Comment Image"width="100px" class="img-fluid mb-2">
+            @endif
+            @if ($comment->client_id == Auth::id())
+                <form action="{{ route('product_like_comments.destroy', $comment->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                </form>
+            @endif
+        </div>
+    @endif
+@endforeach
+
+                                
+
+
+                            </div>
 
                             </div>
                         </div>
@@ -890,6 +935,12 @@
         </div>
     </div>
 @endforeach
+
+
+
+
+
+
 
 <!-- Products Display -->
 <div class="col-lg-9">
@@ -1091,7 +1142,7 @@
 @foreach ($produit->comments as $comment)
     @if ($comment->commentaire)
         <div class="comment mb-3">
-            <p><strong>Client #{{ $comment->client_id }}:</strong> {{ $comment->commentaire }}</p>
+            <p><strong>Client #{{ $comment->client->name }}:</strong> {{ $comment->commentaire }}</p>
             @if ($comment->image)
                 <img src="{{ asset('img/' . $comment->image) }}" alt="Comment Image"width="100px" class="img-fluid mb-2">
             @endif
@@ -1148,7 +1199,7 @@
     border: 1px solid #ddd;
     padding: 10px;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: #f9f9f929;
 }
 
 .product-title {
@@ -1179,6 +1230,11 @@
                     <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                         <div class="row g-4 justify-content-center">
                             @foreach($chunk as $produit)
+                            @php
+                                // Remplacez ceci par la logique réelle pour obtenir le nombre de likes
+                                $likesCount =  $produit->getLikesCountAttribute($produit->id) 
+
+                            @endphp
                                 @php
                                                 $qrCodeImage = $galleries->where('produit_id', $produit->id)->where('type', 'qr')->first();
 
@@ -1213,6 +1269,10 @@
                                                     <p class="text-dark fs-5 fw-bold mb-0">{{ $produit->prix }} DT</p>
                                                 @endif
                                             </div>
+                                              <!-- Affichage du nombre de likes -->
+                                    <div class="likes-info">
+                                        <i class="fas fa-heart"></i> {{ $likesCount }}
+                                    </div>
                                         </div>
 
                                         <!-- Container des icônes -->
@@ -1263,7 +1323,7 @@
              @php
                  $leftImage = $produit->galleries->where('type', 'L')->first();
              @endphp
-             style="@if($leftImage) background-image: url('{{ asset('img/' . $leftImage->image) }}'); background-size: cover; background-position: center; background-repeat: no-repeat; @endif">
+             style="@if($leftImage) background-image: url('#'); background-size: cover; background-position: center; background-repeat: no-repeat; @endif">
             <div class="modal-header">
                 <h5 class="modal-title" id="productModalLabel{{ $produit->id }}">Détails du Produit</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -1312,6 +1372,105 @@
                                 </form>
                             </div>
                         </div>
+                            <!-- Section des commentaires et likes -->
+                            <div class="col-md-12 mt-4">
+                            <h5>Commentaires des Clients</h5>
+@foreach ($produit->comments as $comment)
+    @if ($comment->commentaire)
+        <div class="comment mb-3">
+            <p><strong>{{ $comment->client->nom }}:</strong> {{ $comment->commentaire }}</p>
+            @if ($comment->image)
+                <img src="{{ asset('img/' . $comment->image) }}" alt="Comment Image" width="100px"class="img-fluid mb-2">
+            @endif
+            @if ($comment->client_id == Auth::id())
+                <form action="{{ route('product_like_comments.destroy', $comment->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                </form>
+            @endif
+        </div>
+    @endif
+@endforeach
+
+                                
+                                <!-- Formulaire pour ajouter un commentaire -->
+                                <form action="{{ route('product_like_comments.store') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+                                    <div class="mb-3">
+                                        <textarea name="commentaire" class="form-control" rows="3" placeholder="Ajouter un commentaire..."></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="file" name="image" class="form-control">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Ajouter Commentaire</button>
+                                </form>
+
+                                                 <!-- Section pour le like/dislike -->
+<div class="mt-4 text-center">
+    <p><strong>Coup de cœur ? Cliquez ici !</strong></p>
+    @if ($produit->userHasLiked(Auth::id()))
+        <form action="{{ route('product_like_comments.like') }}" method="POST">
+            @csrf
+            <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+            <button type="submit" class="btn btn-link p-0 border-0" style="background: none;">
+                <i class="fas fa-heart text-danger" style="font-size: 24px;"></i>
+            </button>
+        </form>
+    @else
+        <form action="{{ route('product_like_comments.like') }}" method="POST">
+            @csrf
+            <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+            <button type="submit" class="btn btn-link p-0 border-0" style="background: none;">
+                <i class="far fa-heart text-success" style="font-size: 24px;"></i>
+            </button>
+        </form>
+    @endif
+</div>
+                                                                    <!-- Formulaire pour ajouter un commentaire -->
+                                <form action="{{ route('product_like_comments.store') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+                                    <div class="mb-3">
+                                        <textarea name="commentaire" class="form-control" rows="3" placeholder="Ajouter un commentaire..."></textarea>
+                                    </div>
+                                    <div class="mb-3">
+        <label for="photo" class="form-label">Ajouter une photo</label>
+        <input type="file" name="photo" class="form-control" id="photo">
+    </div>
+                                    <button type="submit" class="btn btn-primary">Ajouter Commentaire</button>
+                                </form>
+
+
+
+
+                                        <!-- Section des commentaires et likes -->
+                            <div class="col-md-12 mt-4">
+                            <h5>Commentaires des Clients</h5>
+@foreach ($produit->comments as $comment)
+    @if ($comment->commentaire)
+        <div class="comment mb-3">
+            <p><strong>Client #{{ $comment->client->name }}:</strong> {{ $comment->commentaire }}</p>
+            @if ($comment->image)
+                <img src="{{ asset('img/' . $comment->image) }}" alt="Comment Image"width="100px" class="img-fluid mb-2">
+            @endif
+            @if ($comment->client_id == Auth::id())
+                <form action="{{ route('product_like_comments.destroy', $comment->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                </form>
+            @endif
+        </div>
+    @endif
+@endforeach
+
+                                
+
+
+                            </div>
+                            </div>
                     </div>
                 </div>
             </div>

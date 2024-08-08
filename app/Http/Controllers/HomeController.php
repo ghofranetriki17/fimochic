@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Produit;
 use App\Models\Gallery;
+use App\Models\ProductLikeComment;
+
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -42,8 +44,10 @@ class HomeController extends Controller
         // Récupérer toutes les galeries
         $galleries = Gallery::all();
         $produitsEnPromo = Produit::whereHas('promotions')->get();
+    // Récupérer les commentaires
+    $comments = ProductLikeComment::with('client')->get(); // Assurez-vous que la relation 'client' est définie
 
-        return view('welcome', compact('produits', 'galleries', 'produitsEnPromo', 'keychains', 'groupedProducts', 'bestSellers'));
+        return view('welcome', compact('produits', 'galleries', 'produitsEnPromo', 'keychains', 'groupedProducts', 'bestSellers', 'comments'));
     }
 
     public function create()

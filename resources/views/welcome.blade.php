@@ -165,6 +165,11 @@
                         <div class="product-navigation">
                             <div class="product-container">
                                 @foreach($produits as $produit)
+                                @php
+                                // Remplacez ceci par la logique réelle pour obtenir le nombre de likes
+                                $likesCount =  $produit->getLikesCountAttribute($produit->id) 
+
+                            @endphp
                                     @php
                                                     $galleryHover = $galleries->where('produit_id', $produit->id)->where('type', 'hover')->first();
 
@@ -197,6 +202,10 @@
                                                         <p class="text-dark fs-5 fw-bold mb-0">{{ $produit->prix }} DT</p>
                                                     @endif
                                                 </div>
+                                                  <!-- Affichage du nombre de likes -->
+                                    <div class="likes-info">
+                                        <i class="fas fa-heart"></i> {{ $likesCount }}
+                                    </div>
                                             </div>
 
                                             <div class="icon-container">
@@ -311,6 +320,69 @@
                                                                     </form>
                                                                 </div>
                                                             </div>
+                                                 <!-- Section pour le like/dislike -->
+<div class="mt-4 text-center">
+    <p><strong>Coup de cœur ? Cliquez ici !</strong></p>
+    @if ($produit->userHasLiked(Auth::id()))
+        <form action="{{ route('product_like_comments.like') }}" method="POST">
+            @csrf
+            <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+            <button type="submit" class="btn btn-link p-0 border-0" style="background: none;">
+                <i class="fas fa-heart text-danger" style="font-size: 24px;"></i>
+            </button>
+        </form>
+    @else
+        <form action="{{ route('product_like_comments.like') }}" method="POST">
+            @csrf
+            <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+            <button type="submit" class="btn btn-link p-0 border-0" style="background: none;">
+                <i class="far fa-heart text-success" style="font-size: 24px;"></i>
+            </button>
+        </form>
+    @endif
+</div>
+                                                                    <!-- Formulaire pour ajouter un commentaire -->
+                                <form action="{{ route('product_like_comments.store') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+                                    <div class="mb-3">
+                                        <textarea name="commentaire" class="form-control" rows="3" placeholder="Ajouter un commentaire..."></textarea>
+                                    </div>
+                                    <div class="mb-3">
+        <label for="photo" class="form-label">Ajouter une photo</label>
+        <input type="file" name="photo" class="form-control" id="photo">
+    </div>
+                                    <button type="submit" class="btn btn-primary">Ajouter Commentaire</button>
+                                </form>
+
+
+
+
+                                        <!-- Section des commentaires et likes -->
+                            <div class="col-md-12 mt-4">
+                            <h5>Commentaires des Clients</h5>
+@foreach ($produit->comments as $comment)
+    @if ($comment->commentaire)
+        <div class="comment mb-3">
+            <p><strong>Client #{{ $comment->client->name }}:</strong> {{ $comment->commentaire }}</p>
+            @if ($comment->image)
+                <img src="{{ asset('img/' . $comment->image) }}" alt="Comment Image"width="100px" class="img-fluid mb-2">
+            @endif
+            @if ($comment->client_id == Auth::id())
+                <form action="{{ route('product_like_comments.destroy', $comment->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                </form>
+            @endif
+        </div>
+    @endif
+@endforeach
+
+                                
+
+
+                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -418,6 +490,11 @@
         <div class="product-container">
             <div class="d-flex"> <!-- Utiliser flexbox pour tous les produits sur la même ligne -->
             @foreach($bestSellers as $produit)
+            @php
+                                // Remplacez ceci par la logique réelle pour obtenir le nombre de likes
+                                $likesCount =  $produit->getLikesCountAttribute($produit->id) 
+
+                            @endphp
                 @php
                     $galleryHover = $galleries->where('produit_id', $produit->id)->where('type', 'hover')->first();
                     $qrCodeImage = $galleries->where('produit_id', $produit->id)->where('type', 'qr')->first();
@@ -449,6 +526,10 @@
                                     <p class="text-dark fs-5 fw-bold mb-0">{{ $produit->prix }} DT</p>
                                 @endif
                             </div>
+                              <!-- Affichage du nombre de likes -->
+                              <div class="likes-info">
+                                        <i class="fas fa-heart"></i> {{ $likesCount }}
+                                    </div>
                         </div>
                         <!-- Container des icônes -->
                         <div class="icon-container">
@@ -563,6 +644,70 @@
                                                 </form>
                                             </div>
                                         </div>
+                                       
+                                                 <!-- Section pour le like/dislike -->
+<div class="mt-4 text-center">
+    <p><strong>Coup de cœur ? Cliquez ici !</strong></p>
+    @if ($produit->userHasLiked(Auth::id()))
+        <form action="{{ route('product_like_comments.like') }}" method="POST">
+            @csrf
+            <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+            <button type="submit" class="btn btn-link p-0 border-0" style="background: none;">
+                <i class="fas fa-heart text-danger" style="font-size: 24px;"></i>
+            </button>
+        </form>
+    @else
+        <form action="{{ route('product_like_comments.like') }}" method="POST">
+            @csrf
+            <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+            <button type="submit" class="btn btn-link p-0 border-0" style="background: none;">
+                <i class="far fa-heart text-success" style="font-size: 24px;"></i>
+            </button>
+        </form>
+    @endif
+</div>
+                                                                    <!-- Formulaire pour ajouter un commentaire -->
+                                <form action="{{ route('product_like_comments.store') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+                                    <div class="mb-3">
+                                        <textarea name="commentaire" class="form-control" rows="3" placeholder="Ajouter un commentaire..."></textarea>
+                                    </div>
+                                    <div class="mb-3">
+        <label for="photo" class="form-label">Ajouter une photo</label>
+        <input type="file" name="photo" class="form-control" id="photo">
+    </div>
+                                    <button type="submit" class="btn btn-primary">Ajouter Commentaire</button>
+                                </form>
+
+
+
+
+                                        <!-- Section des commentaires et likes -->
+                            <div class="col-md-12 mt-4">
+                            <h5>Commentaires des Clients</h5>
+@foreach ($produit->comments as $comment)
+    @if ($comment->commentaire)
+        <div class="comment mb-3">
+            <p><strong>Client #{{ $comment->client->name }}:</strong> {{ $comment->commentaire }}</p>
+            @if ($comment->image)
+                <img src="{{ asset('img/' . $comment->image) }}" alt="Comment Image"width="100px" class="img-fluid mb-2">
+            @endif
+            @if ($comment->client_id == Auth::id())
+                <form action="{{ route('product_like_comments.destroy', $comment->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                </form>
+            @endif
+        </div>
+    @endif
+@endforeach
+
+                                
+
+
+                            </div>
                                     </div>
                                 </div>
                             </div>
@@ -1731,105 +1876,67 @@ document.getElementById('prevKeychains').onclick = function() {
     <!-- Fact Start -->
 
 
-    <!-- Tastimonial Start -->
-    <div class="container-fluid testimonial py-5">
-        <div class="container py-5">
-            <div class="testimonial-header text-center">
-                <h4 class="text-primary">Our Testimonial</h4>
-                <h1 class="display-5 mb-5 text-dark">Our Client Saying!</h1>
-            </div>
-            <div class="owl-carousel testimonial-carousel">
-                <div class="testimonial-item img-border-radius bg-light rounded p-4">
-                    <div class="position-relative">
-                        <i class="fa fa-quote-right fa-2x text-secondary position-absolute"
-                            style="bottom: 30px; right: 0;"></i>
-                        <div class="mb-4 pb-4 border-bottom border-secondary">
-                            <p class="mb-0">Lorem Ipsum is simply dummy text of the printing Ipsum has been the
-                                industry's standard dummy text ever since the 1500s,
-                            </p>
-                        </div>
-                        <div class="d-flex align-items-center flex-nowrap">
-                            <div class="bg-secondary rounded">
-                                <img src="img/testimonial-1.jpg" class="img-fluid rounded"
-                                    style="width: 100px; height: 100px;" alt="">
+   <!-- Tastimonial Start -->
+<div class="container-fluid testimonial py-5">
+    <div class="container py-5">
+        <div class="testimonial-header text-center">
+            <h4 class="text-primary">Nos Témoignages</h4>
+            <h1 class="display-5 mb-5 text-dark">Ce Que Nos Clients Disent !</h1>
+        </div>
+        <div class="owl-carousel testimonial-carousel">
+            @foreach ($comments as $comment)
+                @if ($comment->commentaire)
+                    <div class="testimonial-item img-border-radius bg-light rounded p-4">
+                        <div class="position-relative">
+                            <i class="fa fa-quote-right fa-2x text-secondary position-absolute" style="bottom: 30px; right: 0;"></i>
+                            <div class="mb-4 pb-4 border-bottom border-secondary">
+                                <h3 class="text-dark">{{ $comment->client->nom }} {{ $comment->client->preNom }}</h3>
                             </div>
-                            <div class="ms-4 d-block">
-                                <h4 class="text-dark">Client Name</h4>
-                                <p class="m-0 pb-3">Profession</p>
-                                <div class="d-flex pe-5">
-                                    <i class="fas fa-star text-primary"></i>
-                                    <i class="fas fa-star text-primary"></i>
-                                    <i class="fas fa-star text-primary"></i>
-                                    <i class="fas fa-star text-primary"></i>
-                                    <i class="fas fa-star"></i>
+                            <div class="d-flex align-items-center flex-nowrap">
+                                @if ($comment->image)
+                                    <div class="bg-secondary rounded">
+                                    <img src="{{ asset('img/' . $comment->image) }}" class="img-fluid rounded" style="width: 150px; height: 100px; object-fit: cover;" alt="Client Image">
+                                    </div>
+                                @endif
+                                <div class="ms-4 d-block">
+                                    <h4 class="text-dark">{{ $comment->produit->name }}</h4> <!-- Assuming the produit model has a 'name' attribute -->
+                                    <h6 class="m-0 pb-3">{{ $comment->commentaire }}</h6>
+                                    <div class="d-flex pe-5">
+                                        <!-- Affichage du nombre de likes -->
+                                        <div class="likes-info">
+                                            <i class="fas fa-heart text-primary"></i> {{ $comment->produit->likes_count }}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="testimonial-item img-border-radius bg-light rounded p-4">
-                    <div class="position-relative">
-                        <i class="fa fa-quote-right fa-2x text-secondary position-absolute"
-                            style="bottom: 30px; right: 0;"></i>
-                        <div class="mb-4 pb-4 border-bottom border-secondary">
-                            <p class="mb-0">Lorem Ipsum is simply dummy text of the printing Ipsum has been the
-                                industry's standard dummy text ever since the 1500s,
-                            </p>
-                        </div>
-                        <div class="d-flex align-items-center flex-nowrap">
-                            <div class="bg-secondary rounded">
-                                <img src="img/testimonial-1.jpg" class="img-fluid rounded"
-                                    style="width: 100px; height: 100px;" alt="">
-                            </div>
-                            <div class="ms-4 d-block">
-                                <h4 class="text-dark">Client Name</h4>
-                                <p class="m-0 pb-3">Profession</p>
-                                <div class="d-flex pe-5">
-                                    <i class="fas fa-star text-primary"></i>
-                                    <i class="fas fa-star text-primary"></i>
-                                    <i class="fas fa-star text-primary"></i>
-                                    <i class="fas fa-star text-primary"></i>
-                                    <i class="fas fa-star text-primary"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-item img-border-radius bg-light rounded p-4">
-                    <div class="position-relative">
-                        <i class="fa fa-quote-right fa-2x text-secondary position-absolute"
-                            style="bottom: 30px; right: 0;"></i>
-                        <div class="mb-4 pb-4 border-bottom border-secondary">
-                            <p class="mb-0">Lorem Ipsum is simply dummy text of the printing Ipsum has been the
-                                industry's standard dummy text ever since the 1500s,
-                            </p>
-                        </div>
-                        <div class="d-flex align-items-center flex-nowrap">
-                            <div class="bg-secondary rounded">
-                                <img src="img/testimonial-1.jpg" class="img-fluid rounded"
-                                    style="width: 100px; height: 100px;" alt="">
-                            </div>
-                            <div class="ms-4 d-block">
-                                <h4 class="text-dark">Client Name</h4>
-                                <p class="m-0 pb-3">Profession</p>
-                                <div class="d-flex pe-5">
-                                    <i class="fas fa-star text-primary"></i>
-                                    <i class="fas fa-star text-primary"></i>
-                                    <i class="fas fa-star text-primary"></i>
-                                    <i class="fas fa-star text-primary"></i>
-                                    <i class="fas fa-star text-primary"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                @endif
+            @endforeach
+            @if($comments->isEmpty())
+                <p class="text-center">Aucun témoignage pour le moment.</p>
+            @endif
         </div>
     </div>
-    <!-- Tastimonial End -->
+</div>
+<!-- Tastimonial End -->
+<style>.img-fluid {
+    max-width: 100px;
+    height: auto;
+}
 
-
-
+<style>.testimonial-item {
+    background-color: #97ffcc69 !important;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgb(114 222 127);
+    padding: 20px !important;
+    margin: 10px;
+    position: relative;
+    width: fit-content;
+    height: 300px !important;
+    margin-right: 0px;
+    margin-left: 0px !important;
+}</style>
 
 
     @include('welcome.layout.footer')

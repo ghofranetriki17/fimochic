@@ -54,6 +54,6 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         // Redirect to the login page after registration
-        return redirect()->route('login');
+        return redirect()->route('panier.index');
     }
 }
