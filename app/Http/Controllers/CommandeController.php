@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Commande;
 use App\Models\Panier;
 use App\Models\LigneCmd;
+use App\Models\produit;
 
 class CommandeController extends Controller
 {
@@ -55,6 +56,15 @@ class CommandeController extends Controller
             'total_price' => 'required|numeric',
         ]);
     
+        // Vérification des quantités disponibles pour chaque produit dans le panier
+        foreach ($panier as $item) {
+            $produit = Produit::find($item->produit_id);
+            if ($produit->qte_dispo < $item->quantite) {
+                return redirect()->route('panier.index')->with('error', 'La quantité demandée pour le produit ' . $produit->name . ' dépasse la quantité disponible.');
+            }
+        }
+    
+        // Création de la commande
         $commande = new Commande();
         $commande->client_id = $clientId;
         $commande->adresse = $validated['adresse'];
@@ -65,18 +75,29 @@ class CommandeController extends Controller
         $commande->etat = '0';
         $commande->save();
     
+        // Création des lignes de commande et mise à jour des quantités de produits
         foreach ($panier as $item) {
+            $produit = Produit::find($item->produit_id);
+    
+            // Mise à jour de la quantité disponible
+            $produit->qte_dispo -= $item->quantite;
+            $produit->save();
+    
+            // Création de la ligne de commande
             $ligneCommande = new LigneCmd();
             $ligneCommande->commande_id = $commande->id;
-            $ligneCommande->produit_id = $item->produit_id;
+            $ligneCommande->produit_id = $produit->id;
             $ligneCommande->qtecmnd = $item->quantite;
             $ligneCommande->save();
         }
     
+        // Vider le panier
         Panier::where('client_id', $clientId)->delete();
     
         return redirect()->route('panier.index')->with('success', 'Votre commande a été passée avec succès !');
     }
+    
+    
 
     // Méthode pour afficher les détails d'une commande
     public function show($id)

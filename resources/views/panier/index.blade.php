@@ -28,6 +28,7 @@
         @endif
 
        <!-- Tableau des articles du panier -->
+        
 <div class="table-responsive">
     <table class="table">
         <thead>
@@ -40,6 +41,26 @@
                 <th scope="col">Gérer</th>
             </tr>
         </thead>
+        @if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('message'))
+    <div class="alert alert-info">
+        {{ session('message') }}
+    </div>
+@endif
+
+<!-- Le reste du code HTML pour afficher le panier -->
+
         <tbody>
             @forelse($cart as $item)
                 <tr>

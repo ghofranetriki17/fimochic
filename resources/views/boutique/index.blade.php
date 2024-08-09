@@ -964,7 +964,20 @@
             @endphp
             <div class="col-md-6 col-lg-6 col-xl-4">
                 <div class="product-card">
-                    <div class="category-badge">{{ $produit->categorie }}</div>
+                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
+                    @if($produit->qte_dispo > 5)
+                    {{ $produit->type}}
+@endif
+       <!-- Affichage de la quantité disponible -->
+                        @if($produit->qte_dispo < 5 && $produit->qte_dispo > 0)
+                            <div class="stock-warning">
+                                <span>Seulement {{ $produit->qte_dispo }} restant en stock!</span>
+                            </div>
+                        @elseif($produit->qte_dispo == 0)
+                            <div class="out-of-stock">
+                                <span>Currently Out of Stock</span>
+                            </div>
+                        @endif                </div>
                     <img src="{{ asset('img/' . $produit->image) }}" alt="{{ $produit->name }}" class="main-product-image">
                     @if($galleryHover)
                         <img src="{{ asset('img/' . $galleryHover->image) }}" class="hover-image" alt="{{ $produit->name }} Hover">
@@ -980,7 +993,8 @@
                         @endif
                         <h4>{{ $produit->name }}</h4>
 
-               
+                        @if($produit->qte_dispo > 0 )
+
 
                         <div class="d-flex justify-content-between">
                             @if($promotion)
@@ -992,13 +1006,14 @@
                                 <p class="text-dark fs-5 fw-bold mb-0">{{ $produit->prix }} DT</p>
                             @endif
                         </div>
+                     @endif
                                  <!-- Affichage du nombre de likes -->
         <div class="likes-info">
                                         <i class="fas fa-heart"></i> {{ $likesCount }}
                                     </div>
                     </div>
      
-
+                    @if($produit->qte_dispo > 0)
                     <!-- Container des icônes -->
                     <div class="icon-container">
                         <!-- Formulaire d'ajout au panier -->
@@ -1016,6 +1031,7 @@
                             <i class="fas fa-eye"></i>
                         </button>
                     </div>
+                    @endif
                 </div>
             </div>
 
@@ -1186,7 +1202,20 @@
     </div>
 </div>
 
+<style>.out-of-stock {
+    font-size: 0.9em;
+    color: #e74c3c; /* Rouge pour le message "Out of Stock" */
+    font-weight: bold;
+  
+}
 
+.stock-warning {
+    font-size: 0.9em;
+    color:green; /* Rouge pour le message de stock faible */
+    font-weight: bold;
+ 
+}
+</style>
 
 
 </div>
