@@ -52,7 +52,7 @@ class GalleryController extends Controller
             'image' => $imageName,
         ]);
 
-        return redirect()->route('produits.index')->with('success', 'Image ajoutée avec succès.');
+        return redirect()->route('galleries.create')->with('success', 'Image ajoutée avec succès.');
     }
 
 

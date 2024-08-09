@@ -1108,6 +1108,15 @@
                                             </div>
                                         </div>
                                     </div>
+
+
+
+
+                                    
+  
+
+
+
                                     <div class="col-md-12 mt-4">
                                         <h4>{{ $produit->name }}</h4>
                                         <p class="text-muted">{{ $produit->categorie }}</p>
@@ -1134,6 +1143,39 @@
         </form>
     @endif
 </div>
+                                    <!-- Section des produits similaires -->
+                                    <div class="mt-4">
+    <div class="row">
+    <h5>Produits Similaires</h5>
+{{$i=1}}
+        @foreach ($produits->filter(function ($p) use ($produit) { return $p->name == $produit->name && $p->id != $produit->id; }) as $relatedProduct)
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <img src="{{ asset('img/' . $relatedProduct->image) }}" class="card-img-top" alt="{{ $relatedProduct->name }}">
+                    <div class="card-body">
+                        <h6 class="card-title">{{ $relatedProduct->name }} {{$i++}}</h6>
+                        <form action="{{ route('panier.store') }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                <input type="hidden" name="produit_id" value="{{ $relatedProduct->id }}">
+                                                <input type="hidden" name="quantite" value="1" min="1" class="quantity-input">
+                                                <button type="submit" class="btn-icon cart-icon">
+                                                    <i class="fas fa-shopping-cart"></i>
+                                                </button>
+                                            </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
+</div>
+
+
+
+
+
+
+
+
                                                                     <!-- Formulaire pour ajouter un commentaire -->
                                 <form action="{{ route('product_like_comments.store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
