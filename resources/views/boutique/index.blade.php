@@ -952,6 +952,8 @@
 
     <div class="row g-4 justify-content-center">
         @foreach($produits as $produit)
+        @if($produit->qte_dispo > 0)
+
         @php
                                 // Remplacez ceci par la logique réelle pour obtenir le nombre de likes
                                 $likesCount =  $produit->getLikesCountAttribute($produit->id) 
@@ -1236,7 +1238,9 @@
                     
                 </div>
             </div>
+            @endif 
         @endforeach
+    
     </div>
     <!-- Pagination -->
     <div class="d-flex justify-content-center">

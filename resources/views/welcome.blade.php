@@ -36,7 +36,8 @@
     justify-content: center;
     align-items: center;
 }
-
+.owl-carousel .owl-item {
+    height: 500px;}
 .left-images, .right-images {
     display: flex;
     flex-direction: column;
