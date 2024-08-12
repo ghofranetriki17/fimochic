@@ -127,3 +127,21 @@ Route::get('/header', [ContactController::class, 'getUnreadContacts'])->name('he
 use App\Http\Controllers\PromoCodeController;
 
 Route::resource('promo_codes', PromoCodeController::class);
+
+
+
+use App\Http\Controllers\FaqController;
+
+// Routes pour les clients
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+Route::post('/faq/{faq}/like', [FaqController::class, 'like'])->name('faq.like');
+
+// Routes pour l'administration
+Route::prefix('admin')->group(function () {
+    Route::get('/faq', [FaqController::class, 'manage'])->name('faq.manage');
+    Route::get('/faq/create', [FaqController::class, 'create'])->name('faq.create');
+    Route::post('/faq', [FaqController::class, 'store'])->name('faq.store');
+    Route::get('/faq/{faq}/edit', [FaqController::class, 'edit'])->name('faq.edit');
+    Route::put('/faq/{faq}', [FaqController::class, 'update'])->name('faq.update');
+    Route::delete('/faq/{faq}', [FaqController::class, 'destroy'])->name('faq.destroy');
+});

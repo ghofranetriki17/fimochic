@@ -162,10 +162,12 @@
                                     <option value="visa">Carte Visa</option>
                                 </select>
                             </div>
-                            <div class="mb-4">
-                                <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Code Promo">
-                                <button class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Appliquer le Code</button>
-                            </div>
+    <!-- Zone de saisie pour le code promo -->
+    <div class="form-group">
+        <label for="promo_code">Code Promo</label>
+        <input type="text" class="form-control" id="promo_code" name="promo_code">
+    </div>
+
                             <input type="hidden" name="total_price" value="{{ $total + 7.00 }}">
                             <button type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase">Procéder au Paiement</button>
                         </form>

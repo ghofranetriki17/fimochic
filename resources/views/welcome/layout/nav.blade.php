@@ -64,7 +64,11 @@
                         <div class="dropdown-menu m-0 bg-jaune-pale rounded-0">
 
                             <a href="tutorials.html" class="dropdown-item {{ request()->routeIs('tutorials') ? 'active' : '' }} text-rose">Voir Tutoriels</a>
+
+<a href="{{ route('faq.index') }}" class="dropdown-item {{ request()->routeIs('faq') ? 'active' : '' }} text-rose">faq</a>
+
                         </div>
+
                     </div>
                     <a href="{{ route('contact.create') }}" class="nav-item nav-link {{ request()->routeIs('contact') ? 'active' : '' }} text-bleu-doux text-rose">Contact</a>
                 </div>
