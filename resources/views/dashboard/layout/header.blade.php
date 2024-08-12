@@ -69,72 +69,58 @@
 
  
 
+        <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle" href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+      
         <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-chat-left-text"></i>
-            <span class="badge bg-success badge-number">3</span>
+            <span class="badge bg-success badge-number">{{ $unreadContacts->count() }}</span>
           </a><!-- End Messages Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
             <li class="dropdown-header">
-              You have 3 new messages
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+              You have {{ $unreadContacts->count() }} new messages
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
-            <li class="message-item">
-              <a href="#">
-                <img src="{{ asset('assets/img/messages-1.jpg')}}" alt="" class="rounded-circle">
-                <div>
-                  <h4>Maria Hudson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>4 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>Anna Nelson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>6 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>David Muldon</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>8 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
+            @foreach($unreadContacts as $contact)
+              <li class="message-item" data-bs-toggle="modal" data-bs-target="#messageModal" 
+                  data-name="{{ $contact->name }}"
+                  data-subject="{{ $contact->subject }}"
+                  data-message="{{ $contact->message }}"
+                  data-email="{{ $contact->email }}">
+                <a href="#">
+                  <div>
+                    <h4>{{ $contact->name }}</h4>
+                    <p>{{ $contact->subject }}</p>
+                    
+                    <p>{{ $contact->created_at->diffForHumans() }}</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+            @endforeach
 
             <li class="dropdown-footer">
-              <a href="#">Show all messages</a>
+              <a href="{{ route('contact.index') }}">Show all messages</a>
             </li>
 
           </ul><!-- End Messages Dropdown Items -->
 
         </li><!-- End Messages Nav -->
-
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
@@ -194,3 +180,38 @@
     </nav><!-- End Icons Navigation -->
 
   </header><!-- End Header -->
+   <!-- Message Modal -->
+   <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="messageModalLabel">Message Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="messageContent"></p>
+        </div>
+        <div class="modal-footer">
+          <a id="sendEmailButton" href="#" class="btn btn-primary" target="_blank">Send Email</a>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var messageItems = document.querySelectorAll('.message-item');
+
+      messageItems.forEach(function(item) {
+        item.addEventListener('click', function() {
+          var name = item.getAttribute('data-name');
+          var subject = item.getAttribute('data-subject');
+          var message = item.getAttribute('data-message');
+          var email = item.getAttribute('data-email');
+
+          document.getElementById('messageModalLabel').innerText = 'Message from ' + name;
+          document.getElementById('messageContent').innerText = message;
+          document.getElementById('sendEmailButton').href = 'mailto:' + email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(message);
+        });
+      });
+    });
+  </script>

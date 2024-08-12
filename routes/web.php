@@ -119,3 +119,8 @@ use App\Http\Controllers\CreationController;
 
 Route::get('/creations', [CreationController::class, 'index'])->name('creations.index');
 Route::get('/creations/{creation}', [CreationController::class, 'show'])->name('creations.show');
+use App\Http\Controllers\ContactController;
+
+Route::resource('contact', ContactController::class);
+Route::post('contacts/{contact}/mark-as-read', [ContactController::class, 'markAsRead'])->name('contact.markAsRead');
+Route::get('/header', [ContactController::class, 'getUnreadContacts'])->name('header');
