@@ -138,6 +138,11 @@
         <i class="bi bi-circle"></i><span>Profils Clients Actifs</span>
     </a>
 </li>
+<li class="{{ Request::is('index') ? 'active' : '' }}">
+    <a href="{{ route('contact.index') }}">
+        <i class="bi bi-circle"></i><span>messages des clients</span>
+    </a>
+</li>
 
                 <li>
                     <a href="crm-customer-profiles.html">

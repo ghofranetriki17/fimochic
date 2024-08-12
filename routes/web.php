@@ -124,3 +124,6 @@ use App\Http\Controllers\ContactController;
 Route::resource('contact', ContactController::class);
 Route::post('contacts/{contact}/mark-as-read', [ContactController::class, 'markAsRead'])->name('contact.markAsRead');
 Route::get('/header', [ContactController::class, 'getUnreadContacts'])->name('header');
+use App\Http\Controllers\PromoCodeController;
+
+Route::resource('promo_codes', PromoCodeController::class);
