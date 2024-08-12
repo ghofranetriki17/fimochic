@@ -132,8 +132,9 @@ function getStepLabel($stepIndex) {
     background-color: #32cd32; /* Vert lime pour complété */
 }
 
+
 .timeline-step.current .timeline-icon {
-    background-color: #1e90ff; /* Bleu pour en cours */
+    background-color: #ff1e1e;
 }
 
 .timeline-step.upcoming .timeline-icon {

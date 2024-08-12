@@ -62,10 +62,7 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle {{ request()->routeIs('panier.index') || request()->routeIs('checkout') || request()->routeIs('testimonials') || request()->routeIs('404') || request()->routeIs('tutorials') ? 'active' : '' }} text-bleu-doux" data-bs-toggle="dropdown">Explorez</a>
                         <div class="dropdown-menu m-0 bg-jaune-pale rounded-0">
-                            <a href="{{ route('panier.index') }}" class="dropdown-item {{ request()->routeIs('panier.index') ? 'active' : '' }} text-rose">Mon Panier</a>
-                            <a href="checkout.html" class="dropdown-item {{ request()->routeIs('checkout') ? 'active' : '' }} text-rose">Passer Commande</a>
-                            <a href="testimonials.html" class="dropdown-item {{ request()->routeIs('testimonials') ? 'active' : '' }} text-rose">Avis Clients</a>
-                            <a href="404.html" class="dropdown-item {{ request()->routeIs('404') ? 'active' : '' }} text-rose">Page Non Trouvée</a>
+
                             <a href="tutorials.html" class="dropdown-item {{ request()->routeIs('tutorials') ? 'active' : '' }} text-rose">Voir Tutoriels</a>
                         </div>
                     </div>
