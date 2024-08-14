@@ -145,3 +145,6 @@ Route::prefix('admin')->group(function () {
     Route::put('/faq/{faq}', [FaqController::class, 'update'])->name('faq.update');
     Route::delete('/faq/{faq}', [FaqController::class, 'destroy'])->name('faq.destroy');
 });
+use App\Http\Controllers\DashboardController;
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
