@@ -59,4 +59,9 @@ class Produit extends Model
     {
         return $this->productLikeComments()->where('client_id', $userId)->where('like', true)->exists();
     }
+
+
+
+    
+    
 }
