@@ -63,8 +63,8 @@
                         <a href="#" class="nav-link dropdown-toggle {{ request()->routeIs('panier.index') || request()->routeIs('checkout') || request()->routeIs('testimonials') || request()->routeIs('404') || request()->routeIs('tutorials') ? 'active' : '' }} text-bleu-doux" data-bs-toggle="dropdown">Explorez</a>
                         <div class="dropdown-menu m-0 bg-jaune-pale rounded-0">
 
-                            <a href="tutorials.html" class="dropdown-item {{ request()->routeIs('tutorials') ? 'active' : '' }} text-rose">Voir Tutoriels</a>
-
+<!--                            <a href="tutorials.html" class="dropdown-item {{ request()->routeIs('tutorials') ? 'active' : '' }} text-rose">Voir Tutoriels</a>
+-->
 <a href="{{ route('faq.index') }}" class="dropdown-item {{ request()->routeIs('faq') ? 'active' : '' }} text-rose">faq</a>
 
                         </div>
@@ -73,9 +73,25 @@
                     <a href="{{ route('contact.create') }}" class="nav-item nav-link {{ request()->routeIs('contact') ? 'active' : '' }} text-bleu-doux text-rose">Contact</a>
                 </div>
                 <div class="d-flex m-3 me-0">
-                    <button class="btn-search btn border border-bleu-doux btn-md-square rounded-circle bg-blanc me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
-                        <i class="fas fa-search text-bleu-doux"></i>
-                    </button>
+                <form method="GET" action="{{ route('boutique.index') }}" class="w-100 mx-auto d-flex">
+    <div class="input-group w-100" style="max-width: 200px; height:10px;margin: 0 auto;">
+        <input 
+            type="search" 
+            name="search" 
+            class="form-control p-2" 
+            style="border-radius: 20px; padding-left: 0.5rem; font-size: 0.8rem;" 
+            placeholder="Rechercher des produits..." 
+            aria-describedby="search-icon-1" 
+            value="{{ request()->input('search') }}"
+        >
+        <span id="search-icon-1" class="input-group-text" style="border-radius: 20px; padding: 0.5rem; background-color: transparent; border: none;">
+            <button type="submit" class="btn btn-link p-0" style="font-size: 1rem; color: #c4089;">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+</form>
+
                     
                     <a href="{{ route('panier.index') }}" class="position-relative me-4 my-auto">
                         <i class="fa fa-shopping-bag fa-2x text-bleu-doux"></i>

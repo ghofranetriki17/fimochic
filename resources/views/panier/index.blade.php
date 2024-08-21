@@ -141,7 +141,6 @@
                                 <p class="mb-0">Forfait: 7.00dt</p>
                             </div>
                         </div>
-                        <p class="mb-0 text-end">Livraison en Ukraine.</p>
                         <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                             <h5 class="mb-0 ps-4 me-4">Total</h5>
                             <p class="mb-0 pe-4">{{ $total + 7.00 }}dt</p>

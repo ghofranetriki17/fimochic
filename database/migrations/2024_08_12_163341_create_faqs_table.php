@@ -12,7 +12,7 @@ class CreateFaqsTable extends Migration
             $table->string('type_de_question');
             $table->text('question');
             $table->text('reponse');
-            $table->string('video_url')->nullable();
+            $table->text('video_url')->nullable();
             $table->integer('likes_count')->default(0);
             $table->timestamps();
         });

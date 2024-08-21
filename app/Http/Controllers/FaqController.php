@@ -40,7 +40,6 @@ class FaqController extends Controller
             'type_de_question' => 'required|string|max:255',
             'question' => 'required|string',
             'reponse' => 'required|string',
-            'video' => 'nullable|file|mimes:mp4,avi,mkv|max:10000',
         ]);
     
         // Initialiser le nom du fichier vidéo à null
@@ -50,24 +49,14 @@ class FaqController extends Controller
         if ($request->hasFile('video')) {
             $videoFile = $request->file('video');
             $videoName = time() . '_video.' . $videoFile->getClientOriginalExtension();
-            $destinationPath = public_path('img');
+            //$destinationPath = public_path('img');
+            $videoFile->move(public_path('img'), $videoName);
+           // dd($videoName);
     
-            // Débogage : vérifier que le dossier existe
-            if (!file_exists($destinationPath)) {
-                return back()->withErrors(['error' => 'Le dossier de destination n\'existe pas.']);
-            }
-    
-            // Débogage : essayer de déplacer le fichier
-            if ($videoFile->move($destinationPath, $videoName)) {
-                // Optionnel : message de succès pour débogage
-                session()->flash('success', 'Fichier vidéo stocké avec succès.');
-            } else {
-                return back()->withErrors(['error' => 'Échec du stockage du fichier vidéo.']);
-            }
         }
     
         // Création de la nouvelle FAQ
-        $faq = new Faq();
+        /*$faq = new Faq();
         $faq->type_de_question = $validated['type_de_question'];
         $faq->question = $validated['question'];
         $faq->reponse = $validated['reponse'];
@@ -76,8 +65,15 @@ class FaqController extends Controller
         if ($videoName) {
             $faq->video_url = 'img/' . $videoName;
         }
-    
+
         $faq->save();
+*/
+        Faq::create([
+            'type_de_question' =>$validated['type_de_question'],
+            'question' => $validated['question'],
+            'reponse' => $validated['reponse'],
+            'video_url' => 'img/' . $videoName
+        ]);
     
         return redirect()->route('faq.create')->with('success', 'Question ajoutée avec succès !');
     }

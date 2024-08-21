@@ -55,16 +55,17 @@
     }
 
     .custom-option {
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        padding: 10px;
-        text-align: center;
-        width: 140px;
-                height: 270px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    width: 130px;
+    height: 290px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgb(255 0 172 / 31%);
+}
 
-        background-color: #fff;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
+
 
     .custom-option img {
         max-width: 100px;
@@ -170,50 +171,48 @@ h2{color:#205681;}
             <div class="col-md-6">
                 <div class="custom-form-group">
                     <h2>Aperçu</h2>
-                    <div id="preview" class="text-center">
-                    </div>
+                    <div id="preview" class="text-center"></div>
                 </div>
                 <button type="submit" class="btn btn-primary">Enregistrer la personnalisation</button>
             </div>
             <div class="col-md-6">
-            <h2>Choisissez vos options</h2>
-        <div id="type-buttons" class="mb-4">
-            @foreach($ressourcesParType as $type => $ressources)
-                <button type="button" class="btn btn-primary type-button" data-type="{{ $type }}">{{ ucfirst($type) }}</button>
-            @endforeach
-        </div>
-
-        <div id="options-container">
-            @foreach($ressourcesParType as $type => $ressources)
-                <div class="custom-form-group options-group" id="{{ $type }}-options" style="display: none;">
-                    <label for="{{ $type }}">{{ ucfirst($type) }}</label>
-                    <div class="custom-option-group" >
-                        @foreach($ressources as $ressource)
-                            <div class="custom-option">
-                                <img src="{{ asset('img/'.$ressource->image) }}" alt="{{ $ressource->nom }}" class="img-thumbnail" data-id="{{ $ressource->id }}">
-                                <span>{{ $ressource->nom }} - {{ $ressource->prix }} DT</span>
-                                <input type="number" name="ressources[{{ $ressource->id }}][quantite]" min="1" value="1" class="form-control mt-2" style="width: 100px;">
-                                <div class="option-buttons">
-                                    <button type="button" class="btn btn-success add-resource" data-id="{{ $ressource->id }}">Ajouter</button>
-                                    <button type="button" class="btn btn-danger remove-resource" data-id="{{ $ressource->id }}" style="display: none;">Annuler</button>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
+                <h2>Choisissez vos options</h2>
+                <div id="type-buttons" class="mb-4">
+                    @foreach($ressourcesParType as $type => $ressources)
+                        <button type="button" class="btn btn-primary type-button {{ $loop->first ? 'default' : '' }}" data-type="{{ $type }}">{{ ucfirst($type) }}</button>
+                    @endforeach
                 </div>
-            @endforeach
-        </div>
 
-        <input type="hidden" name="ressources_json" id="ressources-json">
-              
+                <div id="options-container">
+                    @foreach($ressourcesParType as $type => $ressources)
+                        <div class="custom-form-group options-group" id="{{ $type }}-options" style="display: none;">
+                            <label for="{{ $type }}">{{ ucfirst($type) }}</label>
+                            <div class="custom-option-group">
+                                @foreach($ressources as $ressource)
+                                    <div class="custom-option {{ $loop->first && $loop->parent->first ? 'selected' : '' }}">
+                                        <img src="{{ asset('img/'.$ressource->image) }}" alt="{{ $ressource->nom }}" class="img-thumbnail" data-id="{{ $ressource->id }}">
+                                        <span>{{ $ressource->nom }} - {{ $ressource->prix }} DT</span>
+                                        <input type="number" name="ressources[{{ $ressource->id }}][quantite]" min="1" value="1" class="form-control mt-2" style="width: 100px;">
+                                        <div class="option-buttons">
+                                            <button type="button" class="btn btn-success add-resource" data-id="{{ $ressource->id }}">Ajouter</button>
+                                            <button type="button" class="btn btn-danger remove-resource" data-id="{{ $ressource->id }}" style="display: none;">Annuler</button>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <input type="hidden" name="ressources_json" id="ressources-json">
             </div>
         </div>
 
         <div id="summary">
-                    <h2>Résumé de votre personnalisation</h2>
-                    <ul id="summary-list"></ul>
-                    <p>Total: <span id="total-price">0</span> DT</p>
-                </div>
+            <h2>Résumé de votre personnalisation</h2>
+            <ul id="summary-list"></ul>
+            <p>Total: <span id="total-price">0</span> DT</p>
+        </div>
     </form>
 </div>
 
@@ -417,3 +416,108 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </style>
 @include('welcome.layout.footer')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Vérifiez si le panier est vide
+        var panierVide = true; // Remplacez cette variable par votre propre logique pour vérifier le panier
+
+        if (panierVide) {
+            alert("🎁 **Chère cliente, cher client,**\n\nPour passer une commande en boite cadeau , veuillez d'abord ajouter des articles à votre panier. Nous serions ravis de préparer votre commande spéciale avec soin, mais nous avons besoin de quelques articles pour commencer !\n\nMerci de votre compréhension et de votre confiance !");
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('personnalisation-form');
+        const preview = document.getElementById('preview');
+        const summaryList = document.getElementById('summary-list');
+        const totalPriceElement = document.getElementById('total-price');
+        const addedResources = new Set();
+
+        const updatePreview = () => {
+            preview.innerHTML = ''; // Clear previous content
+            let firstImageUrl = '';
+            addedResources.forEach(id => {
+                const resourceElement = document.querySelector(`.custom-option[data-id="${id}"] img`);
+                if (resourceElement) {
+                    firstImageUrl = resourceElement.src;
+                }
+            });
+            if (firstImageUrl) {
+                const img = document.createElement('div');
+                img.className = 'preview-image';
+                img.style.backgroundImage = `url(${firstImageUrl})`;
+                preview.appendChild(img);
+            }
+        };
+
+        const updateSummary = () => {
+            summaryList.innerHTML = '';
+            let totalPrice = 0;
+            addedResources.forEach(id => {
+                const resourceElement = document.querySelector(`.custom-option[data-id="${id}"]`);
+                if (resourceElement) {
+                    const name = resourceElement.querySelector('span').textContent;
+                    const price = parseFloat(resourceElement.querySelector('span').textContent.split('- ')[1].split(' ')[0]);
+                    const quantity = parseInt(resourceElement.querySelector('input').value);
+                    const total = price * quantity;
+                    totalPrice += total;
+                    summaryList.innerHTML += `<li>${name}: ${quantity} x ${price} DT = ${total} DT</li>`;
+                }
+            });
+            totalPriceElement.textContent = totalPrice.toFixed(2);
+        };
+
+        document.querySelectorAll('.type-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const type = this.getAttribute('data-type');
+                document.querySelectorAll('.options-group').forEach(group => {
+                    group.style.display = group.id === `${type}-options` ? 'block' : 'none';
+                });
+                document.querySelectorAll('.type-button').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.add-resource').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                if (!addedResources.has(id)) {
+                    addedResources.add(id);
+                    updatePreview();
+                    updateSummary();
+                    this.style.display = 'none';
+                    this.nextElementSibling.style.display = 'inline-block';
+                }
+            });
+        });
+
+        document.querySelectorAll('.remove-resource').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                if (addedResources.has(id)) {
+                    addedResources.delete(id);
+                    updatePreview();
+                    updateSummary();
+                    this.style.display = 'none';
+                    this.previousElementSibling.style.display = 'inline-block';
+                }
+            });
+        });
+
+        document.querySelectorAll('.custom-option img').forEach(img => {
+            img.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                if (!addedResources.has(id)) {
+                    addedResources.add(id);
+                    updatePreview();
+                    updateSummary();
+                    document.querySelector(`.add-resource[data-id="${id}"]`).style.display = 'none';
+                    document.querySelector(`.remove-resource[data-id="${id}"]`).style.display = 'inline-block';
+                }
+            });
+        });
+
+        // Setting default selected resource type and pre-selecting its first option
+        document.querySelector('.type-button.default').click();
+    });
+</script>

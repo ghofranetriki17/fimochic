@@ -661,7 +661,7 @@
     <div class="text-center">
         <h4  id="create-earrings-title">Créez Vos Boucles d'Oreilles!</h4>
         <p  id="create-earrings-description">Exprimez votre créativité avec des boucles d'oreilles uniques. Utilisez notre outil de personnalisation pour donner vie à vos idées!</p>
-        <a href="/page-customize" class="btn btn-primary btn-md" id="create-earrings-button">Commencez à Créer</a>
+        <a href="{{ route('personnalisation.boucles') }}" class="btn btn-primary btn-md" id="create-earrings-button">Commencez à Créer</a>
     </div>
 </div>
 <style>#create-earrings-section {
