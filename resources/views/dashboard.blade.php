@@ -16,16 +16,14 @@
 
 
 
+
     <section class="section dashboard">
       <div class="row">
 
         <!-- Left side columns -->
 <div class="col-lg-8">
   <div class="row">
-     <h1>1. Statistiques Globales</h1>
-
-
-
+  
 
 
 
@@ -194,53 +192,37 @@
     </div>
 </div>
 <!-- End Total Groups Card -->
- <!-- Total Groups Card -->
+<!-- Total Products in Carts Card -->
 <div class="col-xxl-4 col-md-6">
     <div class="card info-card orders-card">
-       
+  
+
         <div class="card-body">
-            <lis class="card-title">la personnalisation la plus aimee</h5>
+            <h5 class="card-title">Produits dans les Paniers <span>|</span></h5>
 
             <div class="d-flex align-items-center">
                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-cart"></i>
                 </div>
                 <div class="ps-3">
-                    <p>le nom et id du client</p>
-                    <p>image</p>
+                    <h6>{{ $totalProductsInCarts }}</h6>
+                    <span class="text-success small pt-1 fw-bold">{{ number_format($totalPriceInCarts, 2) }} DT</span>
+                    <span class="text-muted small pt-2 ps-1">en produits non commandés</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- End Total Groups Card -->
+<!-- End Total Products in Carts Card -->
 
 <style>#pr{margin-top:20px}</style>
 
-<!-- Popular Customizations by Type Section -->
-<div class="col-xxl-4 col-md-12" id="pr">
-    <div class="card info-card customizations-card">
-        <div class="card-body">
-            <h5 class="card-title">Personnalisations Tendances</h5>
-            <ul class="list-group">
-                @foreach ($mostUsedPerType as $type => $data)
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ $data['nom'] }} ({{ $data['type'] }})
-                        <span class="badge bg-success rounded-pill">{{ $data['count'] }} fois</span>
-                    </li>
-                @endforeach
-            </ul>
-        </div>
-    </div>
-</div>
-<!-- End Popular Customizations by Type Section -->
 
 
 
 
-
-
-       <!-- Revenue Card -->
-      <div id="rev" class="col-xxl-4 col-md-12">
+ <!-- Revenue Card -->
+ <div id="rev" class="col-xxl-4 col-md-6">
     <div class="card info-card revenue-card">
 
     <div class="dropdown">
@@ -268,12 +250,63 @@
 
 
              <div class="ps-3">
-                    <h6>{{ $totalRevenue }}</h6><p> ici je vais mettre kaddeh zed pourcentage</p>
+                    <h6>{{ $totalRevenue }}</h6>
 
+                    
                 </div>
                 
             </div>
             
+      <div class="card-body">
+
+            <!-- Pie Chart -->
+            <div id="pieChart" style="min-height: 400px;" class="echart"></div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const pieChartData = @json($pieChartData);
+
+                    echarts.init(document.querySelector("#pieChart")).setOption({
+                        title: {
+                            text: '',
+                            subtext: '',
+                            left: 'center'
+                        },
+                        tooltip: {
+                            trigger: 'item'
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            left: 'left'
+                        },
+                        series: [{
+                            name: 'Revenus',
+                            type: 'pie',
+                            radius: '50%',
+                            data: pieChartData,
+                            itemStyle: {
+                                normal: {
+                                    color: function(params) {
+                                        // Define colors for each segment
+                                        const colors = ['#cfe2ff', '#f5d7dc']; // Add more colors if needed
+                                        return colors[params.dataIndex % colors.length];
+                                    }
+                                }
+                            },
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }]
+                    });
+                });
+            </script>
+            <!-- End Pie Chart -->
+
+        </div>
         </div>
         
 
@@ -282,10 +315,8 @@
 
 
         <div class="card-body">
-            <h5 class="card-title">Reports <span>/{{ $filterName }}</span></h5>
 
             <!-- Revenue Chart -->
-            <div id="revenueChart"></div>
 
             <!-- Clients Chart -->
             <div id="clientsChart" class="mt-4"></div>
@@ -336,17 +367,64 @@
 
 
 
-      <div class="card-body">
-            <h5 class="card-title">Répartition des Revenus<span>| {{ $filterName }}</span></h5>
+    </div>
+      </div><!-- End Revenue Card -->
+
+
+<style>#cst{margin-top:20px;
+height:510px;}</style>
+      
+<!-- Customers Card -->
+<div class="col-xxl-4 col-xl-6" id="cst">
+  <div class="card info-card customers-card">
+
+    <div class="dropdown">
+      <a class="icon" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-three-dots"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li class="dropdown-header text-start">
+          <h6>Filtrer</h6>
+        </li>
+        <li><a class="dropdown-item" href="{{ route('dashboard', ['filter' => 'today']) }}">Aujourd'hui</a></li>
+        <li><a class="dropdown-item" href="{{ route('dashboard', ['filter' => 'this_month']) }}">Ce mois-ci</a></li>
+        <li><a class="dropdown-item" href="{{ route('dashboard', ['filter' => 'this_year']) }}">Cette année</a></li>
+        <li><a class="dropdown-item" href="{{ route('dashboard', ['filter' => 'all_time']) }}">Tout le temps</a></li>
+      </ul>
+    </div>
+
+    <div class="card-body">
+      <h5 class="card-title">Clients <span>| {{ $filterName }}</span></h5>
+
+      <div class="d-flex align-items-center">
+        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+          <i class="bi bi-people"></i>
+        </div>
+        <div class="ps-3">
+          <h6>{{ $femaleClients + $maleClients + $otherClients }}</h6>
+          <!-- Ici vous pouvez ajouter la logique pour les pourcentages d'augmentation/diminution -->
+          @if($filterName == 'all_time')
+            <!-- Si vous avez les données pour la période précédente -->
+            <span class="text-danger small pt-1 fw-bold">{{ $orderIncreasePercentage }}%</span>
+            <span class="text-muted small pt-2 ps-1">d'augmentation</span>
+          @else
+            <span class="text-danger small pt-1 fw-bold">{{ $orderIncreasePercentage }}%</span>
+            <span class="text-muted small pt-2 ps-1">changement</span>
+          @endif
+        </div>
+      </div>
+
+    </div>
+    <div class="card-body">
 
             <!-- Pie Chart -->
-            <div id="pieChart" style="min-height: 400px;" class="echart"></div>
+            <div id="pieChartclients" style="min-height: 400px;" class="echart"></div>
 
             <script>
                 document.addEventListener("DOMContentLoaded", () => {
-                    const pieChartData = @json($pieChartData);
+                    const pieChartDataclients = @json($pieChartDataclients);
 
-                    echarts.init(document.querySelector("#pieChart")).setOption({
+                    echarts.init(document.querySelector("#pieChartclients")).setOption({
                         title: {
                             text: '',
                             subtext: '',
@@ -363,12 +441,12 @@
                             name: 'Revenus',
                             type: 'pie',
                             radius: '50%',
-                            data: pieChartData,
+                            data: pieChartDataclients,
                             itemStyle: {
                                 normal: {
                                     color: function(params) {
                                         // Define colors for each segment
-                                        const colors = ['#cfe2ff', '#f5d7dc']; // Add more colors if needed
+                                        const colors = ['#f5d7dc','#cfe2ff', '#c0fdbb']; // Add more colors if needed
                                         return colors[params.dataIndex % colors.length];
                                     }
                                 }
@@ -387,14 +465,14 @@
             <!-- End Pie Chart -->
 
         </div>
-    </div>
-      </div><!-- End Revenue Card -->
+  </div>
+</div><!-- End Customers Card -->
 
 
 
 <style>#rev {
  margin-top:20px;
-    height: 40%;
+    height: 510px;
 }</style>
 
 
@@ -403,9 +481,117 @@
 
 
 
-      <!-- Reports -->
-      <div class="col-12">
+
+
+<!-- Reports -->
+<div class="col-6">
     <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="card-title">Produits les plus vendus ({{ $filterName }})</h5>
+
+                <div class="dropdown">
+                    <a class="icon" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li class="dropdown-header text-start">
+                            <h6>Filtrer</h6>
+                        </li>
+                        <li><a class="dropdown-item" href="{{ route('dashboard', ['filter' => 'today']) }}">Aujourd'hui</a></li>
+                        <li><a class="dropdown-item" href="{{ route('dashboard', ['filter' => 'this_month']) }}">Ce mois-ci</a></li>
+                        <li><a class="dropdown-item" href="{{ route('dashboard', ['filter' => 'this_year']) }}">Cette année</a></li>
+                        <li><a class="dropdown-item" href="{{ route('dashboard', ['filter' => 'all_time']) }}">Tout le temps</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <ul class="list-group">
+                @foreach($topProducts as $product)
+                    @php
+                        // Supposons que vous avez un modèle Produit pour récupérer les détails du produit
+                        $produit = \App\Models\Produit::find($product->produit_id);
+                    @endphp
+                    @if($produit)
+                        <li class="list-group-item">
+                            <div class="d-flex align-items-center">
+                                <img src="{{ asset('img/' . $produit->image) }}" alt="{{ $produit->nom }}" class="img-thumbnail" style="width: 100px; height: 100px;">
+                                <div class="ms-3">
+                                    <h5 class="mb-1">{{ $produit->name }}</h5>
+                                    <p class="mb-1"><strong>Q.vendue : </strong>{{ $product->total_quantity }}</p>
+                                </div>
+                            </div>
+                        </li>
+                    @endif
+                @endforeach
+            </ul>
+        </div>
+    </div>
+</div><!-- End Reports -->
+
+
+
+
+<!-- Reports -->
+<div class="col-6">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Produits les plus populaires de tout le temps</h5>
+            <ul class="list-group">
+                @foreach($topLikedProducts as $produit)
+                    <li class="list-group-item">
+                        <div class="d-flex align-items-center">
+                            <img src="{{ asset('img/' . $produit->image) }}" alt="{{ $produit->nom }}" class="img-thumbnail" style="width: 100px; height: 100px;">
+                            <div class="ms-3">
+                                <h5 class="mb-1">{{ $produit->name }}</h5>
+                                <p class="mb-1"><strong>Likes :</strong> {{ $produit->getLikesCountAttribute() }}</p>
+                            </div>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+</div><!-- End Reports -->
+
+
+<!-- Popular Customizations by Type Section -->
+<div class="col-xxl-4 col-md-12" id="pr">
+    <div class="card info-card customizations-card">
+        <div class="card-body">
+            <h5 class="card-title">Personnalisations Tendances</h5>
+            <ul class="list-group">
+                @foreach ($mostUsedPerType as $type => $data)
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ $data['nom'] }} ({{ $data['type'] }})
+                        <span class="badge bg-success rounded-pill">{{ $data['count'] }} fois</span>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- End Popular Customizations by Type Section -->
+
+
+
+
+
+
+            <!-- Recent Sales -->
+          <!-- End Recent Sales -->
+
+            <!-- Top Selling -->
+           <!-- End Top Selling -->
+
+          </div>
+        </div><!-- End Left side columns -->
+
+        <!-- Right side columns -->
+        <div class="col-lg-4">
+    <!-- Reports -->
+    <div class="col-12">
+    <div class="card" >
         
         <div class="card-body">
             <h5 class="card-title">Reports </h5>
@@ -463,174 +649,46 @@
     </div>
 </div><!-- End Reports -->
 
+      
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Adresse les Plus Frequentes</h5>
 
-
-
-<!-- Customers Card -->
-<div class="col-xxl-4 col-xl-12">
-  <div class="card info-card customers-card">
-
-    <div class="dropdown">
-      <a class="icon" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="bi bi-three-dots"></i>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-end">
-        <li class="dropdown-header text-start">
-          <h6>Filtrer</h6>
-        </li>
-        <li><a class="dropdown-item" href="{{ route('dashboard', ['filter' => 'today']) }}">Aujourd'hui</a></li>
-        <li><a class="dropdown-item" href="{{ route('dashboard', ['filter' => 'this_month']) }}">Ce mois-ci</a></li>
-        <li><a class="dropdown-item" href="{{ route('dashboard', ['filter' => 'this_year']) }}">Cette année</a></li>
-        <li><a class="dropdown-item" href="{{ route('dashboard', ['filter' => 'all_time']) }}">Tout le temps</a></li>
-      </ul>
-    </div>
-
-    <div class="card-body">
-      <h5 class="card-title">Clients <span>| {{ $filterName }}</span></h5>
-
-      <div class="d-flex align-items-center">
-        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-          <i class="bi bi-people"></i>
-        </div>
-        <div class="ps-3">
-          <h6>{{ $femaleClients + $maleClients + $otherClients }}</h6>
-          <!-- Ici vous pouvez ajouter la logique pour les pourcentages d'augmentation/diminution -->
-          @if($filterName == 'all_time')
-            <!-- Si vous avez les données pour la période précédente -->
-            <span class="text-danger small pt-1 fw-bold">{{ $orderIncreasePercentage }}%</span>
-            <span class="text-muted small pt-2 ps-1">d'augmentation</span>
-          @else
-            <span class="text-danger small pt-1 fw-bold">{{ $orderIncreasePercentage }}%</span>
-            <span class="text-muted small pt-2 ps-1">changement</span>
-          @endif
-        </div>
-      </div>
-
-    </div>
-    <div class="card-body">
-            <h5 class="card-title">Répartition des clients<span>| {{ $filterName }}</span></h5>
-
-            <!-- Pie Chart -->
-            <div id="pieChartclients" style="min-height: 400px;" class="echart"></div>
+            <!-- Bar Chart -->
+            <div id="barChart"></div>
 
             <script>
                 document.addEventListener("DOMContentLoaded", () => {
-                    const pieChartDataclients = @json($pieChartDataclients);
-
-                    echarts.init(document.querySelector("#pieChartclients")).setOption({
-                        title: {
-                            text: '',
-                            subtext: '',
-                            left: 'center'
-                        },
-                        tooltip: {
-                            trigger: 'item'
-                        },
-                        legend: {
-                            orient: 'vertical',
-                            left: 'left'
-                        },
+                    new ApexCharts(document.querySelector("#barChart"), {
                         series: [{
-                            name: 'Revenus',
-                            type: 'pie',
-                            radius: '50%',
-                            data: pieChartDataclients,
-                            itemStyle: {
-                                normal: {
-                                    color: function(params) {
-                                        // Define colors for each segment
-                                        const colors = ['#f5d7dc','#cfe2ff', '#c0fdbb']; // Add more colors if needed
-                                        return colors[params.dataIndex % colors.length];
-                                    }
-                                }
-                            },
-                            emphasis: {
-                                itemStyle: {
-                                    shadowBlur: 10,
-                                    shadowOffsetX: 0,
-                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                                }
+                            data: @json($barChartDataadresse['data'])
+                        }],
+                        chart: {
+                            type: 'bar',
+                            height: 350
+                        },
+                        plotOptions: {
+                            bar: {
+                                borderRadius: 4,
+                                horizontal: false,
                             }
-                        }]
-                    });
+                        },
+                        dataLabels: {
+                            enabled: false
+                        },
+                        xaxis: {
+                            categories: @json($barChartDataadresse['categories']),
+                        }
+                    }).render();
                 });
             </script>
-            <!-- End Pie Chart -->
+            <!-- End Bar Chart -->
 
-        </div>
-  </div>
-</div><!-- End Customers Card -->
-
-
-<!-- Reports -->
-<div class="col-12">
-    <div class="card">
-        <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center">
-                <h5 class="card-title">Produits les plus vendus ({{ $filterName }})</h5>
-
-                <div class="dropdown">
-                    <a class="icon" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-three-dots"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li class="dropdown-header text-start">
-                            <h6>Filtrer</h6>
-                        </li>
-                        <li><a class="dropdown-item" href="{{ route('dashboard', ['filter' => 'today']) }}">Aujourd'hui</a></li>
-                        <li><a class="dropdown-item" href="{{ route('dashboard', ['filter' => 'this_month']) }}">Ce mois-ci</a></li>
-                        <li><a class="dropdown-item" href="{{ route('dashboard', ['filter' => 'this_year']) }}">Cette année</a></li>
-                        <li><a class="dropdown-item" href="{{ route('dashboard', ['filter' => 'all_time']) }}">Tout le temps</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="row">
-                @foreach($topProducts as $product)
-                    @php
-                        // Supposons que vous avez un modèle Produit pour récupérer les détails du produit
-                        $produit = \App\Models\Produit::find($product->produit_id);
-                    @endphp
-                    @if($produit)
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <img src="{{ asset('img/' . $produit->image) }}" class="card-img-top" alt="{{ $produit->nom }}">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $produit->name }}</h5>
-                                    <p class="card-text"><strong>Quantité vendue : </strong>{{ $product->total_quantity }}</p>
-                                    <p class="card-text"><strong>Prix : </strong>{{ $produit->prix }} DT</p>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-                @endforeach
-            </div>
         </div>
     </div>
-</div><!-- End Reports -->
+</div>
 
-
-
-
-
-
-
-
-
-
-
-
-            <!-- Recent Sales -->
-          <!-- End Recent Sales -->
-
-            <!-- Top Selling -->
-           <!-- End Top Selling -->
-
-          </div>
-        </div><!-- End Left side columns -->
-
-        <!-- Right side columns -->
-        <div class="col-lg-4">
 
 <!-- Recent Activity -->
 <div class="card" id="commandesrecentes">
@@ -712,6 +770,7 @@
     --bs-text-opacity: 1;
     color: rgb(53 252 54) !important;
 }</style>
+
  <!-- Recent Purchases -->
 <div class="card" id="recentPurchases">
  
@@ -741,82 +800,47 @@
     background-color: #ffffff;
     border-color: #ffffff;
     color: #ff8ad5;
-}</style>
+}
+#cmnt{height:700px;}
+</style>
+<!-- News & Updates Traffic -->
+<div class="card" id="cmnt">
+    <div class="card-body pb-0">
+        <h5 class="card-title">Commentaires et Likes Récents <span>| Aujourd'hui</span></h5>
 
-<!-- Recent Activity -->
-<div class="card" id="commandesrecentes">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
+        <div class="news">
+            @foreach($comments as $comment)
+                <div class="post-item clearfix">
+                    <!-- Affichage de l'image du commentaire s'il en existe une -->
+                    @if($comment->image)
+                        <img src="{{ asset('img/' . $comment->image) }}" alt="Comment Image" class="img-thumbnail" style="width: 100px; height: 100px;">
+                    @else
+                        <img src="{{ asset('img/' . $comment->produit->image) }}" alt="Product Image" class="img-thumbnail" style="width: 100px; height: 100px;">
+                    @endif
+                    <div class="content">
+                        <h4>{{ $comment->produit->name }}</h4>
+             
+                        <!-- Affichage de l'état du commentaire -->
+                        @if($comment->like && !$comment->commentaire)
+                            <p><strong>Status:</strong> Le client {{$comment->client->nom}} a aimé le produit {{$comment->produit->name}} le {{$comment->created_at}}</p>
+                        @elseif(!$comment->like && $comment->commentaire)
+                            <p><strong>Status:</strong> Le client {{$comment->client->nom}} a commenté le produit {{$comment->produit->name}} le {{$comment->created_at}}</p>
+                        @elseif($comment->like && $comment->commentaire)
+                            <p><strong>Status:</strong> Le client {{$comment->client->nom}} a aimé et commenté le produit {{$comment->produit->name}} le {{$comment->created_at}}</p>
+                        @else
+                            <p><strong>Status:</strong> Aucun like ni commentaire</p>
+                        @endif
 
-                <li><a class="dropdown-item" href="#">Today</a></li>
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
-              </ul>
-            </div>
+                        <!-- Contenu du commentaire caché -->
+                    
+                    </div>
+                </div>
+            @endforeach
+        </div><!-- End sidebar recent posts-->
+    </div>
+    <a href="{{ route('product_like_comments.index') }}" class="btn btn-primary">Voir Tous les interactions</a>
 
-            <div class="card-body">
-              <h5 class="card-title">Recent Activity <span>| Today</span></h5>
-
-              <div class="activity">
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">32 min</div>
-                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                  <div class="activity-content">
-                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">56 min</div>
-                  <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-                  <div class="activity-content">
-                    Voluptatem blanditiis blanditiis eveniet
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">2 hrs</div>
-                  <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-                  <div class="activity-content">
-                    Voluptates corrupti molestias voluptatem
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">1 day</div>
-                  <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-                  <div class="activity-content">
-                    Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati voluptatem</a> tempore
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">2 days</div>
-                  <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-                  <div class="activity-content">
-                    Est sit eum reiciendis exercitationem
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">4 weeks</div>
-                  <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-                  <div class="activity-content">
-                    Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
-                  </div>
-                </div><!-- End activity item-->
-
-              </div>
-
-            </div>
-          </div><!-- End Recent Activity -->
-
-
+</div><!-- End News & Updates -->
 
           <!-- Website Traffic -->
       <!-- End Website Traffic -->
@@ -829,40 +853,15 @@
 
 <style>#commandesrecentes {height: 655px;}
 #recentPurchases{height: 655px;}
-
+.dashboard .activity .activity-item .activite-label {
+    width: 70px;
+}
 
 </style>
 
 
-<!-- Reports -->
-<div class="col-12">
-    <div class="card">
-
-        
-
-        <div class="card-body">
-            <h5 class="card-title">Produits les plus populaire</h5>
-            <div class="row">
-                @foreach($topLikedProducts as $produit)
-                    <div class="col-md-2">
-                        <div class="card">
-                            <img src="{{ asset('img/' . $produit->image) }}" class="card-img-top" alt="{{ $produit->nom }}">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $produit->name }}</h5>
-                                <p class="card-text"><strong>Likes : </strong>{{ $produit->getLikesCountAttribute()}}</p>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-
-    </div>
-</div><!-- End Reports -->
-
       </div>
     </section>
-
 
 @include('dashboard.layout.script')
 

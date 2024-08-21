@@ -8,94 +8,84 @@
                 <span>Dashboard</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#sales-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-bar-chart"></i><span>Analyse des Ventes</span><i class="bi bi-chevron-down ms-auto"></i>
+      
+
+  <!-- Gestion de l'Inventaire -->
+  <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#inventory-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-archive"></i>
+                <span>Gestion de l'Inventaire</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="sales-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li><a href="sales-overview.html"><i class="bi bi-circle"></i><span>Vue d'Ensemble</span></a></li>
-                <li><a href="sales-products.html"><i class="bi bi-circle"></i><span>Produits Populaires</span></a></li>
-                <li><a href="sales-customers.html"><i class="bi bi-circle"></i><span>Analyses Clients</span></a></li>
+            <ul id="inventory-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li class="{{ Request::is('produits') ? 'active' : '' }}">
+                    <a href="{{ route('produits.index') }}">
+                        <i class="bi bi-circle"></i><span>Liste des Produits</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('produits/create') ? 'active' : '' }}">
+                    <a href="{{ route('produits.create') }}">
+                        <i class="bi bi-circle"></i><span>Mettre à Jour le Stock</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('galleries/create') ? 'active' : '' }}">
+                    <a href="{{ route('galleries.create') }}">
+                        <i class="bi bi-circle"></i><span>Mettre à Jour la Galerie</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('attributs') ? 'active' : '' }}">
+                    <a href="{{ route('attributs.index') }}">
+                        <i class="bi bi-circle"></i><span>Gérer les Catégories (Attributs)</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('valeurs') ? 'active' : '' }}">
+                    <a href="{{ route('valeurs.index') }}">
+                        <i class="bi bi-circle"></i><span>Gérer les Sous-Catégories (Valeurs)</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('ressources') ? 'active' : '' }}">
+                    <a href="{{ route('ressources.index') }}">
+                        <i class="bi bi-circle"></i><span>Gérer des Ressources</span>
+                    </a>
+                </li>
             </ul>
         </li>
 
 
 
 
-        <li class="nav-item">
-    <a class="nav-link collapsed" data-bs-target="#inventory-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-archive"></i><span>Gestion de l'Inventaire</span><i class="bi bi-chevron-down ms-auto"></i>
-    </a>
-    <ul id="inventory-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-    <li class="{{ Request::is('index') ? 'active' : '' }}">
-    <a href="{{ route('produits.index') }}">
-        <i class="bi bi-circle"></i><span>liste produits</span>
-    </a>
-</li>
-        <li>
-            <a href="{{ route('produits.create') }}">
-                <i class="bi bi-circle"></i><span> Mettre à Jour le Stock</s</span>
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('galleries.create') }}">
-                <i class="bi bi-circle"></i><span> Mettre à Jour la gallerie</s</span>
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('attributs.index') }}">
-                <i class="bi bi-circle"></i><span> Gérer les categories(Attributs)</li>
-        <li>
-            <a href="{{ route('valeurs.index') }}">
-                <i class="bi bi-circle"></i><span> Gérer les sous categories(Valeurs)</span>
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('ressources.index') }}">
-                <i class="bi bi-circle"></i><span>Gérer des ressources</span>
-            </a>
-        </li>
-    </ul>
-</li>
 
-
-
-
-
-<li class="nav-item">
+  <!-- Gestion des Commandes -->
+  <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#order-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-cart-check"></i><span>Gestion des Commandes</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-cart-check"></i>
+                <span>Gestion des Commandes</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="order-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li>
+                <li class="{{ Request::is('commandes') ? 'active' : '' }}">
                     <a href="{{ route('commandes.index') }}">
                         <i class="bi bi-circle"></i><span>Suivi des Commandes</span>
                     </a>
                 </li>
-                <li>
-                <a href="{{ route('ressources_personnalisation.index') }}" >
-                <i class="bi bi-circle"></i><span>options de personnalisation des Commandes</span>
+                <li class="{{ Request::is('ressources_personnalisation') ? 'active' : '' }}">
+                    <a href="{{ route('ressources_personnalisation.index') }}">
+                        <i class="bi bi-circle"></i><span>Options de Personnalisation des Commandes</span>
                     </a>
                 </li>
-                
-                <li>
-                <a href="{{ route('personnalisation.index') }}" >
-                <i class="bi bi-circle"></i><span> Commandesn perso</span>
+                <li class="{{ Request::is('personnalisation') ? 'active' : '' }}">
+                    <a href="{{ route('personnalisation.index') }}">
+                        <i class="bi bi-circle"></i><span>Commandes Personnalisées en Attentes</span>
                     </a>
                 </li>
-                <li>
-                <a href="{{ route('commandespersoonalisse.index') }}" >
-                <i class="bi bi-circle"></i><span> Commandesn confirmee</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('commandes.index') }}">
-                        <i class="bi bi-circle"></i><span>Facturation Automatisée</span>
+                <li class="{{ Request::is('commandespersoonalisse') ? 'active' : '' }}">
+                    <a href="{{ route('commandespersoonalisse.index') }}">
+                        <i class="bi bi-circle"></i><span>Commandes Personnalisées Confirmées</span>
                     </a>
                 </li>
                 <li>
                     <a href="order-customer-communication.html">
-                        <i class="bi bi-circle"></i><span>livraison</span>
+                        <i class="bi bi-circle"></i><span>Livraison</span>
                     </a>
                 </li>
             </ul>
@@ -103,104 +93,61 @@
 
 
 
-
      
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i
-                    class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="tables-general.html">
-                        <i class="bi bi-circle"></i><span>General Tables</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="tables-data.html">
-                        <i class="bi bi-circle"></i><span>Data Tables</span>
-                    </a>
-                </li>
-            </ul>
-        </li><!-- End Tables Nav -->
-
        
 
 
 
+        <!-- Gestion de la Relation Client (CRM) -->
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#crm-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-people"></i><span>Gestion de la Relation Client (CRM)</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-people"></i>
+                <span>Gestion de la Relation Client (CRM)</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="crm-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-            <li class="{{ Request::is('index') ? 'active' : '' }}">
-    <a href="{{ route('clients.index') }}">
-        <i class="bi bi-circle"></i><span>Profils Clients Actifs</span>
-    </a>
-</li>
-<li class="{{ Request::is('index') ? 'active' : '' }}">
-    <a href="{{ route('contact.index') }}">
-        <i class="bi bi-circle"></i><span>messages des clients</span>
-    </a>
-</li>
-
-                <li>
-                    <a href="crm-customer-profiles.html">
-                        <i class="bi bi-circle"></i><span>Profils Clients Inactifs</span>
+                <li class="{{ Request::is('clients') ? 'active' : '' }}">
+                    <a href="{{ route('clients.index') }}">
+                        <i class="bi bi-circle"></i><span>Liste des Clients</span>
                     </a>
                 </li>
-                <li>
-    <a href="{{ route('clients.create') }}">
-        <i class="bi bi-circle"></i><span>Ajout Client</span>
-    </a>
-</li>
-
+                <li class="{{ Request::is('contact') ? 'active' : '' }}">
+                    <a href="{{ route('contact.index') }}">
+                        <i class="bi bi-circle"></i><span>Messages des Clients</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('clients/create') ? 'active' : '' }}">
+                    <a href="{{ route('clients.create') }}">
+                        <i class="bi bi-circle"></i><span>Ajout Client</span>
+                    </a>
+                </li>
                 <li>
                     <a href="crm-loyalty-program.html">
                         <i class="bi bi-circle"></i><span>Gestion du Programme de Fidélité</span>
                     </a>
                 </li>
-                <li>
-                    <a href="crm-feedback-system.html">
+                <li class="{{ Request::is('product_like_comments') ? 'active' : '' }}">
+                    <a href="{{ route('product_like_comments.index') }}">
                         <i class="bi bi-circle"></i><span>Système de Feedback</span>
                     </a>
                 </li>
-               
             </ul>
         </li>
-        
-<!-- Nouvelle section pour les promotions -->
-<li class="nav-item">
-    <a class="nav-link collapsed" data-bs-target="#promo-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-tags"></i><span>Gestion des Promotions</span><i class="bi bi-chevron-down ms-auto"></i>
-    </a>
-    <ul id="promo-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-        <li>
-            <a href="{{ route('promotions.create') }}">
-                <i class="bi bi-circle"></i><span>Créer une Promotion</span>
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('promotions.index') }}">
-                <i class="bi bi-circle"></i><span>Gérer les Promotions</span>
-            </a>
-        </li>
-    </ul>
-</li>
-
-
-        <li class="nav-item">
+      <!-- Gestion des Promotions -->
+      <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#promo-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-tags"></i><span>Gestion des Codes Promo</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-tags"></i>
+                <span>Gestion des Promotions</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="promo-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="promo-create.html">
-                        <i class="bi bi-circle"></i><span>Créer un Code Promo</span>
+                <li class="{{ Request::is('promotions') ? 'active' : '' }}">
+                    <a href="{{ route('promotions.index') }}">
+                        <i class="bi bi-circle"></i><span>Gérer les Promotions</span>
                     </a>
                 </li>
-                <li>
-                    <a href="promo-manage.html">
+                <li class="{{ Request::is('promo_codes') ? 'active' : '' }}">
+                    <a href="{{ route('promo_codes.index') }}">
                         <i class="bi bi-circle"></i><span>Gérer les Codes Promo</span>
                     </a>
                 </li>
@@ -208,13 +155,17 @@
         </li>
 
 
+       
 
 
 
 
-        <li class="nav-item">
+ <!-- Images d'Inspiration -->
+ <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#inspo-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-images"></i><span>Images d'Inspiration</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-images"></i>
+                <span>Images d'Inspiration</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="inspo-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
@@ -232,11 +183,12 @@
 
 
 
-
-
-        <li class="nav-item">
+         <!-- Vidéos Tutoriels -->
+         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#tutorials-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-play-circle"></i><span>Vidéos Tutoriels</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-play-circle"></i>
+                <span>Vidéos Tutoriels</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="tutorials-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
@@ -251,8 +203,6 @@
                 </li>
             </ul>
         </li>
-
-
 
 
 
@@ -273,41 +223,7 @@
             </a>
         </li><!-- End F.A.Q Page Nav -->
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-contact.html">
-                <i class="bi bi-envelope"></i>
-                <span>Contact</span>
-            </a>
-        </li><!-- End Contact Page Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-register.html">
-                <i class="bi bi-card-list"></i>
-                <span>Register</span>
-            </a>
-        </li><!-- End Register Page Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-login.html">
-                <i class="bi bi-box-arrow-in-right"></i>
-                <span>Login</span>
-            </a>
-        </li><!-- End Login Page Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-error-404.html">
-                <i class="bi bi-dash-circle"></i>
-                <span>Error 404</span>
-            </a>
-        </li><!-- End Error 404 Page Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-blank.html">
-                <i class="bi bi-file-earmark"></i>
-                <span>Blank</span>
-            </a>
-        </li><!-- End Blank Page Nav -->
-
+       
     </ul>
 
 </aside><!-- End Sidebar-->

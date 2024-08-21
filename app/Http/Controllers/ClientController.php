@@ -105,11 +105,10 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
+     */public function update(Request $request, $id)
+{
+    // Validation des données
+    $request->validate([
         'preNom' => 'nullable|string|max:255',
         'nom' => 'nullable|string|max:255',
         'mail' => 'nullable|email|max:255',
@@ -117,14 +116,27 @@ class ClientController extends Controller
         'numeroTel' => 'nullable|numeric',
         'sexe' => 'nullable|string|max:255',
         'adresse' => 'nullable|string|max:255',
-        ]);
+    ]);
 
-        $client = Client::findOrFail($id);
-        $client->update($request->all());
+    // Trouver le client par ID
+    $client = Client::findOrFail($id);
 
-        return redirect()->route('clients.index')
-            ->with('success', 'Client mis à jour avec succès.');
-    }
+    // Mise à jour des informations du client
+    $client->update([
+        'preNom' => $request->input('preNom', $client->preNom),
+        'nom' => $request->input('nom', $client->nom),
+        'mail' => $request->input('mail', $client->mail),
+        'age' => $request->input('age', $client->age),
+        'numeroTel' => $request->input('numeroTel', $client->numeroTel),
+        'sexe' => $request->input('sexe', $client->sexe),
+        'adresse' => $request->input('adresse', $client->adresse),
+    ]);
+
+    // Redirection avec message de succès
+    return redirect()->route('clients.compte')
+        ->with('success', 'Client mis à jour avec succès.');
+}
+
 
     /**
      * Supprime un client spécifique de la base de données.

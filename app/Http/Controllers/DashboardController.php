@@ -9,19 +9,25 @@ use App\Models\Client;
 use Illuminate\Support\Facades\DB;
 use App\Models\Produit;
 use App\Models\Contact;
+use App\Models\Panier;
+
 use App\Models\ClientRessourcePersonnalisation;
 use App\Models\RessourcePersonnalisation;
+use App\Models\ProductLikeComment;
 
 use Carbon\Carbon;
 
 use App\Models\ligneCmd;
 
+use Illuminate\Support\Facades\Auth; // Ajoutez cette ligne
 
 
 class DashboardController extends Controller
 {
     public function index(Request $request)
-    {
+    {  if (!Auth::check()) {
+        return redirect()->route('login'); // Redirige vers la page de connexion si non authentifié
+    }
         $filter = $request->get('filter', 'all_time');
         $filterName = 'Tout le temps';
 
@@ -209,7 +215,7 @@ $otherClients = Client::whereYear('created_at', Carbon::now()->year)
  
        $topLikedProducts = Produit::withCount(['likes' => function($query) {
         $query->where('like', true);
-    }])->orderBy('likes_count', 'desc')->take(6)->get();
+    }])->orderBy('likes_count', 'desc')->take(3)->get();
   
 
 
@@ -360,17 +366,43 @@ $lineChartData = [
 
 
 
+$comments = ProductLikeComment::with('produit')->orderBy('created_at', 'desc')->take(5)->get();
+
+$totalProductsInCarts = Panier::sum('quantite');
+$totalPriceInCarts = Panier::join('produits', 'panier.produit_id', '=', 'produits.id')
+                           ->sum(\DB::raw('panier.quantite * produits.prix'));
 
 
 
 
-        return view('dashboard', compact('orderIncreasePercentage',
+
+
+
+                           $topAddresses = DB::table('commandes')
+                           ->select('adresse', DB::raw('COUNT(*) as total'))
+                           ->groupBy('adresse')
+                           ->orderBy('total', 'desc')
+                           ->limit(10) // Ajustez le nombre selon vos besoins
+                           ->get();
+                           // Ajouter cette ligne après votre récupération des données
+$addresses = $topAddresses->pluck('adresse');
+$quantities = $topAddresses->pluck('total');
+
+// Préparer les données pour le graphique à barres
+$barChartDataadresse = [
+    'categories' => $addresses,
+    'data' => $quantities
+];
+
+
+                           
+        return view('dashboard', compact('totalProductsInCarts', 'totalPriceInCarts','comments','orderIncreasePercentage',
             'commandeIncreasePercentage',
             'orderStateData','recentMessages','topLikedProducts','totalOrders', 'topProducts','filterName', 'orderIncreasePercentage','totalCommandes', 'commandeIncreasePercentage' , 
        
        
    
-        'totalRevenue','lineChartData','lignesCommande','barChartData','groupCount','groupedByDateTime', 'barChartLabels' ,'pieChartDataclients','totalRevenueOrders','totalRevenueCommandes','pieChartData', 'femaleClients', 'maleClients', 'otherClients',
+        'totalRevenue','lineChartData','lignesCommande','barChartData','barChartDataadresse','groupCount','groupedByDateTime', 'barChartLabels' ,'pieChartDataclients','totalRevenueOrders','totalRevenueCommandes','pieChartData', 'femaleClients', 'maleClients', 'otherClients',
         'mostUsedPerType'
        ));
     }

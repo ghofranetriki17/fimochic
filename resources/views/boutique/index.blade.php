@@ -132,7 +132,7 @@
 .modal-content {
     border: #ff949400;
     border-radius: 15px;
-    background-color: #cffcda00;
+    background-color: #2d1621;
     overflow: hidden;
 }
 .modal-header {
@@ -1148,14 +1148,16 @@
                                     <!-- Section des produits similaires -->
                                     <div class="mt-4">
     <div class="row">
-    <h5>Produits Similaires</h5>
-{{$i=1}}
         @foreach ($produits->filter(function ($p) use ($produit) { return $p->name == $produit->name && $p->id != $produit->id; }) as $relatedProduct)
+       
+        @if($relatedProduct->qte_dispo > 0)
+        <h5>Autres Couleurs</h5>
+
             <div class="col-md-3 mb-3">
                 <div class="card">
                     <img src="{{ asset('img/' . $relatedProduct->image) }}" class="card-img-top" alt="{{ $relatedProduct->name }}">
                     <div class="card-body">
-                        <h6 class="card-title">{{ $relatedProduct->name }} {{$i++}}</h6>
+                        <h6 class="card-title">{{ $relatedProduct->name }} </h6>
                         <form action="{{ route('panier.store') }}" method="POST" style="display: inline;">
                                                 @csrf
                                                 <input type="hidden" name="produit_id" value="{{ $relatedProduct->id }}">
@@ -1167,6 +1169,9 @@
                     </div>
                 </div>
             </div>
+
+        
+            @endif
         @endforeach
     </div>
 </div>
@@ -1269,7 +1274,8 @@
  
 
 
-<style>.comment {
+<style>
+.comment {
     border: 1px solid #ddd;
     padding: 10px;
     border-radius: 5px;

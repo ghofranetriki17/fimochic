@@ -184,5 +184,13 @@ class ProduitController extends Controller
         return redirect()->route('produits.index')->with('success', 'Produit supprimé avec succès.');
     }
   
-
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        
+        // Recherche des produits par nom
+        $products = Produit::where('name', 'like', "%{$query}%")->get();
+        
+        return view('produits.search', compact('products')); // Assurez-vous que cette vue existe et qu'elle affiche les produits
+    }
 }

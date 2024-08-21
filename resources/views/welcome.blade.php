@@ -123,7 +123,7 @@
                 <h4 class="b-3 text-white">Façonné avec Amour, Porté avec Joie</h4>
                 <h4 class="mb-3 text-green">100% Handmade</h4>
 
-                <a href="#" class="btn btn-pink rounded-pill px-4 py-2">Acheter Maintenant</a>
+                <a href="{{ route('boutique.index') }}" class="btn btn-pink rounded-pill px-4 py-2">Acheter Maintenant</a>
             </div>
         </div>
     </div>
@@ -413,12 +413,12 @@
     <div class="container py-5">
         <div class="row g-4 justify-content-center">
             <div class="col-md-6 col-lg-3">
-                <a href="boutique.html">
+                <a href="{{ route('boutique.index') }}">
                     <div class="service-item bg-secondaryyy rounded border border-secondary">
                         <img src="img/featur-1.jpg" class="img-fluid rounded-top w-100" alt="">
                         <div class="px-4 rounded-bottom">
                             <div class="service-content bg-light text-center p-4 rounded">
-                                <h5 class="text-primary">30% sur le premier achat</h5>
+                                <h5 class="text-primary">20% sur le premier achat</h5>
                                 <h3 class="mb-0">Découvrez la boutique</h3>
                                 <p>Profitez de notre offre spéciale !</p>
                             </div>
@@ -2082,7 +2082,7 @@ document.getElementById('prevKeychains').onclick = function() {
 .modal-content {
     border: #ff949400;
     border-radius: 15px;
-    background-color: #cffcda00;
+    background-color: #2d1621;
     overflow: hidden;
 }
 .modal-header {

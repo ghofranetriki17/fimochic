@@ -709,7 +709,7 @@ color:white;
     transition: 0.5s;
 }
 .container-fluid {
-    background-color: rgba(141, 141, 136, 0.036); /* Exemple de couleur rose */
+    background-color: rgb(255 241 193);
 }
 
 .dropdown-menu {

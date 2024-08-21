@@ -8,12 +8,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProductLikeCommentController extends Controller
-{
-    public function index()
+{public function index()
     {
-        $comments = ProductLikeComment::all();
-        return view('product_like_comments.index', compact('comments'));
+        $commentsGrouped = ProductLikeComment::with('produit', 'client')
+                            ->get()
+                            ->groupBy('produit_id');
+        
+        $likeCounts = $commentsGrouped->map(function ($comments, $produitId) {
+            return $comments->where('like', true)->count();
+        });
+    
+        return view('product_like_comments.index', compact('commentsGrouped', 'likeCounts'));
     }
+    
 
     public function create()
     {
