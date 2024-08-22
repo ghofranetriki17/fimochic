@@ -149,3 +149,6 @@ use App\Http\Controllers\DashboardController;
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::post('/search', [ProduitController::class, 'search'])->name('search');
+use App\Http\Controllers\ParametreController;
+
+Route::resource('parametres', ParametreController::class);

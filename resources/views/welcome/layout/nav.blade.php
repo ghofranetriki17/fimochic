@@ -24,13 +24,33 @@
 <div class="container topbar bg-primary d-none d-lg-block">
     <div class="d-flex justify-content-between">
         <div class="top-info ps-2">
-            <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondaryy"></i> <a href="#" class="text-whitee">Sfax, Tunisia</a></small>
-            <small class="me-3"><i class="fas fa-envelope me-2 text-secondaryy"></i><a href="#" class="text-whitee">fimochic@gmail.com</a></small>
+            <!-- Adresse -->
+            <small class="me-3">
+                <i class="fas fa-map-marker-alt me-2 text-secondary"></i>
+                <a href="#" class="text-white">{{ $parametres['adresse'] ?? 'Sfax, Tunisia' }}</a>
+            </small>
+                 <!-- Adresse -->
+                 <small class="me-3">
+                <i class="fas fa-phone-alt me-2 text-secondary"></i>
+                <a href="#" class="text-white">{{ $parametres['numero tel'] ?? '' }}</a>
+            </small>
+            <!-- Email -->
+            <small class="me-3">
+                <i class="fas fa-envelope me-2 text-secondary"></i>
+                <a href="mailto:{{ $parametres['email'] ?? 'ghofrane.triki.17@gmail.com' }}" class="text-white">{{ $parametres['email'] ?? 'ghofrane.triki.17@gmail.com' }}</a>
+            </small>
         </div>
         <div class="top-link pe-2">
-            <a href="#" class="text-whitee"><small class="text-whitee mx-2">Privacy Policy</small>/</a>
-            <a href="#" class="text-whitee"><small class="text-whitee mx-2">Terms of Use</small>/</a>
-            <a href="#" class="text-whitee"><small class="text-whitee ms-2">Sales and Refunds</small></a>
+            <!-- Liens vers les pages légales -->
+            <a href="{{ $parametres['privacy_policy'] ?? '#' }}" class="text-white">
+                <small class="text-white mx-2">Privacy Policy</small>/
+            </a>
+            <a href="{{ $parametres['terms_of_use'] ?? '#' }}" class="text-white">
+                <small class="text-white mx-2">Terms of Use</small>/
+            </a>
+            <a href="{{ $parametres['sales_and_refunds'] ?? '#' }}" class="text-white">
+                <small class="text-white ms-2">Sales and Refunds</small>
+            </a>
         </div>
     </div>
 </div>
@@ -39,7 +59,7 @@
         <nav class="navbar navbar-light bg-rose-poudre navbar-expand-xl">
             <a href="{{ route('home') }}" class="navbar-brand">
                 <h1 class="text-bleu-doux display-6 text-pink">
-                    <img src="{{ asset('img/logo.jpg') }}" alt="Logo Fimo Chic" style="max-width: 40px;"> Fimo Chic
+                <img src="{{ asset($parametres['logo'] ?? 'img/logo.jpg') }}" alt="Logo Fimo Chic" style="max-width: 45px;"> Fimo Chic
                 </h1>
             </a>
             <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">

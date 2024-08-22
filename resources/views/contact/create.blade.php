@@ -75,8 +75,8 @@ element.style {
     <div>
         <h4>Réseaux Sociaux</h4>
         <div class="d-flex">
-            <a href="https://www.facebook.com/FimoChic" class="text-primary me-3" target="_blank">
-                <i class="fab fa-facebook fa-2x"></i>
+        <a href="{{ $parametres['terms_of_use'] ?? '#' }}" class="text-primary me-3" target="_blank">
+        <i class="fab fa-facebook fa-2x"></i>
             </a>
             <a href="https://www.instagram.com/FimoChic" class="text-primary me-3" target="_blank">
                 <i class="fab fa-instagram fa-2x"></i>
@@ -94,21 +94,24 @@ element.style {
                         <i class="fas fa-map-marker-alt fa-2x text-primary me-4"></i>
                         <div>
                             <h4>Adresse</h4>
-                            <p class="mb-2">Bouzayen 8klm , Sfax, Tunisie</p>
+                            <p class="mb-2">                            <a href="#" class="text-white">{{ $parametres['adresse'] ?? 'sfax,tunisia' }}</a>
+                            </p>
                             </div>
                     </div>
                     <div class="d-flex p-4 rounded mb-4 bg-white">
                         <i class="fas fa-envelope fa-2x text-primary me-4"></i>
                         <div>
                             <h4>Email</h4>
-                            <p class="mb-2">fimochic@gmail.com</p>
+                            <p class="mb-2">                            <a href="#" class="text-white">{{ $parametres['email'] ?? '' }}</a>
+                            </p>
                         </div>
                     </div>
                     <div class="d-flex p-4 rounded bg-white">
                         <i class="fa fa-phone-alt fa-2x text-primary me-4"></i>
                         <div>
                             <h4>Téléphone</h4>
-                            <p class="mb-2">(+216) 25141113</p>
+                            <p class="mb-2">(+216)                             <a href="#" class="text-white">{{ $parametres['numero tel'] ?? '' }}</a>
+                            </p>
                         </div>
                     </div>
 
