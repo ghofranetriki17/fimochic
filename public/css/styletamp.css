@@ -1,0 +1,742 @@
+.service {
+    padding: 50px 0; /* Espacement vertical */
+}
+
+.service-item {
+    transition: transform 0.3s; /* Animation au survol */
+    overflow: hidden; /* Masquer le débordement d'images */
+}
+
+.service-item:hover {
+    transform: scale(1.05); /* Agrandir l'élément au survol */
+}
+
+.service-content {
+    border-radius: 15px; /* Coins arrondis */
+}
+
+.service-content h5 {
+    font-size: 1.2rem; /* Taille du texte */
+    margin-bottom: 10px; /* Espacement sous le titre */
+}
+
+.service-content h3 {
+    font-size: 1.5rem; /* Taille du sous-titre */
+    color: #ff6f61; /* Couleur rose pastel */
+}
+
+.service-content p {
+    font-size: 0.9rem; /* Taille de texte pour la description */
+    color: #333; /* Couleur de texte */
+}
+
+/* Styles pour les images */
+.service-item img {
+    transition: transform 0.3s; /* Transition d'image */
+}
+
+.service-item img:hover {
+    transform: scale(1.1); /* Effet de zoom sur l'image au survol */
+}
+
+/* Styles pour le texte sur fond coloré */
+.bg-primary {
+    background-color: #d786ff !important; /* Vert pastel pour le fond */
+}
+
+.bg-secondaryyy {
+    background-color: #a0e5f3 !important; /* Bleu pastel */
+}
+.bg-secondaryy {
+    background-color: #c3ff92 !important; /* Bleu pastel */
+}
+
+.bg-dark {
+    background-color: #ffa4e2 !important; /* Couleur foncée */
+}
+
+.bg-light {
+    background-color:#b9ffb6 !important; /* Fond clair */
+}
+
+body {
+    background-color: rgba(255, 245, 180, 0.855); /* Exemple de couleur rose */
+}
+
+.hero-header {
+    height: 100vh; /* Prend toute la hauteur de la fenêtre */
+    overflow: hidden; /* Empêche le débordement */
+    display: flex; /* Permet le centrage */
+    flex-direction: column; /* Aligne les éléments verticalement */
+    justify-content: center; /* Centre verticalement */
+    align-items: center; /* Centre horizontalement */
+}
+
+.text-pink {
+    color: #ff96c9; /* Couleur rose pastel */
+}
+.text-green {
+    color: #a9ffac; /* Couleur rose pastel */
+}
+
+
+
+video {
+    height: 100%; /* Hauteur complète */
+    width: 100%; /* Largeur complète */
+}
+
+h4, h1 {
+    text-shadow: 2px 2px 4px rgba(255, 165, 250, 0.7); /* Ombre pour le texte */
+    text-align: center; /* Centre le texte */
+    color: rgb(247, 225, 245); /* Couleur du texte */
+}
+
+.btn-pink {
+    background-color: #ffa9e7; /* Couleur rose pastel */
+    border: none; /* Pas de bordure */
+    transition: background-color 0.3s ease; /* Transition douce */
+    color: white; /* Couleur du texte du bouton */
+    padding: 10px 20px; /* Espacement intérieur */
+    border-radius: 25px; /* Coins arrondis */
+    font-size: 16px; /* Taille du texte */
+}
+
+.btn-pink:hover {
+    background-color: #f131bb; /* Couleur au survol */
+color:white;
+}
+
+.product-navigation {
+    display: flex;
+    align-items: center;
+}
+
+.product-container {
+    display: flex;
+    overflow-x: auto; /* Permet le défilement horizontal */
+    padding: 10px 0; /* Espacement autour du conteneur */
+    scroll-behavior: smooth; /* Transition douce pour le défilement */
+    scrollbar-width: none; /* Pour Firefox */
+}
+
+.product-container::-webkit-scrollbar {
+    display: none; /* Pour Chrome, Safari et Opera */
+}
+
+.fruite-item {
+    min-width: 200px; /* Ajustez la largeur selon vos besoins */
+    height: 350px; /* Hauteur fixe pour assurer la même taille */
+    margin-right: 15px; /* Espacement entre les produits */
+    position: relative; /* Nécessaire pour le positionnement de l'icône */
+}
+
+.icon-container {
+    position: absolute;
+    bottom: 30px; /* Ajustez la position verticale */
+    left: 50%;
+    transform: translateX(-50%);
+    display: none; /* Caché par défaut */
+}
+
+.fruite-item:hover .icon-container {
+    display: block; /* Affiche les icônes au survol */
+}
+
+.eye-icon, .cart-icon {
+    color: white; /* Couleur des icônes */
+    font-size: 30px;
+    margin: 0 5px; /* Espacement entre les icônes */
+}
+
+.nav-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.bg-fcbff8 {
+    background-color: #fdc9fa!important; /* Rose pastel */
+}
+
+.bg-b9fac3 {
+    background-color: #c3ffb8!important; /* Vert pastel */
+}
+
+.text-b9bbfa {
+    color: #d0acfa!important; /* Violet pastel */
+}
+.b{color: #ff99e2;}
+.fruite-item {
+    transition: transform 0.6s, background-color 0.5s; /* Ajout de la transition pour la couleur de fond */
+    background-color: #fcd46e; /* Couleur rose bébé */
+
+}
+
+
+.bestr {
+    background-color: #b9ffa7 !important; /* Couleur verte */
+}
+.fruite-item:hover {
+    transform: scale(1.05);
+    background-color: #feab4c; /* Couleur rose bébé */
+}
+.best:hover {
+    transform: scale(1.05);
+    background-color: #89f36e; /* Couleur rose bébé */
+}
+.best {
+    background-color: #b9ffa7; /* Couleur rose bébé */
+}
+
+.p-4 {
+    height: calc(100% - 200px); /* Ajustez en fonction de la taille de l'image */
+}
+
+.frute-img {
+    height: 150px; /* Hauteur fixe pour l'image */
+    overflow: hidden; /* Masquer le débordement de l'image */
+}
+
+.frute-img img {
+    height: 100%; /* S'assurer que l'image occupe toute la hauteur */
+    object-fit: cover; /* Maintenir le ratio d'aspect de l'image */
+}
+
+/***...........................................***/
+/*** Spinner Start ***/
+#spinner {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .8s ease-out, visibility 0s linear .5s;
+    z-index: 99999;
+ }
+
+ #spinner.show {
+     transition: opacity .8s ease-out, visibility 0s linear .0s;
+     visibility: visible;
+     opacity: 1;
+ }
+
+ .back-to-top {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    display: flex;
+    width: 45px;
+    height: 45px;
+    align-items: center;
+    justify-content: center;
+    transition: 0.5s;
+    z-index: 99;
+}
+/*** Spinner End ***/
+
+
+/*** Button Start ***/
+.btn {
+    font-weight: 600;
+    transition: .5s;
+}
+
+.btn-square {
+    width: 32px;
+    height: 32px;
+}
+
+.btn-sm-square {
+    width: 34px;
+    height: 34px;
+}
+
+.btn-md-square {
+    width: 44px;
+    height: 44px;
+}
+
+.btn-lg-square {
+    width: 56px;
+    height: 56px;
+}
+
+.btn-square,
+.btn-sm-square,
+.btn-md-square,
+.btn-lg-square {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: normal;
+}
+
+.btn.border-secondary {
+    transition: 0.5s;
+}
+
+
+
+/*** Topbar Start ***/
+.fixed-top {
+    transition: 0.5s;
+    background: var(--bs-white);
+    border: 0;
+}
+
+.topbar {
+    padding: 20px;
+    border-radius: 230px 100px;
+}
+
+.topbar .top-info {
+    font-size: 15px;
+    line-height: 0;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+}
+
+.topbar .top-link {
+    font-size: 15px;
+    line-height: 0;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+}
+
+.topbar .top-link a {
+    letter-spacing: 1px;
+}
+
+.topbar .top-link a small:hover {
+    color: var(--bs-secondary) ;
+    transition: 0.5s;
+}
+
+.topbar .top-link a small:hover i {
+    color: var(--bs-primary)t;
+}
+/*** Topbar End ***/
+
+/*** Navbar Start ***/
+
+.navbar .navbar-nav .nav-link {
+    padding: 10px 15px;
+    font-size: 16px;
+    transition: .5s;
+    color: #ffa9e7;
+}
+
+.navbar {
+    height: 100px;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+}
+
+.navbar .navbar-nav .nav-link:hover, .navbar .navbar-nav .nav-link.active, .fixed-top.bg-white .navbar .navbar-nav .nav-link:hover, .fixed-top.bg-white .navbar .navbar-nav .nav-link.active {
+    color: #a2fb00;
+}
+
+.navbar .dropdown-toggle::after {
+    border: none;
+    content: "\f107";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 700;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+@media (min-width: 1200px) {
+    .navbar .nav-item .dropdown-menu {
+        display: block;
+        visibility: hidden;
+        top: 100%;
+        transform: rotateX(-75deg);
+        transform-origin: 0% 0%;
+        border: 0;
+        transition: .5s;
+        opacity: 0;
+    }
+}
+.banner {
+    background-color: #ffdc97db !important;  /* Couleur très claire pour le fond de la bannière */
+    color: #e734c3; /* Couleur rose pour le texte */
+    padding: 20px 0;
+}
+
+.banner h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #e734c3; /* Couleur rose du titre */
+}
+
+.banner p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #e734c3; /* Couleur rose du texte */
+}
+
+.banner-btn {
+    font-size: 18px;
+    text-transform: uppercase;
+    border-color: #e734c3; /* Couleur de la bordure du bouton en rose */
+    background-color: #ffffff; /* Couleur de fond du bouton en blanc */
+    color: #e734c3; /* Couleur du texte du bouton en rose */
+}
+
+.banner-btn:hover {
+    background-color: #e734c3 !important; /* Couleur de fond du bouton au survol en rose */
+    color: #ffffff; /* Couleur du texte du bouton au survol en blanc */
+}
+
+.dropdown .dropdown-menu a:hover {
+    background: var(--bs-secondary);
+    color: var(--bs-primary);
+}
+
+.navbar .nav-item:hover .dropdown-menu {
+    transform: rotateX(0deg);
+    visibility: visible;
+    background: var(--bs-light) ;
+    border-radius: 10px ;
+    transition: .5s;
+    opacity: 1;
+}
+
+#searchModal .modal-content {
+    background: rgba(255, 255, 255, .8);
+}
+/*** Navbar End ***/
+
+/*** Hero Header ***/
+.hero-header {
+    background: linear-gradient(rgba(248, 223, 173, 0.1), rgba(240, 193, 231, 0.27)), url("{{ asset('img/1720815172.jpg') }}");
+  
+}
+
+.carousel-item {
+    position: relative;
+}
+
+
+
+.carousel-control-next,
+.carousel-control-prev {
+    width: 48px;
+    height: 48px;
+    border-radius: 48px;
+    border: 1px solid  rgba(255, 194, 204, 0.695);
+    background: rgba(255, 194, 204, 0.695);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.carousel-control-next {
+    margin-right: 20px;
+}
+
+.carousel-control-prev {
+    margin-left: 20px;
+}
+
+.page-header {
+    position: relative;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@media (min-width: 992px) {
+    .hero-header,
+    .page-header {
+        margin-top: 152px ;
+    }
+}
+
+@media (max-width: 992px) {
+    .hero-header,
+    .page-header {
+        margin-top: 97px ;
+    }
+}
+/*** Hero Header end ***/
+
+
+/*** featurs Start ***/
+.featurs .featurs-item .featurs-icon {
+    position: relative;
+    width: 120px;
+    height: 120px;
+}
+
+.featurs .featurs-item .featurs-icon::after {
+    content: "";
+    width: 35px;
+    height: 35px;
+    background: var(--bs-secondary);
+    position: absolute;
+    bottom: -10px;
+    transform: translate(-50%);
+    transform: rotate(45deg);
+    background: var(--bs-secondary);
+    
+}
+/*** featurs End ***/
+
+
+/*** service Start ***/
+.service .service-item .service-content {
+    position: relative;
+    width: 250px; 
+    height: 130px; 
+    top: -50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+}
+
+/*** service End ***/
+
+
+/*** Fruits Start ***/
+.fruite .tab-class .nav-item a.active {
+    background: #ff99e2;
+    
+}
+
+.fruite .tab-class .nav-item a.active span {
+    color: var(--bs-white) ; 
+}
+
+.fruite .fruite-categorie .fruite-name {
+    line-height: 40px;
+}
+
+.fruite .fruite-categorie .fruite-name a {
+    transition: 0.5s;
+}
+
+.fruite .fruite-categorie .fruite-name a:hover {
+    color: var(--bs-secondary);
+}
+
+.fruite .fruite-item {
+    height: 100%;
+    transition: 0.5s;
+}
+.fruite .fruite-item:hover {
+    box-shadow: 0 0 55px rgba(0, 0, 0, 0.4);
+}
+
+.fruite .fruite-item .fruite-img {
+    overflow: hidden;
+    transition: 0.5s;
+    border-radius: 10px 10px 0 0;
+}
+
+.fruite .fruite-item .fruite-img img {
+    transition: 0.5s;
+}
+
+.fruite .fruite-item .fruite-img img:hover {
+    transform: scale(1.3);
+}
+/*** Fruits End ***/
+
+
+/*** vesitable Start ***/
+.vesitable .vesitable-item {
+    height: 100%;
+    transition: 0.5s;
+}
+
+.vesitable .vesitable-item:hover {
+    box-shadow: 0 0 55px rgba(0, 0, 0, 0.4);
+}
+
+.vesitable .vesitable-item .vesitable-img {
+    overflow: hidden;
+    transition: 0.5s;
+    border-radius: 10px 10px 0 0;
+}
+
+.vesitable .vesitable-item .vesitable-img img {
+    transition: 0.5s;
+}
+
+.vesitable .vesitable-item .vesitable-img img:hover {
+    transform: scale(1.2);
+}
+
+.vesitable .owl-stage {
+    margin: 50px 0;
+    position: relative;
+}
+
+.vesitable .owl-nav .owl-prev {
+    position: absolute;
+    top: -8px;
+    right: 0;
+    color: var(--bs-primary);
+    padding: 5px 25px;
+    border: 1px solid var(--bs-secondary);
+    border-radius: 20px;
+    transition: 0.5s;
+
+}
+
+.vesitable .owl-nav .owl-prev:hover {
+    background: var(--bs-secondary);
+    color: var(--bs-white);
+}
+
+.vesitable .owl-nav .owl-next {
+    position: absolute;
+    top: -8px;
+    right: 88px;
+    color: var(--bs-primary);
+    padding: 5px 25px;
+    border: 1px solid var(--bs-secondary);
+    border-radius: 20px;
+    transition: 0.5s;
+}
+
+.vesitable .owl-nav .owl-next:hover {
+    background: var(--bs-secondary);
+    color: var(--bs-white);
+}
+/*** vesitable End ***/
+
+
+/*** Banner Section Start ***/
+.banner .banner-btn:hover {
+    background: var(--bs-primary);
+}
+/*** Banner Section End ***/
+
+
+/*** Facts Start ***/
+.counter {
+    height: 100%;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
+}
+
+.counter i {
+    font-size: 60px;
+    margin-bottom: 25px;
+}
+
+.counter h4 {
+    color: var(--bs-primary);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.counter h1 {
+    margin-bottom: 0;
+}
+/*** Facts End ***/
+
+
+/*** testimonial Start ***/
+.testimonial .owl-nav .owl-prev {
+    position: absolute;
+    top: -58px;
+    right: 0;
+    color: var(--bs-primary);
+    padding: 5px 25px;
+    border: 1px solid var(--bs-secondary);
+    border-radius: 20px;
+    transition: 0.5s;
+}
+
+.testimonial .owl-nav .owl-prev:hover {
+    background: var(--bs-secondary);
+    color: var(--bs-white);
+}
+
+.testimonial .owl-nav .owl-next {
+    position: absolute;
+    top: -58px;
+    right: 88px;
+    color: var(--bs-primary);
+    padding: 5px 25px;
+    border: 1px solid var(--bs-secondary);
+    border-radius: 20px;
+    transition: 0.5s;
+}
+
+.testimonial .owl-nav .owl-next:hover {
+    background: var(--bs-secondary);
+    color: var(--bs-white);
+}
+/*** testimonial End ***/
+
+
+/*** Single Page Start ***/
+.pagination {
+    display: inline-block;
+}
+  
+.pagination a {
+    color: var(--bs-dark);
+    padding: 10px 16px;
+    text-decoration: none;
+    transition: 0.5s;
+    border: 1px solid var(--bs-secondary);
+    margin: 0 4px;
+}
+  
+.pagination a.active {
+    background-color: var(--bs-primary);
+    color: var(--bs-light);
+    border: 1px solid var(--bs-secondary);
+}
+  
+.pagination a:hover:not(.active) {background-color: var(--bs-primary)}
+
+.nav.nav-tabs .nav-link.active {
+    border-bottom: 2px solid var(--bs-secondary) ;
+}
+/*** Single Page End ***/
+
+
+/*** Footer Start ***/
+.footer .footer-item .btn-link {
+    line-height: 35px;
+    color: rgba(255, 255, 255, .5);
+    transition: 0.5s;
+}
+.container-fluid {
+    background-color: rgb(255 241 193);
+}
+
+.dropdown-menu {
+    background-color:rgb(255 246 190) !important    ; /* Couleur de fond */
+    border: none; /* Enlever la bordure si souhaité */
+}
+
+
+
+.dropdown-item:hover {
+    background-color: rgba(255, 173, 229, 0.804) !important ;/* Couleur de fond au survol */
+    color: rgb(151, 224, 99); /* Couleur du texte au survol */
+}
+
+.text-rose {
+    color: #fbc8d1  !important; /* Utilisation de !important pour forcer la couleur */
+    
+}
+.text-rose:hover {    color: #bef785 !important; /* Utilisation de !important pour forcer la couleur */
+}
+
+.footer .footer-item .btn-link:hover {
+    color: var(--bs-secondary) ;
+}
+
+.footer .footer-item p.mb-4 {
+    line-height: 35px;
+}
+/*** Footer End ***/
+
