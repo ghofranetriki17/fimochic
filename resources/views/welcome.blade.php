@@ -137,7 +137,14 @@
 
 
 <!-- Palette de Plaisirs start -->
-<div class="container-fluid fruite py-5">
+
+<div class="testimonial py-5">
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="{{ asset('/img/palette.mp4') }}" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+        </video>
+    </div>
     <div class="container py-5">
         <div class="tab-class text-center">
             <div class="row g-4">
@@ -408,8 +415,25 @@
 <!-- Fruits Shop End -->
 
 <!-- Features Start -->
+
+
+
+
+
+
+
+
+
+
+
 <!-- Features Start -->
-<div class="container-fluid service py-5">
+<div class="testimonial service py-5">
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="{{ asset('/img/hero.mp4') }}" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+        </video>
+    </div>
     <div class="container py-5">
         <div class="row g-4 justify-content-center">
             <div class="col-md-6 col-lg-3">
@@ -481,8 +505,20 @@
 <!-- Features End -->
 
 
+
+
+
+
+
+
 <!-- Section Best Sellers -->
-<div class="container py-5">
+<div class="testimonial container py-5">
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="{{ asset('/img/hero.mp4') }}" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+        </video>
+    </div>
     <h1>Meilleures Ventes</h1>
     <div class="product-navigation">
         <button class="nav-btn" id="prev"></button>
@@ -1222,8 +1258,19 @@ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 </style>
 
 
+
+
+
+
+
    <!-- Banner Section Start -->
-   <div class="container-fluid banner bg-lightblue my-5">
+   <div class="testimonial -5 banner bg-lightblue my-5">
+       <div class="video-background">
+        <video autoplay muted loop>
+            <source src="{{ asset('/img/hero.mp4') }}" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+        </video>
+    </div>
     <div class="container py-5">
         <div class="row g-4 align-items-center">
             <!-- Text Section -->
@@ -1245,8 +1292,18 @@ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     </div>
 </div>
 <!-- Banner Section End -->
+
+
+
+
 <!-- Section Porte-Clés -->
-<div class="container py-5">
+<div class="container testimonial py-5">
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="{{ asset('/img/hero.mp4') }}" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+        </video>
+    </div>
     <h1>Porte-Clés</h1>
     <div class="product-navigation">
         <button class="nav-btn" id="prevKeychains"></button>
@@ -1419,6 +1476,13 @@ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 <!-- Fin Section Porte-Clés -->
 
 
+
+
+
+
+
+
+
 <script>
 document.getElementById('nextKeychains').onclick = function() {
     document.querySelector('.product-container').scrollBy({ left: 300, behavior: 'smooth' });
@@ -1576,7 +1640,13 @@ document.getElementById('prevKeychains').onclick = function() {
 
 
   <!-- Featurs Section Start -->
-  <div class="container-fluid featurs py-5">
+  <div class="featurs testimonial py-5">
+      <div class="video-background">
+        <video autoplay muted loop>
+            <source src="{{ asset('/img/hero.mp4') }}" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+        </video>
+    </div>
     <div class="container py-5">
         <div class="row g-4">
             <div class="col-md-6 col-lg-3">
@@ -1629,10 +1699,25 @@ document.getElementById('prevKeychains').onclick = function() {
 <!-- Featurs Section End -->
 
 
+
+
+
+
+
+
+
+
+
  
 
     <!-- Fact Start -->
-    <div class="container-fluid py-5">
+    <div class="testimonial py-5">
+        <div class="video-background">
+        <video autoplay muted loop>
+            <source src="{{ asset('/img/hero.mp4') }}" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+        </video>
+    </div>
         <div class="container">
             <div class="bg-light p-5 rounded">
                 <div class="row g-4 justify-content-center">
@@ -1671,8 +1756,14 @@ document.getElementById('prevKeychains').onclick = function() {
     <!-- Fact Start -->
 
 
-   <!-- Tastimonial Start -->
-<div class="container-fluid testimonial py-5">
+ <!-- Tastimonial Start -->
+<div class="testimonial py-5">
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="{{ asset('/img/palette.mp4') }}" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+        </video>
+    </div>
     <div class="container py-5">
         <div class="testimonial-header text-center">
             <h4 class="text-primary">Nos Témoignages</h4>
