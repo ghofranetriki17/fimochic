@@ -132,7 +132,7 @@
 .modal-content {
     border: #ff949400;
     border-radius: 15px;
-    background-color: #2d1621;
+    background-color: #860356;
     overflow: hidden;
 }
 .modal-header {
