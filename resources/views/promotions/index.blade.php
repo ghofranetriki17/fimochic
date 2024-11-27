@@ -18,9 +18,10 @@
             <tbody>
                 @foreach ($promotions as $promotion)
                     <tr>
-                        <td>{{ $promotion->produit->id }}:{{ $promotion->produit->name }}</td>
-                        <td>{{ $promotion->produit->prix }} €</td>
-                        <td>{{ $promotion->new_price }} €</td>
+                        <td>              <img src="{{ asset('img/' . $promotion->produit->image) }}" width=50px>
+                        {{ $promotion->produit->name }}</td>
+                        <td>{{ $promotion->produit->prix }} dt</td>
+                        <td>{{ $promotion->new_price }} dt</td>
                         <td>
                             <a href="{{ route('promotions.edit', $promotion) }}" class="btn btn-warning btn-sm">Modifier</a>
                             <form action="{{ route('promotions.destroy', $promotion) }}" method="POST" style="display:inline;">

@@ -59,7 +59,7 @@
         <nav class="navbar navbar-light bg-rose-poudre navbar-expand-xl">
             <a href="{{ route('home') }}" class="navbar-brand">
                 <h1 class="text-bleu-doux display-6 text-pink">
-                <img src="{{ asset($parametres['logo'] ?? 'img/logo.jpg') }}" alt="Logo Fimo Chic" style="max-width: 45px;"> Fimo Chic
+                <img src="{{ asset( 'img/logo.png') }}" alt="Logo Fimo Chic" style="max-width: 45px;"> Fimo Chic
                 </h1>
             </a>
             <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">

@@ -74,7 +74,7 @@ class BoutiqueController extends Controller
         }
         
         // Récupérer les produits filtrés et triés
-        $produits = $produits->with(['promotions', 'galleries', 'comments'])->paginate(18);
+        $produits = $produits->with(['promotions', 'galleries', 'comments'])->paginate(12);
         
         // Récupérer toutes les galeries
         $galleries = Gallery::all();

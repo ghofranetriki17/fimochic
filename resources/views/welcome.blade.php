@@ -111,7 +111,7 @@
 <!-- Hero Start -->
 <div class="container-fluid py-5 mb-5 hero-header position-relative">
     <video autoplay loop muted class="w-100 h-100 position-absolute top-0 start-0" style="object-fit: cover;">
-        <source src="/img/hero.mp4" type="video/mp4">
+        <source src="/img/vid.mp4" type="video/mp4">
         Votre navigateur ne prend pas en charge la vidéo.
     </video>
     <div class="container py-5 position-relative">
@@ -141,7 +141,7 @@
 <div class="testimonial py-5">
     <div class="video-background">
         <video autoplay muted loop>
-            <source src="{{ asset('/img/palette.mp4') }}" type="video/mp4">
+            <source src="{{ asset('/img/vid.mp4') }}" type="video/mp4">
             Votre navigateur ne supporte pas la vidéo.
         </video>
     </div>
@@ -430,7 +430,7 @@
 <div class="testimonial service py-5">
     <div class="video-background">
         <video autoplay muted loop>
-            <source src="{{ asset('/img/hero.mp4') }}" type="video/mp4">
+            <source src="{{ asset('/img/vid.mp4') }}" type="video/mp4">
             Votre navigateur ne supporte pas la vidéo.
         </video>
     </div>
@@ -515,7 +515,7 @@
 <div class="testimonial container py-5">
     <div class="video-background">
         <video autoplay muted loop>
-            <source src="{{ asset('/img/hero.mp4') }}" type="video/mp4">
+            <source src="{{ asset('/img/vid.mp4') }}" type="video/mp4">
             Votre navigateur ne supporte pas la vidéo.
         </video>
     </div>
@@ -1267,7 +1267,7 @@ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
    <div class="testimonial -5 banner bg-lightblue my-5">
        <div class="video-background">
         <video autoplay muted loop>
-            <source src="{{ asset('/img/hero.mp4') }}" type="video/mp4">
+            <source src="{{ asset('/img/vid.mp4') }}" type="video/mp4">
             Votre navigateur ne supporte pas la vidéo.
         </video>
     </div>
@@ -1300,7 +1300,7 @@ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 <div class="container testimonial py-5">
     <div class="video-background">
         <video autoplay muted loop>
-            <source src="{{ asset('/img/hero.mp4') }}" type="video/mp4">
+            <source src="{{ asset('/img/vid.mp4') }}" type="video/mp4">
             Votre navigateur ne supporte pas la vidéo.
         </video>
     </div>
@@ -1714,7 +1714,7 @@ document.getElementById('prevKeychains').onclick = function() {
     <div class="testimonial py-5">
         <div class="video-background">
         <video autoplay muted loop>
-            <source src="{{ asset('/img/hero.mp4') }}" type="video/mp4">
+            <source src="{{ asset('/img/vid.mp4') }}" type="video/mp4">
             Votre navigateur ne supporte pas la vidéo.
         </video>
     </div>
@@ -1760,7 +1760,7 @@ document.getElementById('prevKeychains').onclick = function() {
 <div class="testimonial py-5">
     <div class="video-background">
         <video autoplay muted loop>
-            <source src="{{ asset('/img/palette.mp4') }}" type="video/mp4">
+            <source src="{{ asset('/img/vid.mp4') }}" type="video/mp4">
             Votre navigateur ne supporte pas la vidéo.
         </video>
     </div>

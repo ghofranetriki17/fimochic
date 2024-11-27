@@ -56,37 +56,48 @@
             Fimo Chic est née d'une passion pour la créativité et l'originalité. Chaque bijou est conçu avec amour et minutie, reflétant la personnalité unique de chaque client. Découvrez notre histoire, notre mission et ce qui rend nos créations si spéciales.
         </p>
 
-        <div class="image-section">
-            <img src="{{ asset('images/fimo_chic_story.jpg') }}" alt="Notre Histoire">
+        <div class="image-" >
+            <img src="{{ asset('img/logo.jpg') }}" width="200px"alt="Notre Histoire">
         </div>
 
         <h2>Notre Histoire et Notre Mission</h2>
-        <p>
-            L'idée de Fimo Chic a germé lorsque mon amie, une grande amatrice de boucles d'oreilles, fêtait son anniversaire. Désireuse de lui offrir un cadeau unique et personnel, j'ai décidé de créer des boucles d'oreilles faites à la main. Ce cadeau a tellement plu que j'ai réalisé qu'il y avait une véritable demande pour des bijoux personnalisés et faits main. C'est ainsi qu'est né Fimo Chic.
-            Notre mission est de proposer des bijoux de qualité, originaux et personnalisés, qui apportent une touche spéciale à chaque moment de votre vie. Nous nous engageons à offrir des produits uniques qui racontent votre histoire.
-        </p>
+        <div class="text-section">
+    <p>
+        {{ $parametres['notrehistoire'] ?? 'L\'idée de Fimo Chic a germé lorsque mon amie, une grande amatrice de boucles d\'oreilles, fêtait son anniversaire. Désireuse de lui offrir un cadeau unique et personnel, j\'ai décidé de créer des boucles d\'oreilles faites à la main. Ce cadeau a tellement plu que j\'ai réalisé qu\'il y avait une véritable demande pour des bijoux personnalisés et faits main. C\'est ainsi qu\'est né Fimo Chic. Notre mission est de proposer des bijoux de qualité, originaux et personnalisés, qui apportent une touche spéciale à chaque moment de votre vie. Nous nous engageons à offrir des produits uniques qui racontent votre histoire.' }}
+    </p>
+</div>
 
-        <div class="image-section">
-            <img src="{{ asset('images/fimo_chic_mission.jpg') }}" alt="Notre Mission">
+        <div class="image-">
+        <img src="{{ $parametres['notrehistoireimage'] ?? 'img/logo.jpg' }}" width="200px" alt="Notre Mission">
         </div>
 
         <h2>À Propos du Fondateur</h2>
         <div class="team-section">
             <div class="team-member animate__animated animate__fadeInLeft">
-                <img src="{{ asset('images/ghofrane_trikki.jpg') }}" alt="Ghofrane Trikki">
+                <img src="{{ $parametres['Fondateurimage'] ?? 'img/logo.jpg' }}" alt="Ghofrane Trikki">
                 <div>
-                    <p>
-                        Bonjour, je m'appelle Ghofrane Trikki, j'ai 22 ans et je suis étudiante en deuxième année d'ingénierie à l'Institut International de Technologie de l'Université Privée Nord-Américaine.
-                    </p>
-                    <p>
-                        Mon parcours académique a été une véritable aventure. Diplômée en 2021 avec mention très bien en sciences expérimentales, j'ai d'abord envisagé une carrière en médecine. Cependant, la vie m'a orientée vers l'informatique, un domaine qui m'a rapidement passionnée. Après deux années intensives à l'école préparatoire de Sfax-les-Pays, j'ai réussi le concours international d'entrée aux écoles d'ingénieurs et me suis finalement tournée vers la technologie et l'innovation à l'Institut International de Technologie.
-                    </p>
-                    <p>
-                        Pendant ma première année, j'ai réalisé plusieurs projets passionnants, allant d'un site web de portfolio personnel à un système de gestion de transport public utilisant la technologie Arduino. J'ai également participé à des compétitions où j'ai remporté plusieurs prix, notamment en théâtre et en slam.
-                    </p>
-                    <p>
-                        Mon stage chez Exadev, où j'ai développé un site web pour Fimo Chic, a été une expérience enrichissante. J'ai appris à combiner mes compétences techniques et ma passion artistique pour créer des bijoux uniques et personnalisés.
-                    </p>
+                <div class="text-section">
+    <p>
+        {{ $parametres['Fondateurp1'] ?? '        ' }}
+        <br/>
+        {{ $parametres['Fondateurp2'] ?? '                ' }}
+        <br/>
+
+        {{ $parametres['Fondateurp3'] ?? '' }}
+        <br/>
+
+        {{ $parametres['Fondateurp4'] ?? '' }}
+        <br/>
+
+        {{ $parametres['Fondateurp5'] ?? '' }}
+        {{ $parametres['Fondateurp6'] ?? '' }}
+
+             
+         
+                  Mon stage chez Exadev, où j'ai développé un site web pour Fimo Chic, a été une expérience enrichissante. J'ai appris à combiner mes compétences techniques et ma passion artistique pour créer des bijoux uniques et personnalisés.
+            
+    </p>
+</div>
                 </div>
             </div>
         </div>
@@ -94,21 +105,30 @@
         <h2>Nos Offres Uniques</h2>
         <p>
             <strong>Personnalisation Boucles et Cadeaux</strong><br>
-            Chez Fimo Chic, nous croyons que chaque bijou doit être aussi unique que la personne qui le porte. C'est pourquoi nous offrons des options de personnalisation pour nos boucles d'oreilles et nos cadeaux. Que vous cherchiez à ajouter une touche personnelle à vos bijoux ou à offrir un cadeau inoubliable, nous avons ce qu'il vous faut.
+            {{ $parametres['Personnalisation Boucles et Cadeaux p1'] ?? '' }}
+            {{ $parametres['Personnalisation Boucles et Cadeaux p2'] ?? '' }}
+            <div class="image-">
+        <img src="{{ $parametres['Personnalisation Boucles et Cadeaux image'] ?? 'img/logo.jpg' }}" width="200px" alt="Notre Mission">
+        </div>
+
         </p>
         <p>
             <strong>Section Modernité</strong><br>
-            Notre site est à la pointe de la modernité avec des fonctionnalités innovantes telles que les codes QR. Ces codes vous permettent de tester des filtres de nos produits directement sur votre téléphone, pour une expérience d'achat interactive et amusante.
-        </p>
+            {{ $parametres['Modernitép1'] ?? '' }}
+            {{ $parametres['Modernitép2'] ?? '' }}
+            <div class="image-">
+        <img src="{{ $parametres['Modernité image'] ?? 'img/logo.jpg' }}" width="200px" alt="Notre Mission">
+        </div>        </p>
         <p>
             <strong>Expérience Client Unique</strong><br>
-            Nous savons combien il est important de recevoir un cadeau bien présenté. C'est pourquoi nous offrons une option de commande en boîte cadeau personnalisée, assurant que chaque détail est parfait pour rendre votre expérience avec Fimo Chic inoubliable.
+            {{ $parametres['expclientuniquep1'] ?? '' }}
+            {{ $parametres['expclientuniquep2'] ?? '' }}
+            <div class="image-">
+        <img src="{{ $parametres['expclientunique image'] ?? 'img/logo.jpg' }}" width="200px" alt="Notre Mission">
+        </div>       
         </p>
 
-        <div class="image-section">
-            <img src="{{ asset('images/fimo_chic_customization.jpg') }}" alt="Personnalisation">
-        </div>
-
+   
         <h2>Technologie et Innovation</h2>
         <p>
             Nous intégrons la technologie dans chaque aspect de notre entreprise. Les codes QR permettent une interaction directe avec nos produits, vous offrant une visualisation en temps réel de vos personnalisations. C'est cette innovation qui nous distingue et améliore l'expérience client.
@@ -116,42 +136,73 @@
 
   
 
-        <h2>Témoignages et Avis</h2>
-        <div class="testimonials-section">
-            <div class="testimonial animate__animated animate__fadeInUp">
-                <p>"Les bijoux de Fimo Chic sont tout simplement incroyables ! J'ai pu personnaliser chaque détail pour créer une pièce unique." - Marie</p>
-            </div>
-            <div class="testimonial animate__animated animate__fadeInUp">
-                <p>"L'expérience d'achat en ligne est tellement innovante avec les codes QR. J'adore pouvoir voir les filtres sur mon téléphone avant d'acheter." - Julien</p>
-            </div>
-        </div>
-
-        <h2>Engagement Éthique et Durable</h2>
-        <p>
-            Chez Fimo Chic, nous nous engageons à des pratiques de production éthiques et respectueuses de l'environnement. Nous utilisons des matériaux durables et nous nous efforçons de minimiser notre empreinte écologique.
-        </p>
-
-        <h2>Fêtes et Occasions</h2>
-        <p>
-            Chez Fimo Chic, nous savons que chaque fête et chaque occasion sont uniques. Que ce soit pour un anniversaire, Noël, la Saint-Valentin, la fête des mères, un mariage, ou simplement pour dire "merci", nous avons des options de personnalisation qui rendront votre cadeau inoubliable. Nos boîtes cadeaux sont décorées avec soin pour correspondre à chaque événement spécial.
-        </p>
-
-        <h2>Contact et Suivez-Nous</h2>
-        <p>
-            Pour toute question ou demande spéciale, n'hésitez pas à nous contacter à [votre adresse email]. Suivez-nous sur les réseaux sociaux pour rester à jour avec nos dernières créations et offres spéciales.
-        </p>
-    </div>
+        {{ $parametres['techetinnop1'] ?? '' }}
+            {{ $parametres['techetinnop2'] ?? '' }}
+            <div class="image-">
+        <img src="{{ $parametres['techetinno image'] ?? 'img/logo.jpg' }}" width="200px" alt="Notre Mission">
+        </div>        
+     
+    
     <h2>Événements Spéciaux</h2>
         <div class="special-events animate__animated animate__fadeInUp">
-            <p>
-                Chez Fimo Chic, nous comprenons que certains moments de la vie méritent une attention particulière. Que ce soit pour un anniversaire, un mariage, la fête des mères, Noël ou tout autre événement spécial, nous offrons des options de personnalisation pour rendre chaque cadeau unique et mémorable.
-            </p>
-            <div class="image-section">
-                <img src="{{ asset('images/special_events.jpg') }}" alt="Événements Spéciaux">
-            </div>
-            <p>
-                Nos clients peuvent personnaliser leurs cadeaux en choisissant parmi une variété de designs, de couleurs et de messages spéciaux pour les rendre parfaits pour chaque occasion.
-            </p>
+        {{ $parametres['evet1'] ?? '' }}
+
+           
+
+        <video autoplay loop muted class="w-100 h-100 " style="object-fit: cover;">
+    <!-- Assurez-vous que la clé 'vid' est correcte et que le chemin est valide -->
+    <source src="{{ $parametres['videvt1'] ?? '' }}" type="video/mp4">
+    Votre navigateur ne prend pas en charge la vidéo.
+</video>
+
+       
+{{ $parametres['evet2'] ?? '' }}
+
+           
+
+<video autoplay loop muted class="w-100 h-100 " style="object-fit: cover;">
+<!-- Assurez-vous que la clé 'vid' est correcte et que le chemin est valide -->
+<source src="{{ $parametres['videvt2'] ?? '' }}" type="video/mp4">
+Votre navigateur ne prend pas en charge la vidéo.
+</video>
+
+
+
+{{ $parametres['evet3'] ?? '' }}
+
+           
+
+<video autoplay loop muted class="w-100 h-100 " style="object-fit: cover;">
+<!-- Assurez-vous que la clé 'vid' est correcte et que le chemin est valide -->
+<source src="{{ $parametres['videevt3'] ?? '' }}" type="video/mp4">
+Votre navigateur ne prend pas en charge la vidéo.
+</video>
+
+
+
+
+{{ $parametres['evet4'] ?? '' }}
+
+           
+
+<video autoplay loop muted class="w-100 h-100 " style="object-fit: cover;">
+<!-- Assurez-vous que la clé 'vid' est correcte et que le chemin est valide -->
+<source src="{{ $parametres['videevt4'] ?? '' }}" type="video/mp4">
+Votre navigateur ne prend pas en charge la vidéo.
+</video>
+
+
+
+{{ $parametres['evet5'] ?? '' }}
+
+           
+
+<video autoplay loop muted class="w-100 h-100 " style="object-fit: cover;">
+<!-- Assurez-vous que la clé 'vid' est correcte et que le chemin est valide -->
+<source src="{{ $parametres['videevt5'] ?? '' }}" type="video/mp4">
+Votre navigateur ne prend pas en charge la vidéo.
+</video>
+
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

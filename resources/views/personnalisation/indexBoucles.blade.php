@@ -65,9 +65,9 @@
     }
 
     .custom-option img {
-        max-width: 100px;
-        max-height: 100px;
-    }
+    width: 100px;
+    height: 100px;
+}
 
     .custom-option span {
         display: block;

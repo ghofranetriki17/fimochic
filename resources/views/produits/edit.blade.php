@@ -23,7 +23,10 @@
             <label for="qte_dispo">Quantité Disponible</label>
             <input type="number" class="form-control" id="qte_dispo" name="qte_dispo" value="{{ old('qte_dispo', $produit->qte_dispo) }}">
         </div>
-        
+        <div class="form-group">
+            <label for="qte_dispo"> prix</label>
+            <input type="number" class="form-control" id="prix" name="prix" value="{{ old('prix', $produit->prix) }}">
+        </div>
         <div class="form-group">
             <label for="description">Description</label>
             <textarea class="form-control" id="description" name="description" rows="3">{{ old('description', $produit->description) }}</textarea>

@@ -126,6 +126,8 @@ class ProduitController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'qte_dispo' => 'nullable|integer|min:0',
+            'prix' => 'nullable|integer|min:0',
+
             'description' => 'nullable|string',
             'type' => 'nullable|string|max:255',
             'date_ajout' => 'nullable|date',
@@ -138,6 +140,8 @@ class ProduitController extends Controller
         $produit->name = $request->name;
         $produit->description = $request->description;
         $produit->qte_dispo = $request->qte_dispo;
+        $produit->prix = $request->prix;
+
         $produit->type = $request->type;
         $produit->date_ajout = $request->date_ajout;
     
