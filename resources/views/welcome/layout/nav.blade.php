@@ -2,7 +2,7 @@
 <div class="container-fluid fixed-top">
 <style>
    .topbar {
-    background-color: #b4e1f9 !important;
+    background-color: #d63384 !important;
 }
     .top-info small {
         color: #ffffff !important; /* Changer la couleur du texte */

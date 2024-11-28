@@ -67,6 +67,14 @@ class ProduitValeurController extends Controller
         return redirect()->route('produits.index')->with('success', 'Produit créé avec succès.');
     }
 
+    public function detach(Produit $produit, Valeur $valeur)
+    {
+        // Dissocier la valeur du produit (sans supprimer la valeur elle-même)
+        $produit->valeurs()->detach($valeur->id);
 
+        // Rediriger vers la page de détail du produit avec un message de succès
+        return redirect()->route('produits.show', $produit->id)
+                         ->with('success', 'Valeur dissociée avec succès.');
+    }
     // Autres méthodes du contrôleur (show, edit, update, destroy)...
 }

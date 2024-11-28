@@ -17,7 +17,14 @@
     <p><strong>Valeurs :</strong></p>
     <ul>
         @foreach ($produit->valeurs as $valeur)
-            <li>{{ $valeur->nom }}</li>
+            <li>     {{ $valeur->nom }}
+            <!-- Add a delete button for each valeur -->
+            <form action="{{ route('produit-valeur.detach', ['produit' => $produit->id, 'valeur' => $valeur->id]) }}" method="POST" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger btn-sm ml-2" onclick="return confirm('Êtes-vous sûr de vouloir dissocier cette valeur du produit ?')">Dissocier</button>
+            </form>
+        </li>
         @endforeach
     </ul>
     @if ($produit->image)
@@ -28,6 +35,9 @@
         <p class="mt-4">Aucune image disponible pour ce produit.</p>
     @endif
 
+
+
+    
     <!-- Affichage des images de type "R" et "L" -->
     @foreach ($galleries as $gallery)
         @if ($gallery->type === 'R' || $gallery->type === 'L')

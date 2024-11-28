@@ -12,7 +12,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $desiredValues = ['femme voilée','Tendance/Mode', 'Quotidien', 'Travail/Professionnel'];
+        $desiredValues = ['femme voilée','Tendance','Mode', 'Quotidien', 'Travail/Professionnel'];
     
         // Récupérer les produits qui ont les valeurs désirées
         $products = Produit::whereHas('valeurs', function ($query) use ($desiredValues) {
@@ -31,8 +31,8 @@ class HomeController extends Controller
         }
     
         // Récupérer les produits Best Sellers
-        $bestSellers = Produit::whereHas('valeurs', function ($query) {
-            $query->where('nom', 'Best Sellers');
+        $specialsaison = Produit::whereHas('valeurs', function ($query) {
+            $query->where('nom', 'special saison');
         })->with('valeurs')->get();
         
         // Récupérer les produits de type porte-clé
@@ -47,7 +47,7 @@ class HomeController extends Controller
     // Récupérer les commentaires
     $comments = ProductLikeComment::with('client')->get(); // Assurez-vous que la relation 'client' est définie
 
-        return view('welcome', compact('produits', 'galleries', 'produitsEnPromo', 'keychains', 'groupedProducts', 'bestSellers', 'comments'));
+        return view('welcome', compact('produits', 'galleries', 'produitsEnPromo', 'keychains', 'groupedProducts', 'specialsaison', 'comments'));
     }
 
     public function create()

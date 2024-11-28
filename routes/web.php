@@ -70,6 +70,7 @@ Route::resource('boutique', BoutiqueController::class);
 
 // routes/web.php
 
+Route::delete('/produits/{produit}/valeurs/{valeur}', [ProduitValeurController::class, 'detach'])->name('produit-valeur.detach');
 
 
 // Route resource pour le PanierController

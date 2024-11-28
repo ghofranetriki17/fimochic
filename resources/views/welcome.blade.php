@@ -4,7 +4,7 @@
 <style>
 /* Style pour les boutons d'icônes */
 .btn-icon {
-    background-color: #ffb3c1; /* Fond pastel doux pour les boutons */
+    background-color: #D81B60 !important; /* Fond pastel doux pour les boutons */
     border: none; /* Supprime la bordure */
     border-radius: 50%; /* Bordure circulaire */
     width: 30px; /* Largeur uniforme */
@@ -111,7 +111,7 @@
 <!-- Hero Start -->
 <div class="container-fluid py-5 mb-5 hero-header position-relative">
     <video autoplay loop muted class="w-100 h-100 position-absolute top-0 start-0" style="object-fit: cover;">
-        <source src="/img/vid.mp4" type="video/mp4">
+        <source src="{{ $parametres['welcomevid'] ?? '' }}" type="video/mp4">
         Votre navigateur ne prend pas en charge la vidéo.
     </video>
     <div class="container py-5 position-relative">
@@ -136,12 +136,279 @@
 
 
 
+
+
+
+
+<!-- Section special saison -->
+<div class="testimonial container py-5">
+    <div class="video-background">
+        <video autoplay muted loop>
+        <source src="{{ $parametres['specialsaisonvid'] ?? '' }}" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+        </video>
+    </div>
+    <h1>{{ $parametres['specialsaison'] ?? '' }}</h1>
+    <div class="product-navigation">
+        <button class="nav-btn" id="prev"></button>
+        <button class="nav-btn" id="next"></button>
+
+        <div class="product-container">
+            <div class="d-flex"> <!-- Utiliser flexbox pour tous les produits sur la même ligne -->
+            @foreach($specialsaison as $produit)
+            @php
+                                // Remplacez ceci par la logique réelle pour obtenir le nombre de likes
+                                $likesCount =  $produit->getLikesCountAttribute($produit->id) 
+
+                            @endphp
+                @php
+                    $galleryHover = $galleries->where('produit_id', $produit->id)->where('type', 'hover')->first();
+                    $qrCodeImage = $galleries->where('produit_id', $produit->id)->where('type', 'qr')->first();
+                    $promotion = $produit->promotions->first();
+                @endphp
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div class="product-card">
+                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
+                                           special
+                                        </div>                          <img src="{{ asset('img/' . $produit->image) }}" alt="{{ $produit->name }}" class="main-product-image">
+                        @if($galleryHover)
+                            <img src="{{ asset('img/' . $galleryHover->image) }}" class="hover-image" alt="{{ $produit->name }} Hover">
+                        @endif
+                        <div class="card-body">
+                            <!-- Icône QR Code et lien vers la modale -->
+                            @if($qrCodeImage)
+                                <a href="#" class="btn-icon qr-icon" data-bs-toggle="modal" data-bs-target="#qrModal{{ $produit->id }}">
+                                    <i class="fas fa-qrcode"></i>
+                                </a>
+                            @endif
+                            <h4>{{ $produit->name }}</h4>
+                            <div class="d-flex justify-content-between">
+                                @if($promotion)
+                                    <p class="text-dark fs-5 fw-bold mb-0">
+                                        <span class="text-decoration-line-through">{{ $produit->prix }} DT</span>
+                                        <span class="text-danger ms-2">{{ $promotion->new_price }} DT</span>
+                                    </p>
+                                @else
+                                    <p class="text-dark fs-5 fw-bold mb-0">{{ $produit->prix }} DT</p>
+                                @endif
+                            </div>
+                              <!-- Affichage du nombre de likes -->
+                              <div class="likes-info">
+                                        <i class="fas fa-heart"></i> {{ $likesCount }}
+                                    </div>
+                        </div>
+                        <!-- Container des icônes -->
+                        <div class="icon-container">
+                            <!-- Formulaire d'ajout au panier -->
+                            <form action="{{ route('panier.store') }}" method="POST" style="display: inline;">
+                                @csrf
+                                <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+                                <input type="hidden" name="quantite" value="1" min="1" class="quantity-input">
+                                <button type="submit" class="btn-icon cart-icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                            </form>
+                            <!-- Lien vers la fenêtre modal -->
+                            <button type="button" class="btn-icon eye-icon" data-bs-toggle="modal" data-bs-target="#productModal{{ $produit->id }}">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modale QR Code -->
+                @if($qrCodeImage)
+                    <div class="modal fade" id="qrModal{{ $produit->id }}" tabindex="-1" aria-labelledby="qrModalLabel{{ $produit->id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="qrModalLabel{{ $produit->id }}">Code QR pour {{ $produit->name }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <img src="{{ asset('img/' . $qrCodeImage->image) }}" alt="QR Code" class="img-fluid">
+                                    <p>Scannez ce code QR pour voir le produit en réalité augmentée.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                <!-- Fenêtre modale pour les détails du produit -->
+                <div class="modal fade" id="productModal{{ $produit->id }}" tabindex="-1" aria-labelledby="productModalLabel{{ $produit->id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content product-modal-background-{{ $produit->id }}">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="productModalLabel{{ $produit->id }}">Détails du Produit</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="product-details">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="product-images d-flex justify-content-center align-items-center">
+                                                <div class="left-images">
+                                                    @foreach ($produit->galleries as $gallery)
+                                                        @if ($gallery->type == 'L')
+                                                            <img src="{{ asset('img/' . $gallery->image) }}" alt="Image L" class="img-fluid">
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                                <!-- Carrousel d'images -->
+                                                <div id="carousel{{ $produit->id }}" class="carousel slide mx-0">
+                                                    <div class="carousel-inner">
+                                                        <!-- Image principale -->
+                                                        <div class="carousel-item active">
+                                                            <img src="{{ asset('img/' . $produit->image) }}" alt="Image du produit" class="d-block w-100">
+                                                        </div>
+                                                        <!-- Images de type "autre" -->
+                                                        @foreach ($produit->galleries->where('type', 'autre') as $image)
+                                                            <div class="carousel-item">
+                                                                <img src="{{ asset('img/' . $image->image) }}" alt="Image autre" class="d-block w-100">
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ $produit->id }}" data-bs-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="visually-hidden">Previous</span>
+                                                    </button>
+                                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ $produit->id }}" data-bs-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="visually-hidden">Next</span>
+                                                    </button>
+                                                </div>
+                                                <div class="right-images">
+                                                    @foreach ($produit->galleries as $gallery)
+                                                        @if ($gallery->type == 'R')
+                                                            <img src="{{ asset('img/' . $gallery->image) }}" alt="Image R" class="img-fluid">
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mt-4">
+                                            <h4>{{ $produit->name }}</h4>
+                                            <p class="text-muted">{{ $produit->categorie }}</p>
+                                            <p>{{ $produit->description }}</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <p class="text-dark fs-5 fw-bold mb-0">
+                                                    @if($produit->promotions->isNotEmpty())
+                                                        <span class="text-decoration-line-through">{{ $produit->prix }} DT</span>
+                                                        <span class="text-danger ms-2">{{ $produit->promotions->first()->new_price }} DT</span>
+                                                    @else
+                                                        {{ $produit->prix }} DT
+                                                    @endif
+                                                </p>
+                                                <form action="{{ route('panier.store') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+                                                    <input type="hidden" name="quantite" value="1" min="1" class="quantity-input">
+                                                    <button type="submit" class="btn btn-primary">Ajouter au Panier</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                       
+                                                 <!-- Section pour le like/dislike -->
+<div class="mt-4 text-center">
+    <p><strong>Coup de cœur ? Cliquez ici !</strong></p>
+    @if ($produit->userHasLiked(Auth::id()))
+        <form action="{{ route('product_like_comments.like') }}" method="POST">
+            @csrf
+            <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+            <button type="submit" class="btn btn-link p-0 border-0" style="background: none;">
+                <i class="fas fa-heart text-danger" style="font-size: 24px;"></i>
+            </button>
+        </form>
+    @else
+        <form action="{{ route('product_like_comments.like') }}" method="POST">
+            @csrf
+            <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+            <button type="submit" class="btn btn-link p-0 border-0" style="background: none;">
+                <i class="far fa-heart text-success" style="font-size: 24px;"></i>
+            </button>
+        </form>
+    @endif
+</div>
+                                                                    <!-- Formulaire pour ajouter un commentaire -->
+                                <form action="{{ route('product_like_comments.store') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+                                    <div class="mb-3">
+                                        <textarea name="commentaire" class="form-control" rows="3" placeholder="Ajouter un commentaire..."></textarea>
+                                    </div>
+                                    <div class="mb-3">
+        <label for="photo" class="form-label">Ajouter une photo</label>
+        <input type="file" name="photo" class="form-control" id="photo">
+    </div>
+                                    <button type="submit" class="btn btn-primary">Ajouter Commentaire</button>
+                                </form>
+
+
+
+
+                                        <!-- Section des commentaires et likes -->
+                            <div class="col-md-12 mt-4">
+                            <h5>Commentaires des Clients</h5>
+@foreach ($produit->comments as $comment)
+    @if ($comment->commentaire)
+        <div class="comment mb-3">
+            <p><strong>Client #{{ $comment->client->name }}:</strong> {{ $comment->commentaire }}</p>
+            @if ($comment->image)
+                <img src="{{ asset('img/' . $comment->image) }}" alt="Comment Image"width="100px" class="img-fluid mb-2">
+            @endif
+            @if ($comment->client_id == Auth::id())
+                <form action="{{ route('product_like_comments.destroy', $comment->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                </form>
+            @endif
+        </div>
+    @endif
+@endforeach
+
+                                
+
+
+                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <form action="{{ route('panier.store') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="produit_id" value="{{ $produit->id }}">
+                                    <input type="hidden" name="quantite" value="1" min="1" class="quantity-input">
+                                    <button type="submit" class="btn btn-primary">Ajouter au Panier</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
 <!-- Palette de Plaisirs start -->
 
 <div class="testimonial py-5">
     <div class="video-background">
         <video autoplay muted loop>
-            <source src="{{ asset('/img/vid.mp4') }}" type="video/mp4">
+        <source src="{{ $parametres['palette'] ?? '' }}" type="video/mp4">
             Votre navigateur ne supporte pas la vidéo.
         </video>
     </div>
@@ -155,8 +422,8 @@
                     <ul class="nav nav-pills d-inline-flex text-center mb-5">
                         @foreach($groupedProducts as $valeurName => $produits)
                             <li class="nav-item">
-                                <a class="nav-link d-flex m-2 py-2 rounded-pill {{ $loop->first ? 'active' : '' }}" data-bs-toggle="pill" href="#tab-{{ Str::slug($valeurName) }}">
-                                    <span class="b" style="width: 130px;">{{ $valeurName }}</span>
+                            <a class="nav-link d-flex m-2 py-2 rounded-pill {{ $valeurName === 'Tendance' ? 'active' : '' }}" data-bs-toggle="pill" href="#tab-{{ Str::slug($valeurName) }}">
+                                   <span class="b" style="width: 130px;">{{ $valeurName }}</span>
                                 </a>
                             </li>
                         @endforeach
@@ -430,7 +697,7 @@
 <div class="testimonial service py-5">
     <div class="video-background">
         <video autoplay muted loop>
-            <source src="{{ asset('/img/vid.mp4') }}" type="video/mp4">
+        <source src="{{ $parametres['Features'] ?? '' }}" type="video/mp4">
             Votre navigateur ne supporte pas la vidéo.
         </video>
     </div>
@@ -511,260 +778,7 @@
 
 
 
-<!-- Section Best Sellers -->
-<div class="testimonial container py-5">
-    <div class="video-background">
-        <video autoplay muted loop>
-            <source src="{{ asset('/img/vid.mp4') }}" type="video/mp4">
-            Votre navigateur ne supporte pas la vidéo.
-        </video>
-    </div>
-    <h1>Meilleures Ventes</h1>
-    <div class="product-navigation">
-        <button class="nav-btn" id="prev"></button>
-        <button class="nav-btn" id="next"></button>
 
-        <div class="product-container">
-            <div class="d-flex"> <!-- Utiliser flexbox pour tous les produits sur la même ligne -->
-            @foreach($bestSellers as $produit)
-            @php
-                                // Remplacez ceci par la logique réelle pour obtenir le nombre de likes
-                                $likesCount =  $produit->getLikesCountAttribute($produit->id) 
-
-                            @endphp
-                @php
-                    $galleryHover = $galleries->where('produit_id', $produit->id)->where('type', 'hover')->first();
-                    $qrCodeImage = $galleries->where('produit_id', $produit->id)->where('type', 'qr')->first();
-                    $promotion = $produit->promotions->first();
-                @endphp
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div class="product-card">
-                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
-                                           best seller
-                                        </div>                          <img src="{{ asset('img/' . $produit->image) }}" alt="{{ $produit->name }}" class="main-product-image">
-                        @if($galleryHover)
-                            <img src="{{ asset('img/' . $galleryHover->image) }}" class="hover-image" alt="{{ $produit->name }} Hover">
-                        @endif
-                        <div class="card-body">
-                            <!-- Icône QR Code et lien vers la modale -->
-                            @if($qrCodeImage)
-                                <a href="#" class="btn-icon qr-icon" data-bs-toggle="modal" data-bs-target="#qrModal{{ $produit->id }}">
-                                    <i class="fas fa-qrcode"></i>
-                                </a>
-                            @endif
-                            <h4>{{ $produit->name }}</h4>
-                            <div class="d-flex justify-content-between">
-                                @if($promotion)
-                                    <p class="text-dark fs-5 fw-bold mb-0">
-                                        <span class="text-decoration-line-through">{{ $produit->prix }} DT</span>
-                                        <span class="text-danger ms-2">{{ $promotion->new_price }} DT</span>
-                                    </p>
-                                @else
-                                    <p class="text-dark fs-5 fw-bold mb-0">{{ $produit->prix }} DT</p>
-                                @endif
-                            </div>
-                              <!-- Affichage du nombre de likes -->
-                              <div class="likes-info">
-                                        <i class="fas fa-heart"></i> {{ $likesCount }}
-                                    </div>
-                        </div>
-                        <!-- Container des icônes -->
-                        <div class="icon-container">
-                            <!-- Formulaire d'ajout au panier -->
-                            <form action="{{ route('panier.store') }}" method="POST" style="display: inline;">
-                                @csrf
-                                <input type="hidden" name="produit_id" value="{{ $produit->id }}">
-                                <input type="hidden" name="quantite" value="1" min="1" class="quantity-input">
-                                <button type="submit" class="btn-icon cart-icon">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </button>
-                            </form>
-                            <!-- Lien vers la fenêtre modal -->
-                            <button type="button" class="btn-icon eye-icon" data-bs-toggle="modal" data-bs-target="#productModal{{ $produit->id }}">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Modale QR Code -->
-                @if($qrCodeImage)
-                    <div class="modal fade" id="qrModal{{ $produit->id }}" tabindex="-1" aria-labelledby="qrModalLabel{{ $produit->id }}" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="qrModalLabel{{ $produit->id }}">Code QR pour {{ $produit->name }}</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body text-center">
-                                    <img src="{{ asset('img/' . $qrCodeImage->image) }}" alt="QR Code" class="img-fluid">
-                                    <p>Scannez ce code QR pour voir le produit en réalité augmentée.</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-
-                <!-- Fenêtre modale pour les détails du produit -->
-                <div class="modal fade" id="productModal{{ $produit->id }}" tabindex="-1" aria-labelledby="productModalLabel{{ $produit->id }}" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content product-modal-background-{{ $produit->id }}">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="productModalLabel{{ $produit->id }}">Détails du Produit</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="product-details">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="product-images d-flex justify-content-center align-items-center">
-                                                <div class="left-images">
-                                                    @foreach ($produit->galleries as $gallery)
-                                                        @if ($gallery->type == 'L')
-                                                            <img src="{{ asset('img/' . $gallery->image) }}" alt="Image L" class="img-fluid">
-                                                        @endif
-                                                    @endforeach
-                                                </div>
-                                                <!-- Carrousel d'images -->
-                                                <div id="carousel{{ $produit->id }}" class="carousel slide mx-0">
-                                                    <div class="carousel-inner">
-                                                        <!-- Image principale -->
-                                                        <div class="carousel-item active">
-                                                            <img src="{{ asset('img/' . $produit->image) }}" alt="Image du produit" class="d-block w-100">
-                                                        </div>
-                                                        <!-- Images de type "autre" -->
-                                                        @foreach ($produit->galleries->where('type', 'autre') as $image)
-                                                            <div class="carousel-item">
-                                                                <img src="{{ asset('img/' . $image->image) }}" alt="Image autre" class="d-block w-100">
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
-                                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ $produit->id }}" data-bs-slide="prev">
-                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                        <span class="visually-hidden">Previous</span>
-                                                    </button>
-                                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ $produit->id }}" data-bs-slide="next">
-                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                        <span class="visually-hidden">Next</span>
-                                                    </button>
-                                                </div>
-                                                <div class="right-images">
-                                                    @foreach ($produit->galleries as $gallery)
-                                                        @if ($gallery->type == 'R')
-                                                            <img src="{{ asset('img/' . $gallery->image) }}" alt="Image R" class="img-fluid">
-                                                        @endif
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 mt-4">
-                                            <h4>{{ $produit->name }}</h4>
-                                            <p class="text-muted">{{ $produit->categorie }}</p>
-                                            <p>{{ $produit->description }}</p>
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <p class="text-dark fs-5 fw-bold mb-0">
-                                                    @if($produit->promotions->isNotEmpty())
-                                                        <span class="text-decoration-line-through">{{ $produit->prix }} DT</span>
-                                                        <span class="text-danger ms-2">{{ $produit->promotions->first()->new_price }} DT</span>
-                                                    @else
-                                                        {{ $produit->prix }} DT
-                                                    @endif
-                                                </p>
-                                                <form action="{{ route('panier.store') }}" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" name="produit_id" value="{{ $produit->id }}">
-                                                    <input type="hidden" name="quantite" value="1" min="1" class="quantity-input">
-                                                    <button type="submit" class="btn btn-primary">Ajouter au Panier</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                       
-                                                 <!-- Section pour le like/dislike -->
-<div class="mt-4 text-center">
-    <p><strong>Coup de cœur ? Cliquez ici !</strong></p>
-    @if ($produit->userHasLiked(Auth::id()))
-        <form action="{{ route('product_like_comments.like') }}" method="POST">
-            @csrf
-            <input type="hidden" name="produit_id" value="{{ $produit->id }}">
-            <button type="submit" class="btn btn-link p-0 border-0" style="background: none;">
-                <i class="fas fa-heart text-danger" style="font-size: 24px;"></i>
-            </button>
-        </form>
-    @else
-        <form action="{{ route('product_like_comments.like') }}" method="POST">
-            @csrf
-            <input type="hidden" name="produit_id" value="{{ $produit->id }}">
-            <button type="submit" class="btn btn-link p-0 border-0" style="background: none;">
-                <i class="far fa-heart text-success" style="font-size: 24px;"></i>
-            </button>
-        </form>
-    @endif
-</div>
-                                                                    <!-- Formulaire pour ajouter un commentaire -->
-                                <form action="{{ route('product_like_comments.store') }}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <input type="hidden" name="produit_id" value="{{ $produit->id }}">
-                                    <div class="mb-3">
-                                        <textarea name="commentaire" class="form-control" rows="3" placeholder="Ajouter un commentaire..."></textarea>
-                                    </div>
-                                    <div class="mb-3">
-        <label for="photo" class="form-label">Ajouter une photo</label>
-        <input type="file" name="photo" class="form-control" id="photo">
-    </div>
-                                    <button type="submit" class="btn btn-primary">Ajouter Commentaire</button>
-                                </form>
-
-
-
-
-                                        <!-- Section des commentaires et likes -->
-                            <div class="col-md-12 mt-4">
-                            <h5>Commentaires des Clients</h5>
-@foreach ($produit->comments as $comment)
-    @if ($comment->commentaire)
-        <div class="comment mb-3">
-            <p><strong>Client #{{ $comment->client->name }}:</strong> {{ $comment->commentaire }}</p>
-            @if ($comment->image)
-                <img src="{{ asset('img/' . $comment->image) }}" alt="Comment Image"width="100px" class="img-fluid mb-2">
-            @endif
-            @if ($comment->client_id == Auth::id())
-                <form action="{{ route('product_like_comments.destroy', $comment->id) }}" method="POST" class="d-inline">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
-                </form>
-            @endif
-        </div>
-    @endif
-@endforeach
-
-                                
-
-
-                            </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                <form action="{{ route('panier.store') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="produit_id" value="{{ $produit->id }}">
-                                    <input type="hidden" name="quantite" value="1" min="1" class="quantity-input">
-                                    <button type="submit" class="btn btn-primary">Ajouter au Panier</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
 document.getElementById('next').onclick = function() {
@@ -1267,7 +1281,7 @@ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
    <div class="testimonial -5 banner bg-lightblue my-5">
        <div class="video-background">
         <video autoplay muted loop>
-            <source src="{{ asset('/img/vid.mp4') }}" type="video/mp4">
+        <source src="{{ $parametres['qrvideo'] ?? '' }}" type="video/mp4">
             Votre navigateur ne supporte pas la vidéo.
         </video>
     </div>
@@ -1285,7 +1299,7 @@ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             <!-- QR Code Section -->
             <div class="col-lg-6 text-center">
                 <div class="position-relative">
-                    <img src="img/qrfimo.png" class="img-fluid rounded" alt="QR Code">
+                    <img src="{{ $parametres['qr'] ?? '' }} class="img-fluid rounded" alt="QR Code">
                 </div>
             </div>
         </div>
@@ -1294,186 +1308,6 @@ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 <!-- Banner Section End -->
 
 
-
-
-<!-- Section Porte-Clés -->
-<div class="container testimonial py-5">
-    <div class="video-background">
-        <video autoplay muted loop>
-            <source src="{{ asset('/img/vid.mp4') }}" type="video/mp4">
-            Votre navigateur ne supporte pas la vidéo.
-        </video>
-    </div>
-    <h1>Porte-Clés</h1>
-    <div class="product-navigation">
-        <button class="nav-btn" id="prevKeychains"></button>
-        <button class="nav-btn" id="nextKeychains"></button>
-
-        <div class="product-container">
-            <div class="d-flex "> <!-- Utiliser flexbox pour tous les produits sur la même ligne -->
-                @foreach($keychains as $porteClef)
-                    @php
-                        $galleryHover = $galleries->where('produit_id', $porteClef->id)->where('type', 'hover')->first();
-                        $qrCodeImage = $galleries->where('produit_id', $porteClef->id)->where('type', 'qr')->first();
-                        $promotion = $porteClef->promotions->first();
-                    @endphp
-                    <div class="col-md-6 col-lg-3 ">
-                        <div class="product-card">
-                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
-                        Porte-clé
-                                        </div>                              <img src="{{ asset('img/' . $porteClef->image) }}" alt="{{ $porteClef->name }}" class="main-product-image">
-                            @if($galleryHover)
-                                <img src="{{ asset('img/' . $galleryHover->image) }}" class="hover-image" alt="{{ $porteClef->name }} Hover">
-                            @endif
-                            <div class="card-body">
-                                <!-- Icône QR Code et lien vers la modale -->
-                                @if($qrCodeImage)
-                                    <a href="#" class="btn-icon qr-icon" data-bs-toggle="modal" data-bs-target="#qrModal{{ $porteClef->id }}">
-                                        <i class="fas fa-qrcode"></i>
-                                    </a>
-                                @endif
-                                <h4>{{ $porteClef->name }}</h4>
-                                <div class="d-flex justify-content-between">
-                                    @if($promotion)
-                                        <p class="text-dark fs-5 fw-bold mb-0">
-                                            <span class="text-decoration-line-through">{{ $porteClef->prix }} DT</span>
-                                            <span class="text-danger ms-2">{{ $promotion->new_price }} DT</span>
-                                        </p>
-                                    @else
-                                        <p class="text-dark fs-5 fw-bold mb-0">{{ $porteClef->prix }} DT</p>
-                                    @endif
-                                </div>
-                            </div>
-                            <!-- Container des icônes -->
-                            <div class="icon-container">
-                                <!-- Formulaire d'ajout au panier -->
-                                <form action="{{ route('panier.store') }}" method="POST" style="display: inline;">
-                                    @csrf
-                                    <input type="hidden" name="produit_id" value="{{ $porteClef->id }}">
-                                    <input type="hidden" name="quantite" value="1" min="1" class="quantity-input">
-                                    <button type="submit" class="btn-icon cart-icon">
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </button>
-                                </form>
-                                <!-- Lien vers la fenêtre modal -->
-                                <button type="button" class="btn-icon eye-icon" data-bs-toggle="modal" data-bs-target="#keychainModal{{ $porteClef->id }}">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Modale QR Code -->
-                    @if($qrCodeImage)
-                        <div class="modal fade" id="qrModal{{ $porteClef->id }}" tabindex="-1" aria-labelledby="qrModalLabel{{ $porteClef->id }}" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="qrModalLabel{{ $porteClef->id }}">Code QR pour {{ $porteClef->name }}</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body text-center">
-                                        <img src="{{ asset('img/' . $qrCodeImage->image) }}" alt="QR Code" class="img-fluid">
-                                        <p>Scannez ce code QR pour voir le produit en réalité augmentée.</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    <!-- Fenêtre modale pour les détails du produit -->
-                    <div class="modal fade" id="keychainModal{{ $porteClef->id }}" tabindex="-1" aria-labelledby="keychainModalLabel{{ $porteClef->id }}" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content product-modal-background-{{ $porteClef->id }}">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="keychainModalLabel{{ $porteClef->id }}">Détails du Produit</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="product-details">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="product-images d-flex justify-content-center align-items-center">
-                                                    <div class="left-images">
-                                                        @foreach ($porteClef->galleries as $gallery)
-                                                            @if ($gallery->type == 'L')
-                                                                <img src="{{ asset('img/' . $gallery->image) }}" alt="Image L" class="img-fluid">
-                                                            @endif
-                                                        @endforeach
-                                                    </div>
-                                                    <!-- Carrousel d'images -->
-                                                    <div id="carousel{{ $porteClef->id }}" class="carousel slide mx-0">
-                                                        <div class="carousel-inner">
-                                                            <!-- Image principale -->
-                                                            <div class="carousel-item active">
-                                                                <img src="{{ asset('img/' . $porteClef->image) }}" alt="Image du produit" class="d-block w-100">
-                                                            </div>
-                                                            <!-- Images de type "autre" -->
-                                                            @foreach ($porteClef->galleries->where('type', 'autre') as $image)
-                                                                <div class="carousel-item">
-                                                                    <img src="{{ asset('img/' . $image->image) }}" alt="Image autre" class="d-block w-100">
-                                                                </div>
-                                                            @endforeach
-                                                        </div>
-                                                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ $porteClef->id }}" data-bs-slide="prev">
-                                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                            <span class="visually-hidden">Previous</span>
-                                                        </button>
-                                                        <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ $porteClef->id }}" data-bs-slide="next">
-                                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                            <span class="visually-hidden">Next</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="right-images">
-                                                        @foreach ($porteClef->galleries as $gallery)
-                                                            @if ($gallery->type == 'R')
-                                                                <img src="{{ asset('img/' . $gallery->image) }}" alt="Image R" class="img-fluid">
-                                                            @endif
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12 mt-4">
-                                                <h4>{{ $porteClef->name }}</h4>
-                                                <p class="text-muted">{{ $porteClef->categorie }}</p>
-                                                <p>{{ $porteClef->description }}</p>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <p class="text-dark fs-5 fw-bold mb-0">
-                                                        @if($porteClef->promotions->isNotEmpty())
-                                                            <span class="text-decoration-line-through">{{ $porteClef->prix }} DT</span>
-                                                            <span class="text-danger ms-2">{{ $porteClef->promotions->first()->new_price }} DT</span>
-                                                        @else
-                                                            {{ $porteClef->prix }} DT
-                                                        @endif
-                                                    </p>
-                                                    <form action="{{ route('panier.store') }}" method="POST">
-                                                        @csrf
-                                                        <input type="hidden" name="produit_id" value="{{ $porteClef->id }}">
-                                                        <input type="hidden" name="quantite" value="1" min="1" class="quantity-input">
-                                                        <button type="submit" class="btn border border-secondary rounded-pill px-3 text-primary">
-                                                            <i class="fa fa-shopping-bag me-2 text-primary"></i> Ajouter au panier
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Fin Section Porte-Clés -->
 
 
 
@@ -2086,7 +1920,7 @@ document.getElementById('prevKeychains').onclick = function() {
     margin: 8px 0; /* Espacement entre les icônes */
 }
 .likes-info {
-    color: #fbb9c5;
+    color: #e91e63;
 }
 
 .product-card:hover .icon-container {
@@ -2121,7 +1955,7 @@ document.getElementById('prevKeychains').onclick = function() {
 .card-body h4 {
     margin: 10px 0;
     font-size: 1.2em;
-    color: #ffb3c1; /* Couleur girly pastel pour le nom du produit */
+    color: #e91e63; /* Couleur girly pastel pour le nom du produit */
 }
 
 .card-body p {

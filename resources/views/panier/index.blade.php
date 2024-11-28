@@ -157,8 +157,7 @@
                                 <label for="payment_method" class="form-label">Méthode de Paiement</label>
                                 <select class="form-select" id="payment_method" name="payment_method" required>
                                     <option value="cash_on_delivery">Paiement à la livraison</option>
-                                    <option value="post">Chèque Postal</option>
-                                    <option value="visa">Carte Visa</option>
+                                 
                                 </select>
                             </div>
     <!-- Zone de saisie pour le code promo -->

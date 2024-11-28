@@ -132,7 +132,7 @@
 .modal-content {
     border: #ff949400;
     border-radius: 15px;
-    background-color: #860356;
+    background-color: #f8bbd0;
     overflow: hidden;
 }
 .modal-header {
@@ -158,7 +158,7 @@
 
 /* Style pour les boutons d'icônes */
 .btn-icon {
-    background-color: #ffb3c1; /* Fond pastel doux pour les boutons */
+    background-color: #e91e63; /* Fond pastel doux pour les boutons */
     border: none; /* Supprime la bordure */
     border-radius: 50%; /* Bordure circulaire */
     width: 30px; /* Largeur uniforme */
@@ -262,7 +262,7 @@
     margin: 8px 0; /* Espacement entre les icônes */
 }
 .likes-info {
-    color: #fbb9c5;
+    color: #e91e63;
 }
 
 .product-card:hover .icon-container {
@@ -297,7 +297,7 @@
 .card-body h4 {
     margin: 10px 0;
     font-size: 1.2em;
-    color: #ffb3c1; /* Couleur girly pastel pour le nom du produit */
+    color: #e91e63; /* Couleur girly pastel pour le nom du produit */
 }
 
 .card-body p {
@@ -1148,10 +1148,11 @@
                                     <!-- Section des produits similaires -->
                                     <div class="mt-4">
     <div class="row">
+    <h5>Autres Couleurs</h5>
         @foreach ($produits->filter(function ($p) use ($produit) { return $p->name == $produit->name && $p->id != $produit->id; }) as $relatedProduct)
        
         @if($relatedProduct->qte_dispo > 0)
-        <h5>Autres Couleurs</h5>
+      
 
             <div class="col-md-3 mb-3">
                 <div class="card">

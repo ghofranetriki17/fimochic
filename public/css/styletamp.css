@@ -99,10 +99,10 @@ body {
 }
 
 .text-pink {
-    color: #ff96c9; /* Couleur rose pastel */
+    color: #d63384; /* Couleur rose pastel */
 }
 .text-green {
-    color: #a9ffac; /* Couleur rose pastel */
+    color: #6a1b9a; /* Couleur rose pastel */
 }
 
 
@@ -113,9 +113,9 @@ video {
 }
 
 h4, h1 {
-    text-shadow: 2px 2px 4px rgba(255, 165, 250, 0.7); /* Ombre pour le texte */
+    text-shadow: 2px 2px 4px rgba(255, 165,2196f3250, 0.7); /* Ombre pour le texte */
     text-align: center; /* Centre le texte */
-    color: rgb(247, 225, 245); /* Couleur du texte */
+    color:  #1565c0; /* Couleur du texte */
 }
 
 .btn-pink {
@@ -193,7 +193,7 @@ color:white;
 .text-b9bbfa {
     color: #d0acfa!important; /* Violet pastel */
 }
-.b{color: #ff99e2;}
+.b{color: #1e5521;}
 .fruite-item {
     transition: transform 0.6s, background-color 0.5s; /* Ajout de la transition pour la couleur de fond */
     background-color: #fcd46e; /* Couleur rose bébé */
@@ -351,7 +351,8 @@ color:white;
     padding: 10px 15px;
     font-size: 16px;
     transition: .5s;
-    color: #ffa9e7;
+    color: #e734c3 !important;
+    background-color: #fff1c1;
 }
 
 .navbar {
@@ -360,7 +361,7 @@ color:white;
 }
 
 .navbar .navbar-nav .nav-link:hover, .navbar .navbar-nav .nav-link.active, .fixed-top.bg-white .navbar .navbar-nav .nav-link:hover, .fixed-top.bg-white .navbar .navbar-nav .nav-link.active {
-    color: #a2fb00;
+    color: #ffb3c1!important;
 }
 
 .navbar .dropdown-toggle::after {
