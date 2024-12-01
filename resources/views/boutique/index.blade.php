@@ -475,7 +475,7 @@
 
 
 <!-- Shop Page Header with QR Code Introduction Start -->
-<div class="container-fluid page-header py-3">
+<div class=" page-header py-3">
     
     <!-- QR Code Introduction Section Start -->
     <div class="text-center mb-4">
@@ -491,12 +491,12 @@
   document.addEventListener('DOMContentLoaded', function () {
     const phrases = [
         { title: 'Bienvenue à Notre Boutique', description: '' },
-        { title: 'Des Créations Uniques en Fimo', description: 'Plongez dans notre collection exceptionnelle de bijoux faits main, où chaque pièce raconte une histoire.' },
+        { title: 'Des Créations Uniques en Fimo', description: '' },
 
-        { title: 'Découvrez Nos Produits en 3D', description: 'Vivez une expérience immersive en scannant le code QR pour voir nos créations en réalité augmentée, comme si vous les aviez déjà en main.' },
-        { title: 'Concevez Votre Chef-d\'Œuvre Personnel', description: 'Rendez votre pièce vraiment unique en visitant notre page de personnalisation et en ajoutant votre touche personnelle.' },
+        { title: 'Découvrez Nos Produits en 3D', description: '' },
+        { title: 'Concevez Votre Chef-d\'Œuvre Personnel', description: '' },
 
-        { title: 'Cadeaux Personnalisés à Votre Image', description: 'Transformez chaque occasion en un souvenir inoubliable avec nos boîtes sur-mesure, créées selon vos préférences et vos célébrations.' }
+        { title: 'Cadeaux Personnalisés à Votre Image', description: '' }
     ];
 
     let currentIndex = 0;
@@ -548,7 +548,13 @@
 
 
         <!-- Fruits Shop Start-->
-        <div class="container-fluid fruite py-5">
+        <div class=" fruite py-5">
+        <div class="video-background">
+        <video autoplay muted loop>
+        <source src="{{ $parametres['featuress'] ?? 'img/test.mp4' }}" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+        </video>
+    </div>
             <div class="container py-5">
                 <h1 class="display-5 text-primary mb-4"></h1>
 
@@ -903,7 +909,7 @@
 @foreach ($produit->comments as $comment)
     @if ($comment->commentaire)
         <div class="comment mb-3">
-            <p><strong>Client #{{ $comment->client->name }}:</strong> {{ $comment->commentaire }}</p>
+            <p><strong>{{ $comment->client->nom }}:</strong> {{ $comment->commentaire }}</p>
             @if ($comment->image)
                 <img src="{{ asset('img/' . $comment->image) }}" alt="Comment Image"width="100px" class="img-fluid mb-2">
             @endif
@@ -1207,7 +1213,7 @@
 @foreach ($produit->comments as $comment)
     @if ($comment->commentaire)
         <div class="comment mb-3">
-            <p><strong>Client #{{ $comment->client->name }}:</strong> {{ $comment->commentaire }}</p>
+            <p><strong>{{ $comment->client->nom }}:</strong> {{ $comment->commentaire }}</p>
             @if ($comment->image)
                 <img src="{{ asset('img/' . $comment->image) }}" alt="Comment Image"width="100px" class="img-fluid mb-2">
             @endif
@@ -1303,6 +1309,7 @@
 
 
         <div class="nouveaux-produits">
+            
     <div class="container py-5">
         <h2 class="text-center mb-4"> Nouvelle Collection</h2>
         <div id="nouveauxProduitsCarousel" class="carousel slide">
@@ -1532,7 +1539,7 @@
 @foreach ($produit->comments as $comment)
     @if ($comment->commentaire)
         <div class="comment mb-3">
-            <p><strong>Client #{{ $comment->client->name }}:</strong> {{ $comment->commentaire }}</p>
+            <p><strong>{{ $comment->client->nom }}:</strong> {{ $comment->commentaire }}</p>
             @if ($comment->image)
                 <img src="{{ asset('img/' . $comment->image) }}" alt="Comment Image"width="100px" class="img-fluid mb-2">
             @endif

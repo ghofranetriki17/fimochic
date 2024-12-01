@@ -14,21 +14,29 @@
             padding: 20px;
         }
         h1, h2 {
-            margin-top: 60x;
+            margin-top: 60px;
             text-align: center;
-            color: #d4a5a5;
+            color: #880e4f;
         }
+        h4{color:#6ac015;}
         p {
             line-height: 1.6;
             color: #555;
         }
-        .image-section, .team-section, .testimonials-section {
+        .image-text-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             margin: 50px 0;
         }
-        .image-section img, .team-section img {
-            width: 100%;
+        .image-text-section img {
+            width: 200px;
             height: auto;
             border-radius: 10px;
+            margin-left: 20px;
+        }
+        .image-text-section .text {
+            flex: 1;
         }
         .team-member {
             display: flex;
@@ -47,100 +55,85 @@
             border-radius: 10px;
             margin-bottom: 20px;
         }
+        #prop { margin-top: 200px !important; }
     </style>
 </head>
+
 <body>
-    <div class="container mt-5">
+    <div class="container mt-5" id="prop">
         <h1>Bienvenue chez Fimo Chic</h1>
         <p>
             Fimo Chic est née d'une passion pour la créativité et l'originalité. Chaque bijou est conçu avec amour et minutie, reflétant la personnalité unique de chaque client. Découvrez notre histoire, notre mission et ce qui rend nos créations si spéciales.
         </p>
 
-        <div class="image-" >
-            <img src="{{ asset('img/logo.jpg') }}" width="200px"alt="Notre Histoire">
-        </div>
+        <div class="image-text-section">
+            <div class="text">
+                <h2>Notre Histoire et Notre Mission</h2>
+                <h4>Notre Histoire</h4>
+                <p>
+                    {{ $parametres['notrehistoire'] ?? 'L\'idée de Fimo Chic a germé lorsque mon amie, une grande amatrice de boucles d\'oreilles, fêtait son anniversaire. Désireuse de lui offrir un cadeau unique et personnel, j\'ai décidé de créer des boucles d\'oreilles faites à la main. Ce cadeau a tellement plu que j\'ai réalisé qu\'il y avait une véritable demande pour des bijoux personnalisés et faits main. C\'est ainsi qu\'est né Fimo Chic.' }}
+                    {{ $parametres['notrehistoirep2'] ?? 'L\'idée de Fimo Chic a germé lorsque mon amie, une grande amatrice de boucles d\'oreilles, fêtait son anniversaire. Désireuse de lui offrir un cadeau unique et personnel, j\'ai décidé de créer des boucles d\'oreilles faites à la main. Ce cadeau a tellement plu que j\'ai réalisé qu\'il y avait une véritable demande pour des bijoux personnalisés et faits main. C\'est ainsi qu\'est né Fimo Chic.' }}
 
-        <h2>Notre Histoire et Notre Mission</h2>
-        <div class="text-section">
-    <p>
-        {{ $parametres['notrehistoire'] ?? 'L\'idée de Fimo Chic a germé lorsque mon amie, une grande amatrice de boucles d\'oreilles, fêtait son anniversaire. Désireuse de lui offrir un cadeau unique et personnel, j\'ai décidé de créer des boucles d\'oreilles faites à la main. Ce cadeau a tellement plu que j\'ai réalisé qu\'il y avait une véritable demande pour des bijoux personnalisés et faits main. C\'est ainsi qu\'est né Fimo Chic. Notre mission est de proposer des bijoux de qualité, originaux et personnalisés, qui apportent une touche spéciale à chaque moment de votre vie. Nous nous engageons à offrir des produits uniques qui racontent votre histoire.' }}
-    </p>
-</div>
+                </p>
+                <h4>Notre mission</h4>
+                <p>
+                    {{ $parametres['notremission'] ?? 'Notre mission est de proposer des bijoux de qualité, originaux et personnalisés, qui apportent une touche spéciale à chaque moment de votre vie. Nous nous engageons à offrir des produits uniques qui racontent votre histoire.' }}
+                    {{ $parametres['notremissionp2'] ?? 'Notre mission est de proposer des bijoux de qualité, originaux et personnalisés, qui apportent une touche spéciale à chaque moment de votre vie. Nous nous engageons à offrir des produits uniques qui racontent votre histoire.' }}
 
-        <div class="image-">
-        <img src="{{ $parametres['notrehistoireimage'] ?? 'img/logo.jpg' }}" width="200px" alt="Notre Mission">
-        </div>
-
-        <h2>À Propos du Fondateur</h2>
-        <div class="team-section">
-            <div class="team-member animate__animated animate__fadeInLeft">
-                <img src="{{ $parametres['Fondateurimage'] ?? 'img/logo.jpg' }}" alt="Ghofrane Trikki">
-                <div>
-                <div class="text-section">
-    <p>
-        {{ $parametres['Fondateurp1'] ?? '        ' }}
-        <br/>
-        {{ $parametres['Fondateurp2'] ?? '                ' }}
-        <br/>
-
-        {{ $parametres['Fondateurp3'] ?? '' }}
-        <br/>
-
-        {{ $parametres['Fondateurp4'] ?? '' }}
-        <br/>
-
-        {{ $parametres['Fondateurp5'] ?? '' }}
-        {{ $parametres['Fondateurp6'] ?? '' }}
-
-             
-         
-                  Mon stage chez Exadev, où j'ai développé un site web pour Fimo Chic, a été une expérience enrichissante. J'ai appris à combiner mes compétences techniques et ma passion artistique pour créer des bijoux uniques et personnalisés.
-            
-    </p>
-</div>
-                </div>
+                </p>
             </div>
+            <img src="{{ $parametres['notrehistoireimage'] ?? 'img/logo.jpg' }}" alt="Notre Mission">
         </div>
 
-        <h2>Nos Offres Uniques</h2>
-        <p>
-            <strong>Personnalisation Boucles et Cadeaux</strong><br>
-            {{ $parametres['Personnalisation Boucles et Cadeaux p1'] ?? '' }}
-            {{ $parametres['Personnalisation Boucles et Cadeaux p2'] ?? '' }}
-            <div class="image-">
-        <img src="{{ $parametres['Personnalisation Boucles et Cadeaux image'] ?? 'img/logo.jpg' }}" width="200px" alt="Notre Mission">
+        <div class="image-text-section">
+            <div class="text">
+                <h2>À Propos du Fondateur</h2>
+                <p>
+                    {{ $parametres['Fondateurp1'] ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' }}
+               
+                    {{ $parametres['Fondateurp2'] ?? 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }}
+                    {{ $parametres['Fondateurp3'] ?? '' }}
+               
+               {{ $parametres['Fondateurp4'] ?? '' }}
+    </p>
+    <p>
+               {{ $parametres['Fondateurp5'] ?? '' }}
+               
+               {{ $parametres['Fondateurp6'] ?? '' }}
+                </p>
+            </div>
+            <img src="{{ $parametres['Fondateurimage'] ?? 'img/logo.jpg' }}" alt="Ghofrane Trikki">
         </div>
 
-        </p>
-        <p>
-            <strong>Section Modernité</strong><br>
-            {{ $parametres['Modernitép1'] ?? '' }}
-            {{ $parametres['Modernitép2'] ?? '' }}
-            <div class="image-">
-        <img src="{{ $parametres['Modernité image'] ?? 'img/logo.jpg' }}" width="200px" alt="Notre Mission">
-        </div>        </p>
-        <p>
-            <strong>Expérience Client Unique</strong><br>
-            {{ $parametres['expclientuniquep1'] ?? '' }}
-            {{ $parametres['expclientuniquep2'] ?? '' }}
-            <div class="image-">
-        <img src="{{ $parametres['expclientunique image'] ?? 'img/logo.jpg' }}" width="200px" alt="Notre Mission">
-        </div>       
-        </p>
-
-   
         <h2>Technologie et Innovation</h2>
-        <p>
-            Nous intégrons la technologie dans chaque aspect de notre entreprise. Les codes QR permettent une interaction directe avec nos produits, vous offrant une visualisation en temps réel de vos personnalisations. C'est cette innovation qui nous distingue et améliore l'expérience client.
-        </p>
+        <div class="image-text-section">
+            <div class="text">
+                <h4>Personnalisation Boucles et Cadeaux</h4><br>
+                {{ $parametres['Personnalisation Boucles et Cadeaux p1'] ?? '' }}
+                {{ $parametres['Personnalisation Boucles et Cadeaux p2'] ?? '' }}
+            </div>
+            <img src="{{ $parametres['Personnalisation Boucles et Cadeaux image'] ?? 'img/logo.jpg' }}" alt="Personnalisation Boucles et Cadeaux">
+        </div>
 
-  
+        <div class="image-text-section">
+            <div class="text">
+                <h4>Section Modernité</h4><br>
+                {{ $parametres['Modernitép1'] ?? '' }}
+                {{ $parametres['Modernitép2'] ?? '' }}
+            </div>
+            <img src="{{ $parametres['Modernité image'] ?? 'img/logo.jpg' }}" alt="Modernité">
+        </div>
 
-        {{ $parametres['techetinnop1'] ?? '' }}
-            {{ $parametres['techetinnop2'] ?? '' }}
-            <div class="image-">
-        <img src="{{ $parametres['techetinno image'] ?? 'img/logo.jpg' }}" width="200px" alt="Notre Mission">
-        </div>        
+        <div class="image-text-section">
+            <div class="text">
+                <h4>Expérience Client Unique</h4><br>
+                {{ $parametres['expclientuniquep1'] ?? '' }}
+                {{ $parametres['expclientuniquep2'] ?? '' }}
+            </div>
+            <img src="{{ $parametres['expclientunique image'] ?? 'img/logo.jpg' }}" alt="Expérience Client Unique">
+        </div>
+
+
      
     
     <h2>Événements Spéciaux</h2>
@@ -220,4 +213,3 @@ Votre navigateur ne prend pas en charge la vidéo.
         });
     </script>
 </body>
-</html>

@@ -1,4 +1,131 @@
 <!-- Footer Start -->
+<script>// Afficher le bouton "Retour en haut" lorsque l'utilisateur fait défiler la page
+$(window).scroll(function() {
+    if ($(this).scrollTop() > 100) {
+        $('.back-to-top').addClass('show');
+    } else {
+        $('.back-to-top').removeClass('show');
+    }
+});
+
+// Lorsque l'utilisateur clique sur le bouton, revenir en haut de la page
+$('.back-to-top').click(function() {
+    $('html, body').animate({ scrollTop: 0 }, 500);
+    return false;
+});
+</script>
+<style>/* Style du footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 60px 0;
+}
+
+footer .text-light {
+    color: #f1f1f1 !important;
+}
+
+footer .text-white-50 {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+footer h4, footer h5 {
+    margin-bottom: 15px;
+    font-weight: 600;
+    font-size: 1.3rem;
+}
+
+footer ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+footer ul li {
+    margin-bottom: 10px;
+}
+
+footer ul li a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+footer ul li a:hover {
+    color: #f1f1f1;
+}
+
+footer .fab {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-right: 10px;
+    transition: color 0.3s;
+}
+
+footer .fab:hover {
+    color: #f1f1f1;
+}
+.bg-dark {background-color: #880e4f!important;}
+
+/* Style du copyright */
+.copyright {
+    background-color: #222;
+    color: #ccc;
+    padding: 20px 0;
+}
+
+.copyright a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.copyright a:hover {
+    color: #fff;
+}
+
+.copyright .fas {
+    font-size: 18px;
+    color: #fff;
+}
+
+.copyright .border-bottom {
+    border-bottom: 2px solid #fff;
+    transition: border-color 0.3s;
+}
+
+.copyright .border-bottom:hover {
+    border-color: #ccc;
+}
+
+/* Back to top button */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    font-size: 18px;
+    display: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+.back-to-top:hover {
+    background-color: #0056b3 !important;
+}
+
+.back-to-top i {
+    color: #fff;
+}
+
+.back-to-top.show {
+    display: block;
+}
+</style>
 <footer class="container-fluid bg-dark text-white py-5 mt-5">
     <div class="container text-center">
         <div class="row">

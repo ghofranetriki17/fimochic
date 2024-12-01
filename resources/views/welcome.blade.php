@@ -30,7 +30,7 @@
     transition: opacity 0.3s ease;
 
 }
-
+h2{text-align: center !important;}
 .product-images {
     display: flex;
     justify-content: center;
@@ -148,7 +148,7 @@
             Votre navigateur ne supporte pas la vidéo.
         </video>
     </div>
-    <h1>{{ $parametres['specialsaison'] ?? '' }}</h1>
+    <h2>{{ $parametres['specialsaison'] ?? '' }}</h2>
     <div class="product-navigation">
         <button class="nav-btn" id="prev"></button>
         <button class="nav-btn" id="next"></button>
@@ -169,7 +169,8 @@
                 <div class="col-md-6 col-lg-4 col-xl-3">
                     <div class="product-card">
                     <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
-                                           special
+                   {{ $parametres['special'] ?? 'special' }}
+
                                         </div>                          <img src="{{ asset('img/' . $produit->image) }}" alt="{{ $produit->name }}" class="main-product-image">
                         @if($galleryHover)
                             <img src="{{ asset('img/' . $galleryHover->image) }}" class="hover-image" alt="{{ $produit->name }} Hover">
@@ -697,7 +698,7 @@
 <div class="testimonial service py-5">
     <div class="video-background">
         <video autoplay muted loop>
-        <source src="{{ $parametres['Features'] ?? '' }}" type="video/mp4">
+        <source src="{{ $parametres['features'] ?? '' }}" type="video/mp4">
             Votre navigateur ne supporte pas la vidéo.
         </video>
     </div>
@@ -1477,7 +1478,7 @@ document.getElementById('prevKeychains').onclick = function() {
   <div class="featurs testimonial py-5">
       <div class="video-background">
         <video autoplay muted loop>
-            <source src="{{ asset('/img/hero.mp4') }}" type="video/mp4">
+        <source src="{{ $parametres['features'] ?? '' }}" type="video/mp4">
             Votre navigateur ne supporte pas la vidéo.
         </video>
     </div>
@@ -1548,7 +1549,7 @@ document.getElementById('prevKeychains').onclick = function() {
     <div class="testimonial py-5">
         <div class="video-background">
         <video autoplay muted loop>
-            <source src="{{ asset('/img/vid.mp4') }}" type="video/mp4">
+        <source src="{{ $parametres['fact'] ?? '' }}" type="video/mp4">
             Votre navigateur ne supporte pas la vidéo.
         </video>
     </div>
@@ -1594,7 +1595,7 @@ document.getElementById('prevKeychains').onclick = function() {
 <div class="testimonial py-5">
     <div class="video-background">
         <video autoplay muted loop>
-            <source src="{{ asset('/img/vid.mp4') }}" type="video/mp4">
+        <source src="{{ $parametres['testimental'] ?? '' }}" type="video/mp4">
             Votre navigateur ne supporte pas la vidéo.
         </video>
     </div>
@@ -1790,7 +1791,7 @@ document.getElementById('prevKeychains').onclick = function() {
 .modal-content {
     border: #ff949400;
     border-radius: 15px;
-    background-color: #2d1621;
+    background-color: #FCE4EC;
     overflow: hidden;
 }
 .modal-header {

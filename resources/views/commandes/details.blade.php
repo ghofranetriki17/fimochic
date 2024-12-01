@@ -30,6 +30,8 @@
                 <th>Quantité</th>
                 <th>Prix Unitaire</th>
                 <th>Total</th>
+                <th>date estimee pour la livraison</th>
+
             </tr>
         </thead>
         <tbody>
@@ -47,6 +49,8 @@
                     <td>{{ $ligne->qtecmnd }}</td>
                     <td>{{ $ligne->produit->prix }} DT</td>
                     <td>{{ $ligne->qtecmnd * $ligne->produit->prix }} DT</td>
+                    <td>{{ $commande->date_estimee_liv}}</td>
+
                 </tr>
             @endforeach
         </tbody>

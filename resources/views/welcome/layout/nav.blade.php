@@ -40,18 +40,7 @@
                 <a href="mailto:{{ $parametres['email'] ?? 'ghofrane.triki.17@gmail.com' }}" class="text-white">{{ $parametres['email'] ?? 'ghofrane.triki.17@gmail.com' }}</a>
             </small>
         </div>
-        <div class="top-link pe-2">
-            <!-- Liens vers les pages légales -->
-            <a href="{{ $parametres['privacy_policy'] ?? '#' }}" class="text-white">
-                <small class="text-white mx-2">Privacy Policy</small>/
-            </a>
-            <a href="{{ $parametres['terms_of_use'] ?? '#' }}" class="text-white">
-                <small class="text-white mx-2">Terms of Use</small>/
-            </a>
-            <a href="{{ $parametres['sales_and_refunds'] ?? '#' }}" class="text-white">
-                <small class="text-white ms-2">Sales and Refunds</small>
-            </a>
-        </div>
+      
     </div>
 </div>
 

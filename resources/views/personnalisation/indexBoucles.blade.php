@@ -140,6 +140,7 @@ h2{color:#205681;}
 </style>
 
 <div class="container" id="m">
+    
     <form action="{{ route('personnalisation.store') }}" method="POST" id="personnalisation-form">
         @csrf
 
@@ -169,6 +170,12 @@ h2{color:#205681;}
         </div>
 
         <div id="options-container">
+        <div class="video-background">
+        <video autoplay muted loop>
+        <source src="{{ $parametres['featuress'] ?? 'img/test.mp4' }}" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+        </video>
+    </div>
             @foreach($ressourcesParType as $type => $ressources)
                 <div class="custom-form-group options-group" id="{{ $type }}-options" style="display: none;">
                     <label for="{{ $type }}">{{ ucfirst($type) }}</label>

@@ -16,12 +16,15 @@
             </ol>
         </nav>
     </div><!-- End Page Title -->
+    <a href="{{ route('clients.create') }}" class="btn btn-info">Ajouter un Nouveau Client</a>
 
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
+                    <div class="mb-4">
+    </div>
                         <h5 class="card-title">Tableau des Clients</h5>
 
                         <!-- Table with stripped rows -->
@@ -36,7 +39,10 @@
                                     <th>Numéro de Téléphone</th>
                                     <th>Sexe</th>
                                     <th>Adresse</th>
+                                    <th></th>
                                     <th>Actions</th>
+                                    <th></th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -52,13 +58,15 @@
                                         <td>{{ $client->adresse }}</td>
                                         <td>
                                             <a href="{{ route('clients.show', $client->id) }}" class="btn btn-primary btn-sm">Voir</a>
-                                            <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-info btn-sm">Modifier</a>
-                                            <form action="{{ route('clients.destroy', $client->id) }}" method="POST" style="display: inline-block;">
+                                         
+                                        </td>
+                                        <td>                                            <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-info btn-sm">Modifier</a>
+                                        </td>
+                                        <td>   <form action="{{ route('clients.destroy', $client->id) }}" method="POST" style="display: inline-block;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce client?')">Supprimer</button>
-                                            </form>
-                                        </td>
+                                            </form></td>
                                     </tr>
                                 @endforeach
                             </tbody>

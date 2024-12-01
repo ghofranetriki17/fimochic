@@ -114,6 +114,36 @@
 
 
 
+      <!-- Total Groups Card -->
+<div class="col-xxl-4 col-md-6">
+    <div class="card info-card orders-card">
+   
+
+        <div class="card-body">
+            <h5 class="card-title">Nombre De Commandes Personnalisées En Attentes</h5>
+
+            <div class="d-flex align-items-center">
+                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-calendar"></i> <!-- Vous pouvez changer l'icône si nécessaire -->
+                </div>
+                <div class="ps-3">
+                    <h6>{{ $groupCount }}</h6>
+                    @if($groupCount < 3)
+                    "Très bien ! On est dans les temps, pas de panique !"
+
+                        @elseif($groupCount >= 3 && $groupCount <= 5)
+                        "Ça commence à s’accumuler. Mettez le turbo !"
+                        @else
+                        "Situation critique ! Nous devons nous mobiliser immédiatement."
+                        @endif                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Total Groups Card -->
+
+
+
       <div class="chart-container">
             <canvas id="orderStateChart"></canvas>
         </div>
@@ -165,55 +195,8 @@
 
 
 
-<!-- Total Groups Card -->
-<div class="col-xxl-4 col-md-6">
-    <div class="card info-card orders-card">
-   
 
-        <div class="card-body">
-            <h5 class="card-title">Nombre De Commandes Personnalisées En Attentes</h5>
 
-            <div class="d-flex align-items-center">
-                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-calendar"></i> <!-- Vous pouvez changer l'icône si nécessaire -->
-                </div>
-                <div class="ps-3">
-                    <h6>{{ $groupCount }}</h6>
-                    @if($groupCount < 3)
-                    "Très bien ! On est dans les temps, pas de panique !"
-
-                        @elseif($groupCount >= 3 && $groupCount <= 5)
-                        "Ça commence à s’accumuler. Mettez le turbo !"
-                        @else
-                        "Situation critique ! Nous devons nous mobiliser immédiatement."
-                        @endif                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End Total Groups Card -->
-<!-- Total Products in Carts Card -->
-<div class="col-xxl-4 col-md-6">
-    <div class="card info-card orders-card">
-  
-
-        <div class="card-body">
-            <h5 class="card-title">Produits dans les Paniers <span>|</span></h5>
-
-            <div class="d-flex align-items-center">
-                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-cart"></i>
-                </div>
-                <div class="ps-3">
-                    <h6>{{ $totalProductsInCarts }}</h6>
-                    <span class="text-success small pt-1 fw-bold">{{ number_format($totalPriceInCarts, 2) }} DT</span>
-                    <span class="text-muted small pt-2 ps-1">en produits non commandés</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End Total Products in Carts Card -->
 
 <style>#pr{margin-top:20px}</style>
 
@@ -372,7 +355,8 @@
 
 
 <style>#cst{margin-top:20px;
-height:510px;}</style>
+height:510px;
+width: 390px;}</style>
       
 <!-- Customers Card -->
 <div class="col-xxl-4 col-xl-6" id="cst">
@@ -473,6 +457,7 @@ height:510px;}</style>
 <style>#rev {
  margin-top:20px;
     height: 510px;
+    width: 395px;
 }</style>
 
 
@@ -571,6 +556,7 @@ height:510px;}</style>
         </div>
     </div>
 </div>
+
 <!-- End Popular Customizations by Type Section -->
 
 
@@ -847,7 +833,28 @@ height:510px;}</style>
 
           <!-- News & Updates Traffic -->
         <!-- End News & Updates -->
+<!-- Total Products in Carts Card -->
+<div class="col-xxl-4 col-md-6">
+    <div class="card info-card orders-card">
+  
 
+        <div class="card-body">
+            <h5 class="card-title">Produits dans les Paniers <span>|</span></h5>
+
+            <div class="d-flex align-items-center">
+                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-cart"></i>
+                </div>
+                <div class="ps-3">
+                    <h6>{{ $totalProductsInCarts }}</h6>
+                    <span class="text-success small pt-1 fw-bold">{{ number_format($totalPriceInCarts, 2) }} DT</span>
+                    <span class="text-muted small pt-2 ps-1">en produits non commandés</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Total Products in Carts Card -->
         </div><!-- End Right side columns -->
 
 
