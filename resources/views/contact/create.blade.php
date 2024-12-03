@@ -3,6 +3,10 @@
 <style>.p-4 {
     height: calc(100% - 425px);
 }
+.text-white {
+    color: #E91E63!important;
+}
+
 p {
     margin-top: 0;
     margin-bottom: 1rem;

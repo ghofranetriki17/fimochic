@@ -752,10 +752,10 @@ color:white;
 }
 
 .text-rose {
-    color: #fbc8d1  !important; /* Utilisation de !important pour forcer la couleur */
+    color: #ed60c3  !important; /* Utilisation de !important pour forcer la couleur */
     
 }
-.text-rose:hover {    color: #bef785 !important; /* Utilisation de !important pour forcer la couleur */
+.text-rose:hover {    color: #fff !important; /* Utilisation de !important pour forcer la couleur */
 }
 
 .footer .footer-item .btn-link:hover {

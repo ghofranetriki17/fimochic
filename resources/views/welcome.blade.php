@@ -1474,7 +1474,7 @@ document.getElementById('prevKeychains').onclick = function() {
 
 
 
-  <!-- Featurs Section Start -->
+  <!-- Featurs Section Start 
   <div class="featurs testimonial py-5">
       <div class="video-background">
         <video autoplay muted loop>
@@ -1531,7 +1531,7 @@ document.getElementById('prevKeychains').onclick = function() {
         </div>
     </div>
 </div>
-<!-- Featurs Section End -->
+ Featurs Section End -->
 
 
 
@@ -1545,7 +1545,7 @@ document.getElementById('prevKeychains').onclick = function() {
 
  
 
-    <!-- Fact Start -->
+    <!-- Fact Start 
     <div class="testimonial py-5">
         <div class="video-background">
         <video autoplay muted loop>
@@ -1588,7 +1588,7 @@ document.getElementById('prevKeychains').onclick = function() {
             </div>
         </div>
     </div>
-    <!-- Fact Start -->
+ Fact Start -->
 
 
  <!-- Tastimonial Start -->

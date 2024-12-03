@@ -1,40 +1,39 @@
 @include('welcome.layout.head')
 @include('welcome.layout.nav')
 
-<div class="container mt-5">
-    <div class="row">
-        <!-- Section Détails du Compte -->
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h5>Détails du Compte</h5>
-                </div>
-                <div class="card-body">
-                    <p><strong>Prénom : </strong>{{ $client->preNom }}</p>
-                    <p><strong>Nom : </strong>{{ $client->nom }}</p>
-                    <p><strong>Email : </strong>{{ $client->user->email }}</p>
-                    <p><strong>Âge : </strong>{{ $client->age }}</p>
-                    <p><strong>Numéro de téléphone : </strong>{{ $client->numeroTel }}</p>
-                    <p><strong>Sexe : </strong>{{ $client->gender }}</p>
-                    <p><strong>Adresse : </strong>{{ $client->adresse }}</p>
-                    <p><strong>Inscrit en : </strong>{{ $client->created_at->format('d M Y') }}</p>
-                </div>
-                <div class="card-footer text-center">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">
-                        Modifier mon compte
-                    </button>
-                </div>
-            </div>
-            <a class="btn btn-danger mt-4 d-block" href="{{ route('logout') }}" 
-        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-        Déconnexion
-    </a>
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-        @csrf
-    </form>
+<div class="container mt-4">
+    <h1>Mon Compte</h1>
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
         </div>
- <!-- Modale pour modifier les informations du compte -->
- <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    @endif
+
+    <div class="card">
+        <div class="card-header">
+            Détails du Compte
+        </div>
+        <div class="card-body">
+            <p><strong>Prénom : </strong>{{ $client->preNom }}</p>
+            <p><strong>Nom : </strong>{{ $client->nom }}</p>
+            <p><strong>Email : </strong>{{ $client->user->email }}</p>
+            <p><strong>Âge : </strong>{{ $client->age }}</p>
+            <p><strong>Numéro de téléphone : </strong>{{ $client->numeroTel }}</p>
+            <p><strong>Sexe : </strong>{{ $client->gender }}</p>
+            <p><strong>Adresse : </strong>{{ $client->adresse }}</p>
+            <p><strong>Inscrit en : </strong>{{ $client->created_at }}</p>
+        </div>
+        <div class="card-footer">
+            <!-- Bouton pour ouvrir la modale -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">
+                Modifier mon compte
+            </button>
+        </div>
+    </div>
+
+    <!-- Modale pour modifier les informations du compte -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -102,14 +101,13 @@
         </div>
     </div>
 
-        <!-- Section Commandes -->
-        <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-header bg-success text-white">
-                    <h5>Mes Commandes</h5>
-                </div>
-                <div class="card-body">
-                @foreach ($commandes as $commande)
+    <!-- Section des Commandes -->
+    <div class="card mt-4">
+        <div class="card-header">
+            Mes Commandes
+        </div>
+        <div class="card-body">
+            @foreach ($commandes as $commande)
                 <div class="timeline-item mt-4">
                     <div class="timeline-content">
                         <h5>Commande {{ $commande->created_at->format('d M Y') }}</h5>
@@ -126,58 +124,22 @@
                     </div>
                 </div>
             @endforeach
-                </div>
-            </div>
         </div>
     </div>
+
+    <a class="nav-link" href="{{ route('logout') }}" 
+        onclick="event.preventDefault();
+        document.getElementById('logout-form').submit();">
+        Déconnexion
+    </a>
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
+
+    @include('welcome.layout.footer')
+</div>
+
 <!-- Helper functions for status classes and labels -->
-<style>
-    
-    /* styles.css */
-    
-    /* Container for timeline */
-    .timeline-item {
-        position: relative;
-        padding: 10px 0;
-    }
-    
-    .timeline {
-        display: flex;
-    
-    }
-    
-    .timeline-step {
-        position: relative;
-        flex: 1;
-        text-align: center;
-    }
-    
-    .timeline-step .timeline-icon {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background-color: #ddd;
-        margin: 0 auto;
-        position: relative;
-    }
-    
-    .timeline-step .timeline-label {
-        margin-top: 10px;
-    }
-    
-    .timeline-step.completed .timeline-icon {
-        background-color: green;
-    }
-    
-    .timeline-step.current .timeline-icon {
-        background-color: blue;
-    }
-    
-    .timeline-step.upcoming .timeline-icon {
-        background-color: gray;
-    }
-    </style>
-    
 @php
 function getStepClass($stepIndex, $currentStep) {
     if ($stepIndex < $currentStep) {
@@ -202,13 +164,51 @@ function getStepLabel($stepIndex) {
 @endphp
 
 <style>
-    <a class="btn btn-danger mt-4 d-block" href="{{ route('logout') }}" 
-        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-        Déconnexion
-    </a>
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-        @csrf
-    </form>
-</div>
+    
+/* styles.css */
 
-@include('welcome.layout.footer')
+/* Container for timeline */
+.timeline-item {
+    position: relative;
+    padding: 10px 0;
+}
+
+.timeline {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 30px;
+    margin-top: 20px;
+}
+
+.timeline-step {
+    position: relative;
+    flex: 1;
+    text-align: center;
+}
+
+.timeline-step .timeline-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #ddd;
+    margin: 0 auto;
+    position: relative;
+}
+
+.timeline-step .timeline-label {
+    margin-top: 10px;
+}
+
+.timeline-step.completed .timeline-icon {
+    background-color: green;
+}
+
+.timeline-step.current .timeline-icon {
+    background-color: blue;
+}
+
+.timeline-step.upcoming .timeline-icon {
+    background-color: gray;
+}
+</style>

@@ -3,7 +3,9 @@
 @include('dashboard.layout.asside')
 @include('dashboard.layout.script')
 @include('dashboard.layout.cssperso')
-<style>.table-success {
+<style>
+
+.table-success {
     
     --bs-table-bg: #8bf969;}</style>
 <h1>Liste des Messages</h1>
