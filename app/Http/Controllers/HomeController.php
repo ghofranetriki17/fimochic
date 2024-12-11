@@ -12,7 +12,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $desiredValues = ['femme voilée','Tendance', 'Quotidien', 'Travail/Professionnel'];
+        $desiredValues = ['femme voilée','Tendance', 'Quotidien', 'Antiallergie'];
     
         // Récupérer les produits qui ont les valeurs désirées
         $products = Produit::whereHas('valeurs', function ($query) use ($desiredValues) {

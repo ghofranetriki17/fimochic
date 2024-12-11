@@ -423,7 +423,7 @@ h2{text-align: center !important;}
                     <ul class="nav nav-pills d-inline-flex text-center mb-5">
                         @foreach($groupedProducts as $valeurName => $produits)
                             <li class="nav-item">
-                            <a class="nav-link d-flex m-2 py-2 rounded-pill {{ $valeurName === 'Tendance' ? 'active' : '' }}" data-bs-toggle="pill" href="#tab-{{ Str::slug($valeurName) }}">
+                            <a class="nav-link d-flex m-2 py-2 rounded-pill {{ $valeurName === 'Quotidien' ? 'active' : '' }}" data-bs-toggle="pill" href="#tab-{{ Str::slug($valeurName) }}">
                                    <span class="b" style="width: 130px;">{{ $valeurName }}</span>
                                 </a>
                             </li>
@@ -1300,7 +1300,7 @@ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             <!-- QR Code Section -->
             <div class="col-lg-6 text-center">
                 <div class="position-relative">
-                    <img src="{{ $parametres['qr'] ?? '' }} class="img-fluid rounded" alt="QR Code">
+                    <img src="{{ $parametres['qr'] ?? '' }} "class="img-fluid rounded" alt="QR Code">
                 </div>
             </div>
         </div>
