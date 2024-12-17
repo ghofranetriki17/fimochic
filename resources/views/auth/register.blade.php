@@ -73,8 +73,7 @@
                     <label for="male">Male</label>
                     <input type="radio" id="female" name="gender" value="female" class="radio-custom">
                     <label for="female">Female</label>
-                    <input type="radio" id="other" name="gender" value="other" class="radio-custom">
-                    <label for="other">Other</label>
+                   
                 </div>
                 @error('gender')
                 <span class="text-red-500">{{ $message }}</span>
@@ -173,8 +172,7 @@
     }
 
     .input-field input {
-        width: 100%;
-        height: 40px;
+        width: 50%;
         background: transparent;
         border: none;
         outline: none;
@@ -219,9 +217,9 @@
     position: absolute;
     left: 0;
     top: 2px;
-    width: 16px;
-    height: 16px;
-    border: 2px solid #fff;
+    width: 0px;
+    height: 0px;
+    border: 2px  ;
     border-radius: 50%;
     background-color: transparent;
 }
