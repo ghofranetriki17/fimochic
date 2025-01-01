@@ -136,65 +136,7 @@
 
      
     
-    <h2>Événements Spéciaux</h2>
-        <div class="special-events animate__animated animate__fadeInUp">
-        {{ $parametres['evet1'] ?? '' }}
-
-           
-
-        <video autoplay loop muted class="w-100 h-100 " style="object-fit: cover;">
-    <!-- Assurez-vous que la clé 'vid' est correcte et que le chemin est valide -->
-    <source src="{{ $parametres['videvt1'] ?? '' }}" type="video/mp4">
-    Votre navigateur ne prend pas en charge la vidéo.
-</video>
-
-       
-{{ $parametres['evet2'] ?? '' }}
-
-           
-
-<video autoplay loop muted class="w-100 h-100 " style="object-fit: cover;">
-<!-- Assurez-vous que la clé 'vid' est correcte et que le chemin est valide -->
-<source src="{{ $parametres['videvt2'] ?? '' }}" type="video/mp4">
-Votre navigateur ne prend pas en charge la vidéo.
-</video>
-
-
-
-{{ $parametres['evet3'] ?? '' }}
-
-           
-
-<video autoplay loop muted class="w-100 h-100 " style="object-fit: cover;">
-<!-- Assurez-vous que la clé 'vid' est correcte et que le chemin est valide -->
-<source src="{{ $parametres['videevt3'] ?? '' }}" type="video/mp4">
-Votre navigateur ne prend pas en charge la vidéo.
-</video>
-
-
-
-
-{{ $parametres['evet4'] ?? '' }}
-
-           
-
-<video autoplay loop muted class="w-100 h-100 " style="object-fit: cover;">
-<!-- Assurez-vous que la clé 'vid' est correcte et que le chemin est valide -->
-<source src="{{ $parametres['videevt4'] ?? '' }}" type="video/mp4">
-Votre navigateur ne prend pas en charge la vidéo.
-</video>
-
-
-
-{{ $parametres['evet5'] ?? '' }}
-
-           
-
-<video autoplay loop muted class="w-100 h-100 " style="object-fit: cover;">
-<!-- Assurez-vous que la clé 'vid' est correcte et que le chemin est valide -->
-<source src="{{ $parametres['videevt5'] ?? '' }}" type="video/mp4">
-Votre navigateur ne prend pas en charge la vidéo.
-</video>
+    
 
         </div>
     </div>

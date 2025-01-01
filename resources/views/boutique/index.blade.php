@@ -1152,7 +1152,7 @@
     @endif
 </div>
                                     <!-- Section des produits similaires -->
-                                    <div class="mt-4">
+<!--                           <div class="mt-4">
     <div class="row">
     <h5>Autres Couleurs</h5>
         @foreach ($produits->filter(function ($p) use ($produit) { return $p->name == $produit->name && $p->id != $produit->id; }) as $relatedProduct)
@@ -1182,7 +1182,7 @@
         @endforeach
     </div>
 </div>
-
+-->
 
 
 
